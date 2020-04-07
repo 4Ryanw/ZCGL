@@ -1,6 +1,9 @@
 package cn.cqu.controller;
 
+import cn.cqu.pojo.Account;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +17,10 @@ public class indexController {
      *  跳转主页
      */
     @GetMapping("/home")
-    public void home(){}
+    public void home(Model mv){
+        Account user = (Account) SecurityUtils.getSubject().getPrincipal();
+        mv.addAttribute("loginUser",user);
+    }
     //首页 (欢迎页面)
     @GetMapping("/index")
     public void index(){}

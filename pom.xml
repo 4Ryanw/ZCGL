@@ -216,6 +216,13 @@
           <include>**/*.xml</include>
         </includes>
       </resource>
+      <!-- 配置文件 -->
+      <resource>
+        <directory>src/main/resource</directory>
+          <includes>
+            <include>**/*</include>
+        </includes>
+      </resource>
     </resources>
   </build>
 </project>

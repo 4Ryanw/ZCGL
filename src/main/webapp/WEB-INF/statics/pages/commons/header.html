@@ -1,4 +1,4 @@
-<html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
   <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" >
     <div class="navbar-brand-wrapper d-flex justify-content-center" style="background-image: url(../../images/logobg.png)!important;background-repeat: repeat">
       <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100" >
@@ -26,7 +26,7 @@
         <li class="nav-item nav-profile dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
             <img src="/images/faces/face5.jpg" alt="profile"/>
-            <span class="nav-profile-name">admin</span>
+            <span class="nav-profile-name" th:text="${loginUser.userName}">admins</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
             <a class="dropdown-item">

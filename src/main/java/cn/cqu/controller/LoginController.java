@@ -1,5 +1,7 @@
 package cn.cqu.controller;
 
+import cn.cqu.pojo.Account;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
