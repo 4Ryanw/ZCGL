@@ -1,12 +1,9 @@
 package cn.cqu.controller;
 
-import cn.cqu.pojo.Account;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 页面跳转管理控制器
@@ -17,9 +14,10 @@ public class indexController {
      *  跳转主页
      */
     @GetMapping("/home")
-    public void home(Model mv){
-        Account user = (Account) SecurityUtils.getSubject().getPrincipal();
-        mv.addAttribute("loginUser",user);
+    public String home(ModelMap map){
+        String user = (String) SecurityUtils.getSubject().getPrincipal();
+        map.addAttribute("loginUser",user);
+        return "home";
     }
     //首页 (欢迎页面)
     @GetMapping("/index")

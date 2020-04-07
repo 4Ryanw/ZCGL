@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
 <head>
   <!--  meta 标签 -->
   <meta charset="utf-8">
@@ -177,7 +176,7 @@
                     <tbody>
                     <tr class ="tr_sub">
                       <td><input type="checkbox"/></td>
-                      <td>Jeremy Ortega</td>
+                      <td th:text="${loginUser}">Jeremy Ortega</td>
                       <td>Levelled up</td>
                       <td>Catalinaborough</td>
                       <td>$790</td>
