@@ -1,6 +1,7 @@
 /*
  * Container style
  */
+/*noinspection ALL*/
 .ps {
   overflow: hidden !important;
   overflow-anchor: none;
@@ -12,6 +13,7 @@
 /*
  * Scrollbar rail styles
  */
+/*noinspection ALL*/
 .ps__rail-x {
   display: none;
   opacity: 0;
@@ -19,11 +21,12 @@
   -webkit-transition: background-color .2s linear, opacity .2s linear;
   height: 15px;
   /* there must be 'bottom' or 'top' for ps__rail-x */
-  bottom: 0px;
+  bottom: 0;
   /* please don't change 'position' */
   position: absolute;
 }
 
+/*noinspection ALL*/
 .ps__rail-y {
   display: none;
   opacity: 0;
@@ -36,12 +39,14 @@
   position: absolute;
 }
 
+/*noinspection ALL*/
 .ps--active-x > .ps__rail-x,
 .ps--active-y > .ps__rail-y {
   display: block;
   background-color: transparent;
 }
 
+/*noinspection ALL*/
 .ps:hover > .ps__rail-x,
 .ps:hover > .ps__rail-y,
 .ps--focus > .ps__rail-x,
@@ -51,6 +56,7 @@
   opacity: 0.6;
 }
 
+/*noinspection ALL*/
 .ps__rail-x:hover,
 .ps__rail-y:hover,
 .ps__rail-x:focus,
@@ -62,6 +68,7 @@
 /*
  * Scrollbar thumb styles
  */
+/*noinspection ALL*/
 .ps__thumb-x {
   background-color: #aaa;
   border-radius: 6px;
@@ -74,6 +81,7 @@
   position: absolute;
 }
 
+/*noinspection ALL*/
 .ps__thumb-y {
   background-color: #aaa;
   border-radius: 6px;
@@ -86,12 +94,14 @@
   position: absolute;
 }
 
+/*noinspection ALL*/
 .ps__rail-x:hover > .ps__thumb-x,
 .ps__rail-x:focus > .ps__thumb-x {
   background-color: #999;
   height: 11px;
 }
 
+/*noinspection ALL*/
 .ps__rail-y:hover > .ps__thumb-y,
 .ps__rail-y:focus > .ps__thumb-y {
   background-color: #999;
@@ -100,12 +110,14 @@
 
 /* MS supports */
 @supports (-ms-overflow-style: none) {
+  /*noinspection ALL*/
   .ps {
     overflow: auto !important;
   }
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /*noinspection ALL*/
   .ps {
     overflow: auto !important;
   }

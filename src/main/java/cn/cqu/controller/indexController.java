@@ -10,44 +10,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class indexController {
-    //主页
+    /**
+     *  跳转主页
+     */
     @GetMapping("/home")
-    public void home(){};
+    public void home(){}
     //首页 (欢迎页面)
     @GetMapping("/index")
-    public void index(){};
+    public void index(){}
     //设备管理
     @GetMapping("/deviceManage")
-    public void deviceManage(){};
+    public void deviceManage(){}
     //账户信息
     @GetMapping("/account")
-    public void account(){};
+    public void account(){}
     //设备台账
     @GetMapping("/deviceList")
-    public void deviceList(){};
+    public void deviceList(){}
     //信息公告
     @GetMapping("/notice")
-    public void noticeList(){};
+    public void noticeList(){}
     //设备类型
     @GetMapping("/deviceTypes")
-    public void deviceTypes(){};
+    public void deviceTypes(){}
     //设备品牌
     @GetMapping("/deviceBrands")
-    public void deviceBrands(){};
+    public void deviceBrands(){}
     //一级部门
     @GetMapping("/friDepartments")
-    public void friDepartments(){};
+    public void friDepartments(){}
     //二级部门
     @GetMapping("/secDepartments")
-    public void secDepartments(){};
+    public void secDepartments(){}
     //物理地址
     @GetMapping("/macAddress")
-    public void macAddress(){};
+    public void macAddress(){}
     //组织结构
     @GetMapping("/Organizations")
-    public void Organizations(){};
+    public void Organizations(){}
     //系统管理
     @GetMapping("/system")
-    public void system(){};
+    public void system(){}
 
 }

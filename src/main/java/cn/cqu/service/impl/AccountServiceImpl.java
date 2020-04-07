@@ -23,8 +23,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public List<AccountDTO> listAccount() {
-        List<AccountDTO> list = accountDao.listAccount();
-        return list;
+        return accountDao.listAccount();
     }
 
 
@@ -53,8 +52,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public int deleteAccountById(String uuid) {
-        int res =  accountDao.deleteAccountByUUId(uuid);
-        return res;
+        return accountDao.deleteAccountByUUId(uuid);
     }
 
     /**
@@ -85,7 +83,6 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public int updateStatusByid(String uuid, int status) {
-        int res = accountDao.updateStatusByUUId(uuid,status);
-        return res;
+        return accountDao.updateStatusByUUId(uuid,status);
     }
 }

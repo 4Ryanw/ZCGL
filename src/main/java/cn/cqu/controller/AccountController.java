@@ -47,8 +47,7 @@ public class AccountController {
     @PostMapping("/add")
     @ResponseBody
     public int addAccount(Account account){
-            int res = accountService.addAccount(account);
-            return res;
+        return accountService.addAccount(account);
     }
 
 
@@ -60,8 +59,7 @@ public class AccountController {
     @DeleteMapping("/delete/{uuid}")
     @ResponseBody
     public int deleteAccount(@PathVariable("uuid")String uuid){
-        int res =  accountService.deleteAccountById(uuid);
-        return res;
+        return accountService.deleteAccountById(uuid);
     }
 
     /**
@@ -73,8 +71,7 @@ public class AccountController {
     @PutMapping("/update/password")
     @ResponseBody
     public int updatePassword(String uuid, String password){
-        int res = accountService.updatePasswordByid(uuid,password);
-        return res;
+        return accountService.updatePasswordByid(uuid,password);
     }
 
     /**
@@ -86,8 +83,7 @@ public class AccountController {
     @PutMapping("/update/status")
     @ResponseBody
     public int updateStatus(String uuid,int status){
-        int res = accountService.updateStatusByid(uuid,status);
-        return res;
+        return accountService.updateStatusByid(uuid,status);
     }
 
 }
