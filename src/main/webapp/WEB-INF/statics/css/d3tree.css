@@ -1,0 +1,31 @@
+/*树形控件样式*/
+.node {
+    cursor: pointer;
+}
+
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
+
+.node text {
+    font: 10px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #FF6A6A;
+    stroke-width: 2px;
+}
+.tree{
+    width: 1000px;
+    height: 600px;
+    /*margin: 0 auto;*/
+    margin-left: 0 ;
+    background: #F3F3F3;
+}
+.tree svg{
+    width: 100%;
+    height: 100%;
+}

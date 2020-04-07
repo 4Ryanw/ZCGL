@@ -38,7 +38,7 @@ public class UserRealm extends AuthorizingRealm {
         //根据账号查询数据库，如果查不到就认为账号不正确，返回null
         Account user = accountDao.getAccountById(userId);
         if(null != user)
-            //交由shiro判断，账号：admin,密码：123456,是否与用户输入的匹配
+            //交由shiro判断，是否与用户输入的匹配
             return new SimpleAuthenticationInfo(user.getUserId(),user.getPassword(),getName());
         else
             return null;

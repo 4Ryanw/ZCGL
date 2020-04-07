@@ -21,4 +21,15 @@ public class BaseInfoServiceImpl implements BaseInfoService {
     public List<DeviceType> listDeviceType() {
         return baseInfoDao.listDeviceType();
     }
+
+    /**
+     * 添加设备类型
+     *
+     * @param deviceType
+     * @return
+     */
+    @Override
+    public int addtDeviceType(DeviceType deviceType) {
+        return baseInfoDao.insertDeviceType(deviceType);
+    }
 }

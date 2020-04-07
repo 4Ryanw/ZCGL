@@ -2,8 +2,9 @@ package cn.cqu.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 页面跳转管理控制器
@@ -14,9 +15,9 @@ public class indexController {
      *  跳转主页
      */
     @GetMapping("/home")
-    public String home(ModelMap map){
+    public String home(HttpServletRequest request){
         String user = (String) SecurityUtils.getSubject().getPrincipal();
-        map.addAttribute("loginUser",user);
+        request.getSession().setAttribute("loginUser",user);
         return "home";
     }
     //首页 (欢迎页面)

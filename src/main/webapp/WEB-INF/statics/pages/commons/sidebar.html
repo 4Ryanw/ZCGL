@@ -1,72 +1,72 @@
-<html>
-<nav  class="sidebar sidebar-offcanvas">
-<ul class="nav" id="t">
-    <li class="nav-item">
-      <a class="nav-link" href="/index">
-        <i class="mdi mdi-home menu-icon"></i>
-        <span class="menu-title">首页</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-        <i class="mdi mdi-circle-outline menu-icon"></i>
-        <span class="menu-title">设备</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-basic">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="/deviceManage">设备管理</a></li>
-          <li class="nav-item"> <a class="nav-link" href="/deviceList">设备台账</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/account">
-        <i class="mdi mdi-account menu-icon"></i>
-        <span class="menu-title">账户信息</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/deviceList">
-        <i class="mdi mdi-chart-pie menu-icon"></i>
-        <span class="menu-title">设备台账</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/notice">
-        <i class="mdi mdi-message menu-icon"></i>
-        <span class="menu-title">信息公告</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-        <i class="mdi mdi-view-headline menu-icon"></i>
-        <span class="menu-title">信息维护</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="auth">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="/deviceTypes"> 设备类型 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="/deviceBrands"> 设备品牌 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="/friDepartments"> 一级部门 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="/secDepartments"> 二级部门 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="/macAddress"> 物理位置 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="/Organizations"> 组织结构 </a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/system">
-            <i class="mdi mdi-gpu menu-icon"></i>
-            <span class="menu-title">系统管理</span>
-        </a>
-    </li>
-    <!--<li class="nav-item">
-      <a class="nav-link" href="documentation/documentation.html">
-        <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-        <span class="menu-title">文件上传</span>
-      </a>
-    </li>-->
-  </ul>
-</nav>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+    <nav   th:fragment="common_sidebar">
+        <ul class="nav" id="t">
+            <li class="nav-item">
+              <a class="nav-link" href="/index">
+                <i class="mdi mdi-home menu-icon"></i>
+                <span class="menu-title">首页</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="mdi mdi-circle-outline menu-icon"></i>
+                <span class="menu-title">设备</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/deviceManage">设备管理</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/deviceList">设备台账</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/account">
+                <i class="mdi mdi-account menu-icon"></i>
+                <span class="menu-title">账户信息</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/deviceList">
+                <i class="mdi mdi-chart-pie menu-icon"></i>
+                <span class="menu-title">设备台账</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/notice">
+                <i class="mdi mdi-message menu-icon"></i>
+                <span class="menu-title">信息公告</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                <i class="mdi mdi-view-headline menu-icon"></i>
+                <span class="menu-title">信息维护</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="auth">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/deviceTypes"> 设备类型 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/deviceBrands"> 设备品牌 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/friDepartments"> 一级部门 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/secDepartments"> 二级部门 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/macAddress"> 物理位置 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Organizations"> 组织结构 </a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/system">
+                    <i class="mdi mdi-gpu menu-icon"></i>
+                    <span class="menu-title">系统管理</span>
+                </a>
+            </li>
+            <!--<li class="nav-item">
+              <a class="nav-link" href="documentation/documentation.html">
+                <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                <span class="menu-title">文件上传</span>
+              </a>
+            </li>-->
+          </ul>
+    </nav>
 </html>

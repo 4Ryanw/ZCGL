@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
 
-<head>
   <!--  meta 标签 -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,12 +17,12 @@
 <body>
 <div class="container-scroller">
   <!-- 公共头部引用 -->
-  <div class="header"></div>
+  <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"   th:include="/pages/commons/header::common_head"></nav>
   <!-- 主体流式布局 -->
   <div class="container-fluid page-body-wrapper">
     <!-- 导航边条 -->
-    <nav  class="sidebar sidebar-offcanvas" id="siderbar">
-    </nav>
+    <nav  class="sidebar sidebar-offcanvas" th:include="/pages/commons/sidebar::common_sidebar" ></nav>
+
     <!-- 主体部分 -->
     <div class="main-panel">
       <!--标题-->
@@ -199,7 +199,9 @@
       </div>
 
       <!-- 公共底部引用 -->
-      <footer class="footer"/>
+      <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
+
+
     </div>
   </div>
 </div>
@@ -223,10 +225,7 @@
 <script>
   /*初始化*/
   $(document).ready(function(){
-    /*导入头部和尾部*/
-    $(".sidebar").load("/pages/commons/sidebar.html");
-    $(".header").load("/pages/commons/header.html");
-    $(".footer").load("/pages/commons/footer.html");
+
   });
 
   /*表格点击事件*/

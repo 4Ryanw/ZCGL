@@ -1,5 +1,5 @@
 <html lang="cn" xmlns:th="http://www.thymeleaf.org">
-  <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" >
+  <nav th:fragment="common_head" >
     <div class="navbar-brand-wrapper d-flex justify-content-center" style="background-image: url(../../images/logobg.png)!important;background-repeat: repeat">
       <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100" >
         <a class="navbar-brand brand-logo" href="/index"><img style="width: 100%;height: 100%" src="/images/logo_mini.png" alt="logo"/></a>
@@ -10,23 +10,11 @@
       </div>
     </div>
     <div style="background-image: url(../../images/logobg.png)!important;background-repeat: repeat" class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-      <!--     <ul class="navbar-nav mr-lg-4 w-100">
-             <li class="nav-item nav-search d-none d-lg-block w-100">
-               <div class="input-group">
-                 <div class="input-group-prepend">
-                   <span class="input-group-text" id="search">
-                     <i class="mdi mdi-magnify"></i>
-                   </span>
-                 </div>
-                 <input type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
-               </div>
-             </li>
-           </ul>-->
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
             <img src="/images/faces/face5.jpg" alt="profile"/>
-            <span class="nav-profile-name" th:text="${loginUser}">admins</span>
+            <span class="nav-profile-name" th:text="${session.loginUser}">admins</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
             <a class="dropdown-item">
@@ -45,11 +33,4 @@
       </button>
     </div>
   </nav>
-  <script>
-    var body = $('body');
-    (function($) {$('[data-toggle="minimize"]').on("click", function() {
-      body.toggleClass('sidebar-icon-only');
-    });
-    })(jQuery);
-  </script>
   </html>

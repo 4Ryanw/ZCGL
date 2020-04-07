@@ -18,4 +18,12 @@ public interface BaseInfoService {
      */
     List<DeviceType> listDeviceType();
 
+
+    /**
+     * 添加设备类型
+     * @param deviceType
+     * @return
+     */
+    int addtDeviceType(DeviceType deviceType);
+
 }

@@ -15942,6 +15942,7 @@ button.bg-dark:focus {
   }
   .justify-content-sm-center {
     justify-content: center !important;
+    margin-bottom: 1rem;
   }
   .justify-content-sm-between {
     justify-content: space-between !important;
@@ -23670,6 +23671,9 @@ dl li {
   text-transform: uppercase;
   font-size: .875rem;
   font-weight: bold;
+}
+.active.tr_sub{
+  background-color: darkgray!important;
 }
 
 /*# sourceMappingURL=maps/style.css.map */

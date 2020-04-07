@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_layout(title,links)">
+  <meta charset="UTF-8">
+  <title th:replace="${title}">公共js/CSS页面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <!-- 引入CSS -->
+  <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/bootstrap-datetimepicker.css" >
+  <link rel="shortcut icon" href="/images/favicon.png" />
+  <link rel="stylesheet" href="/css/toastr.min.css"  />
+  <link rel="stylesheet" href="/css/bootstrap-switch.min.css"/>
+  <!-- 引入js -->
+  <script src="/vendors/base/vendor.bundle.base.js"></script>
+  <script src="/vendors/chart.js/Chart.min.js"></script>
+  <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/hoverable-collapse.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/data-table.js"></script>
+  <script src="/js/jquery.dataTables.js"></script>
+  <script src="/js/dataTables.bootstrap4.js"></script>
+  <script src="/js/olanguage.js"></script>
+  <script src="/js/toastr.min.js"></script>
+  <script src="/js/bootstrap-switch.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      //设置提示信息显示位置 ,toast-bottom-right表示在右下角
+      toastr.options.positionClass = 'toast-bottom-right';
+    });
+  </script>
+  <th:block th:replace="${links}" />
+</head>
+<body>
+
+</body>
+</html>

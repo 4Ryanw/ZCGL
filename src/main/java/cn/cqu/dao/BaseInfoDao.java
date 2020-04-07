@@ -1,6 +1,8 @@
 package cn.cqu.dao;
 
 import cn.cqu.pojo.DeviceType;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +25,7 @@ public interface BaseInfoDao {
      */
     @Select("select * from t_device_brand")
     List<DeviceType> listDeviceBrand();
+
+    @Insert("insert into t_device_type values(UUID(),#{type})")
+    int insertDeviceType(DeviceType deviceType);
 }
