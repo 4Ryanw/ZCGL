@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--此文件负责整个mvc中的配置-->
+
+    <!-- 自动扫描装配 只扫描controller-->
+    <context:component-scan base-package="cn.cqu.controller"/>
+
+
+
+    <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
+    <mvc:annotation-driven/>
+    <bean id="templateResolver"
+          class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/statics/"/>
+        <property name="suffix" value=".html"/>
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="order" value="1"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheable" value="false"/>
+    </bean>
+
+    <bean id="templateEngine"
+          class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+    </bean>
+
+    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+    <!--freemarker框架视图解析器 用于解析模板html-->
+    <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 使用html不用加前缀-->
+    <!--<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="suffix" value=".html"></property>
+        <property name="order" value="1"></property>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+    </bean>
+    &lt;!&ndash;模板文件的路径以及其他配置&ndash;&gt;
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/statics"></property>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="default_encoding">UTF-8</prop>&lt;!&ndash;编码统一采用utf-8&ndash;&gt;
+                <prop key="number_format">0.##</prop> &lt;!&ndash;小数统一保留两位&ndash;&gt;
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>&lt;!&ndash;时间格式化&ndash;&gt;
+            </props>
+        </property>
+    </bean>-->
+
+    <!--&lt;!&ndash; jsp的视图解析器 在上边的解析错误时使用 &ndash;&gt;
+    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>&lt;!&ndash;设置JSP文件的目录位置&ndash;&gt;
+        <property name="suffix" value=".jsp"/>
+        <property name="exposeContextBeansAsAttributes" value="true"/>
+    </bean>-->
+
+    <!--静态资源映射-->
+    <!--本项目把静态资源放在了webapp的statics目录下，资源映射如下-->
+    <mvc:resources mapping="/css/**" location="/WEB-INF/statics/css/"/>
+    <mvc:resources mapping="/fonts/**" location="/WEB-INF/statics/fonts/"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/statics/js/"/>
+    <mvc:resources mapping="/images/**" location="/WEB-INF/statics/images/"/>
+    <mvc:resources mapping="/pages/**" location="/WEB-INF/statics/pages/"/>
+    <mvc:resources mapping="/vendors/**" location="/WEB-INF/statics/vendors/"/>
+
+    <!--启用spring的一些annotation(注解) -->
+    <context:annotation-config/>
+</beans>

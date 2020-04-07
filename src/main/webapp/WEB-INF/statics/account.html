@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!--  meta 标签 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>台账管理系统</title>
+  <!-- 引入静态资源 -->
+  <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/bootstrap-datetimepicker.css" >
+  <link rel="shortcut icon" href="/images/favicon.png" />
+  <link rel="stylesheet" href="/css/toastr.min.css"  />
+  <link rel="stylesheet" href="/css/bootstrap-switch.min.css"  />
+    <style>
+         .active {
+            background-color: darkgray!important;
+        }
+    </style>
+</head>
+<body>
+<div class="container-scroller">
+  <!-- 公共头部引用 -->
+  <div class="header"></div>
+  <!-- 主体流式布局 -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- 导航边条 -->
+    <nav  class="sidebar sidebar-offcanvas" id="siderbar">
+    </nav>
+    <!-- 主体部分 -->
+    <div class="main-panel">
+      <!--标题-->
+      <p class="mytitle">账户信息</p>
+      <!--内容-->
+      <div class="content-wrapper">
+        <!-- 搜索相关 -->
+        <div class="row">
+          <div class="col-md-12 grid-margin">
+            <div class="d-flex justify-content-between flex-wrap">
+              <ul class="navbar-nav mr-lg-4" style="width: 60%;">
+                <li class="nav-item nav-search d-none d-lg-block w-100">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="search">
+                          <i class="mdi mdi-magnify"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="输入用户名信息" aria-label="search" aria-describedby="search">
+                  </div>
+                </li>
+              </ul>
+              <div class="d-flex justify-content-between align-items-end flex-wrap" >
+                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0">
+                  <a><i class="mdi mdi-magnify"></i> 搜索</a>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 表格-->
+        <div class="row">
+          <div class="col-md-12 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8"></div>
+                  <div class="col-md-4">
+                  <button type="button" class="btn btn-outline-primary btn-fw mr-2"data-toggle="modal" data-target="#addModal">新增人员</button>
+                  <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
+                  <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
+                  </div>
+                </div>
+                <!--表格-->
+                <div class="table-responsive"  >
+                  <table id="account-listing" class="table table-hover table-refresh"  th:fragment="table-refresh">
+                    <thead>
+                    <tr>
+                      <th></th>
+                      <th>姓 名</th>
+                      <th>账号</th>
+                      <th>账号状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class ="tr_sub"  th:each="accountDTO : ${accountDTOList}" >
+                      <td id="uuId" th:value="${accountDTO.uuid}"><input type="checkbox"/></td>
+                      <td id="userName" th:text="${accountDTO.username}">Jeremy Ortega</td>
+                      <td id="userId" th:text="${accountDTO.userId}">a120935779</td>
+                      <td><input id="userStatus"  type='checkbox' checked class='account_status_switch' th:value="${accountDTO.userStatus}" name='mycheck'></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--新增人员模态框-->
+      <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">新增人员</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="addAccount" action="/account/add" method="post">
+              <div class="form-group">
+                <label for="username_add">用户姓名</label>
+                <input id="username_add" name="Username" type="text" class="form-control" placeholder="请输入用户姓名" />
+              </div>
+              <div class="form-group">
+                <label for="userId_add">用户账号</label>
+                <input id="userId_add" name="UserId" type="text" class="form-control" placeholder="请输入用户账户" />
+              </div>
+              <div class="form-group">
+                <label for="password_add" >设置密码</label>
+                <input id="password_add" name="Password" type="text" class="form-control" placeholder="请设置6位数以上密码" />
+              </div>
+              <div class="form-group">
+                <label for="password_add" >确认密码</label>
+                <input id="password2_add" type="text" class="form-control" placeholder="请确认密码"/>
+<!--                <input  type="hidden" name="userRole" value="3"/>-->
+              </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="addInfo()">立即提交</button>
+              <button type="button" class="btn btn-danger" onclick="cleanInfo()">重新输入</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--删除确认模态框-->
+      <div class="modal fade " id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <span style="vertical-align: inherit;margin-left: auto">
+                删除人员会解除设备绑定，是否删除
+              </span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+              </button>
+              <button type="button" class="btn btn-danger" onclick="deleteInfo()">
+                确定
+              </button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+  </div>
+      <!--编辑模态框-->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">编辑</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="userId_edit">账号</label>
+                <input id="userId_edit" type="text" class="form-control" disabled />
+              </div>
+              <div class="form-group">
+                <label for="password_edit">设置密码</label>
+                <input id="password_edit" type="text" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="password2_edit">确认密码</label>
+                <input id="password2_edit" type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="editInfo()">立即提交</button>
+              <button type="button" class="btn btn-default" onclick="cleanInfo()">重新输入</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- 公共底部引用 -->
+      <footer class="footer"/>
+    </div>
+  </div>
+</div>
+</body>
+<!-- 引入js -->
+<script src="/vendors/base/vendor.bundle.base.js"></script>
+<script src="/vendors/chart.js/Chart.min.js"></script>
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/data-table.js"></script>
+<script src="/js/jquery.dataTables.js"></script>
+<script src="/js/dataTables.bootstrap4.js"></script>
+<script src="/js/olanguage.js"></script>
+<script src="/js/toastr.min.js"></script>
+<script src="/js/bootstrap-switch.min.js"></script>
+
+<!-- 自定义jS -->
+<script>
+  //被选中目标
+  var selectedObj = null;
+  //初始化开关的函数
+  function initSwitch(){
+    var switch_list = $('.account_status_switch');
+    $.each(switch_list,function (i,switchitem) {
+      $(switchitem).bootstrapSwitch({
+        onText : "启用",      // 设置ON文本
+        offText : "停用",    // 设置OFF文本
+        onColor : "success",// 设置ON文本颜色(info/success/warning/danger/primary)
+        offColor : "danger",  // 设置OFF文本颜色 (info/success/warning/danger/primary)
+        size : "small",    // 设置控件大小,从小到大  (mini/small/normal/large)
+        state:($(this).val()==1?true:false),
+        // 当开关状态改变时触发
+        onSwitchChange : function(event, state) {
+          var uuid = $(this).parentsUntil(".tr_sub").siblings("#uuId").attr("value");
+          var status;
+          if (state == true) {
+            status = 1;
+          } else {
+            status = 0;
+          }
+          $.ajax({
+            url: "/account/update/status",
+            type: "PUT",
+            data:{
+              "uuid": uuid,
+              "status":status
+            },
+            dataType: "json",
+            success: function(data) {
+              if(data==1)
+                toastr.success("修改成功");
+              else
+                toastr.error("服务器异常");
+            }
+          });
+
+        }
+      })
+    })
+  }
+  //绑定表格点击事件
+  function initTr_onclick(){
+    $(".tr_sub").click(function () {
+      selectedObj = this;
+      $(".tr_sub").removeClass("active");
+      $(this).addClass("active");
+       $(".tr_sub").find(":checkbox").prop("checked",false);
+       $(this).find(":checkbox").prop("checked", true);
+    })
+  }
+  //初始化表格 加载数据
+  function inittable(){
+    $('.modal').modal('hide');
+    $.ajax({
+      url:"/account/list",
+      type:"GET",
+      async:false,
+      success:function (data) {
+        $(".table-refresh").html(data);
+        $("#account-listing").dataTable().fnDestroy();
+        $('#account-listing').DataTable({
+          "aLengthMenu": [
+            [5, 10, 15, -1],
+            [5, 10, 15, "全部"]
+          ],
+          "iDisplayLength": 10,
+          "language": {
+            search: ""
+          },
+          "pagingType": "full_numbers",
+          searching: true, paging: true, info: true
+        });
+        initSwitch();
+        initTr_onclick();
+      }
+    });
+  }
+  //重新输入
+  function cleanInfo() {
+    $(".modal-body input").not("#userId_edit").val("");
+  }
+  //增加账户
+  function addInfo(){
+    var pwd1 = $("#password_add").val();
+    var pwd2 = $("#password2_add").val();
+    if(pwd1.length<6){ //确认密码长度是否符合要求
+      toastr.warning("密码位数小于6位!")
+    }else{
+      if(pwd1!=pwd2){ //确认两次密码输入是否一致
+        toastr.warning("两次输入密码不一致!")
+      }else{  //如果一致则发送ajax请求
+        $.ajax({
+          url: "/account/add",
+          data: {
+            userId: $("#userId_add").val(),
+            password: $("#password_add").val(),
+            username: $("#username_add").val(),
+            userRole: 3,
+            userStatus: 1
+          },
+          type: "POST",
+          dataType: "json",
+          success: function(data) {
+            if(data == 1){
+              toastr.success('添加成功');
+              cleanInfo();
+              inittable();
+            }
+            else if(data == 0)
+              toastr.warning('账号已被使用');
+          }
+        });
+      }
+    }
+  }
+  //删除账户
+  function deleteInfo() {
+      if(selectedObj){
+        var uuid = $(selectedObj).children("#uuId").attr("value");
+        $.ajax({
+          url: "/account/delete/"+uuid,
+          type: "DELETE",
+          dataType: "json",
+          success: function(data) {
+            toastr.success('删除成功');
+            cleanInfo();
+            inittable();
+          }
+        });
+      }else{
+        toastr.warning("请选择一条数据")
+        $('#deleteModal').modal('hide');
+      }
+
+  }
+  //打开编辑框
+  function openEdit(){
+    if(selectedObj){
+      var userId = $(selectedObj).find("#userId")[0].innerText;
+      $("#userId_edit").val(userId);
+      $('#editModal').modal('show');
+    }else{
+      toastr.warning("请选择一条数据")
+    }
+  };
+  //编辑账户信息
+  function editInfo(){
+    var uuid = $(selectedObj).children("#uuId").attr("value");
+    var password = $("#password_edit").val();
+    var password2 = $("#password2_edit").val();
+    if(password.length<6){ //确认密码长度是否符合要求
+      toastr.warning("密码位数小于6位!")
+    }else{
+      if(password!=password2){ //确认两次密码输入是否一致
+        toastr.warning("两次输入密码不一致!")
+      }else{
+        $.ajax({
+          url: "/account/update/password",
+          type: "PUT",
+          data:{
+            "uuid": uuid,
+            "password":password
+          },
+          dataType: "json",
+          success: function(data) {
+            if(data==1)
+              toastr.success("修改成功");
+            else
+              toastr.error("服务器异常");
+            cleanInfo();
+            $('.modal').modal('hide');
+          }
+        });
+      }
+    }
+  };
+  /*初始化*/
+  $(document).ready(function(){
+    /*导入头部和尾部*/
+    $(".sidebar").load("/pages/commons/sidebar.html");
+    $(".header").load("/pages/commons/header.html");
+    $(".footer").load("/pages/commons/footer.html");
+    inittable();
+    //设置提示信息显示位置 ,toast-bottom-right表示在右下角
+    toastr.options.positionClass = 'toast-bottom-right';
+  });
+
+</script>
+</html>
+

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--  meta 标签 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>台账管理系统</title>
+  <!-- 引入静态资源 -->
+  <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/bootstrap-datetimepicker.css" >
+  <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+<body>
+<div class="container-scroller">
+  <!-- 公共头部引用 -->
+  <div class="header"></div>
+  <!-- 主体流式布局 -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- 导航边条 -->
+    <nav  class="sidebar sidebar-offcanvas" id="siderbar">
+    </nav>
+    <!-- 主体部分 -->
+    <div class="main-panel">
+      <!--标题-->
+      <p class="mytitle">信息公告</p>
+      <!--内容-->
+      <div class="content-wrapper">
+        <!-- 表格-->
+        <div class="row">
+          <div class="col-md-12 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8"></div>
+                  <div class="col-md-4">
+                  <button type="button" class="btn btn-outline-primary btn-fw mr-2">新增公告</button>
+                  <button type="button" class="btn btn-outline-success btn-fw mr-2" data-toggle="modal" data-target="#editModal">查看</button>
+                  <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
+                  </div>
+                </div>
+                <!--表格-->
+                <div class="table-responsive">
+                  <table id="recent-purchases-listing" class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th></th>
+                      <th>发布时间</th>
+                      <th>文章标题</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class ="tr_sub">
+                      <td><input type="checkbox"/></td>
+                      <td>Jeremy Ortega</td>
+                      <td>Levelled up</td>
+                    </tr>
+                    <tr class ="tr_sub">
+                      <td><input type="checkbox"/></td>
+                      <td>Alvin Fisher</td>
+                      <td>Ui design completed</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Emily Cunningham</td>
+                      <td>support</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Minnie Farmer</td>
+                      <td>support</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Betty Hunt</td>
+                      <td>Ui design not completed</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Myrtie Lambert</td>
+                      <td>Ui design completed</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Jacob Kennedy</td>
+                      <td>New project</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Ernest Wade</td>
+                      <td>Levelled up</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--删除确认模态框-->
+      <div class="modal fade " id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <span style="vertical-align: inherit;margin-left: auto">
+                是否确认删除?
+              </span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+              </button>
+              <button type="button" class="btn btn-danger">
+                确定
+              </button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+  </div>
+
+      <!-- 公共底部引用 -->
+      <footer class="footer"/>
+    </div>
+  </div>
+</div>
+</body>
+<!-- 引入js -->
+<script src="/vendors/base/vendor.bundle.base.js"></script>
+<script src="/vendors/chart.js/Chart.min.js"></script>
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/data-table.js"></script>
+<script src="/js/jquery.dataTables.js"></script>
+<script src="/js/dataTables.bootstrap4.js"></script>
+<script src="/js/olanguage.js"></script>
+<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<!-- 自定义jS -->
+<script>
+  /*初始化*/
+  $(document).ready(function(){
+    /*导入头部和尾部*/
+    $(".sidebar").load("/pages/commons/sidebar.html");
+    $(".header").load("/pages/commons/header.html");
+    $(".footer").load("/pages/commons/footer.html");
+  });
+
+  /*表格点击事件*/
+  $(".tr_sub").click(function () {
+    $(".tr_sub").css("backgroundColor","");
+    $(this).css("backgroundColor","darkgray");
+    $(".recent-purchases-listing").find(":checkbox").attr("checked",false);
+    $(this).find(":checkbox").attr("checked", true);
+  })
+
+</script>
+</html>
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cqu.dao.AccountDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="listAccount" resultType="AccountDTO">
+        <!-- 具体的sql -->
+        SELECT
+        a.uuid,
+        a.user_id,
+        a.PASSWORD,
+        a.user_name,
+        a.user_role,
+        a.user_status,
+        r.role_name
+        FROM
+        t_account a
+        LEFT JOIN t_role r ON a.user_role = r.role_id
+    </select>
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启注解的扫描-->
+    <context:component-scan base-package="cn.cqu">
+        <!-- 配置哪些不需要扫描 -->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--  shiro filter配置  -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/> <!--       安全管理器-->
+        <property name="loginUrl" value="/login"/><!--判断需要登录时,会调用这里的路径-->
+        <property name="unauthorizedUrl" value="/refuse.html"/><!-- 判定没有权限时,会调用这里的路径-->
+        <property name="filterChainDefinitions"><!-- 权限过滤-->
+            <value>
+                /logout = logout
+                /index = anon
+                /statics/**= anon
+                /css/** = anon
+                /vendors/** = anon
+                /pages/** = anon
+                /images/** = anon
+                /js/** = anon
+                /fonts/** = anon
+                /** = authc
+            </value>
+        </property>
+        <!-- 自定义filter配置 -->
+        <property name="filters" >
+            <map>
+                <!-- 将自定义 的loginFormAuthenticationFilter注入shiroFilter中，并赋予authc权限-->
+                <entry key="authc" value-ref="loginFormAuthenticationFilter" />
+            </map>
+        </property>
+        <property name="successUrl" value="/index"/><!--     登录成功后的跳转路径   -->
+    </bean>
+    <!--shiro 自定义登录成功跳转地址-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--此处数据库相关信息可提取出来单独写在jdbc.Properties文件里,我懒得提了-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ZCGL?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull"/>
+        <property name="user" value="root"/>
+        <property name="password" value="123456"/>
+
+        <!-- c3p0连接池的私有属性 -->
+        <property name="maxPoolSize" value="30" />
+        <property name="minPoolSize" value="10" />
+        <!-- 关闭连接后不自动commit -->
+        <property name="autoCommitOnClose" value="false" />
+        <!-- 获取连接超时时间 -->
+        <property name="checkoutTimeout" value="10000" />
+        <!-- 当获取连接失败重试次数 -->
+        <property name="acquireRetryAttempts" value="2" />
+    </bean>
+    <!--securityManager 安全管理器-->
+    <bean id="loginFormAuthenticationFilter" class="cn.cqu.filter.LoginFormAuthenticationFilter"/>
+    <!--realm 自定义域-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="userRealm"/>
+    </bean>
+    <!-- 整合SSM -->
+    <!-- 数据库配置-c3p0连接池 -->
+    <bean id="userRealm" class="shiro.UserRealm">
+    </bean>
+    <!-- 让spring管理sqlsessionfactory  -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 加载mybatis的全局配置文件 -->
+        <property name="configLocation" value="classpath:/mybaits-config.xml" />
+        <!-- 扫描实体类包 使用别名 -->
+        <property name="typeAliasesPackage" value="cn.cqu.pojo" />
+        <!-- 扫描sql配置文件:mapper需要的xml文件 -->
+        <property name="mapperLocations" value="classpath:cn/cqu/dao/mapper/*.xml" />
+    </bean>
+
+    <!--配置扫描Dao接口包，将dao交给spring管理.生成代理实现类,注入到spring容器中,动态实现Dao接口 -->
+    <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.cqu.dao"/>
+    </bean>
+
+</beans>

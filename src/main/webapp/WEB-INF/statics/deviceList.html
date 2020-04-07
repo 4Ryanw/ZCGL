@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--  meta 标签 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>台账管理系统test</title>
+  <!-- 引入静态资源 -->
+  <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/bootstrap-datetimepicker.css" >
+  <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+<body>
+<div class="container-scroller">
+  <!-- 公共头部引用 -->
+  <div class="header"></div>
+  <!-- 主体流式布局 -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- 导航边条 -->
+    <nav  class="sidebar sidebar-offcanvas" id="siderbar">
+    </nav>
+    <!-- 主体部分 -->
+    <div class="main-panel">
+      <!--标题-->
+      <p class="mytitle">设备台账</p>
+      <!--内容-->
+      <div class="content-wrapper">
+        <!-- 搜索相关 -->
+        <div class="row">
+          <div class="col-md-12 grid-margin">
+            <div class="d-flex justify-content-between flex-wrap">
+              <ul class="navbar-nav mr-lg-4" style="width: 60%;">
+                <li class="nav-item nav-search d-none d-lg-block w-100">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="search">
+                          <i class="mdi mdi-magnify"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="输入设备标识搜索" aria-label="search" aria-describedby="search">
+                  </div>
+                </li>
+              </ul>
+              <div class="d-flex justify-content-between align-items-end flex-wrap" style="float: right">
+                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0">
+                  <a><i class="mdi mdi-magnify"></i> 搜索</a>
+                </button>
+                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="detailSearch()">
+                  <a><i class="mdi mdi-plus text-muted" id="detailSearchIcon"></i> 更多搜索</a>
+                </button>
+                <button class="btn btn-primary mt-2 mt-xl-0">导出报表</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 高级搜索选项框 -->
+        <div id="detailSearch" style="display: none" >
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >设备标识</span>
+              </div>
+              <input type="text" class="form-control" placeholder="输入设备标识" aria-label="设备标识" aria-describedby="basic-addon2">
+            </div>
+
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >设备类型</span>
+              </div>
+              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >设备品牌&nbsp&nbsp</span>
+              </div>
+              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >购买时间</span>
+              </div>
+              <input type="text" class="form-control timepicker" placeholder="选择时间">
+            </div>
+
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >一级部门</span>
+              </div>
+              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >二级部门</span>
+              </div>
+              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >使用人</span>
+              </div>
+              <input type="text" class="form-control" placeholder="输入使用人" aria-label="使用人" aria-describedby="basic-addon2">
+            </div>
+
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >所属网络</span>
+              </div>
+              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3 col-md-3">
+              <div class="input-group-append ">
+                <span class="input-group-text" >设备标识</span>
+              </div>
+              <input type="text" class="form-control" placeholder="输入MCC地址" aria-label="MCC地址" aria-describedby="basic-addon2">
+            </div>
+
+          </div>
+        </div>
+        <!-- 表格-->
+        <div class="row">
+          <div class="col-md-12 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <button type="submit" class="btn btn-primary mr-2">新增设备</button>
+                  <!-- 排序下拉框-->
+                  <div class="input-group-prepend col-md-7">
+                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">排序方式</button>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 47px, 0px);">
+                      <a class="dropdown-item" href="#">购置时间升序</a>
+                      <a class="dropdown-item" href="#">购置时间降序</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table id="recent-purchases-listing" class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th></th>
+                      <th style="width: 10% ">设备标识</th>
+                      <th>设备类型</th>
+                      <th>设备品牌</th>
+                      <th>设备型号</th>
+                      <th>购置时间</th>
+                      <th>一级部门</th>
+                      <th>二级部门</th>
+                      <th>物理位置</th>
+                      <th>使用人</th>
+                      <th>所属网络</th>
+                      <th>mac地址</th>
+                      <th>最后更新时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class ="tr_sub">
+                      <td><input type="checkbox"/></td>
+                      <td>Jeremy Ortega</td>
+                      <td>Levelled up</td>
+                      <td>Catalinaborough</td>
+                      <td>$790</td>
+                      <td>06 Jan 2018</td>
+                      <td>$2274253</td>
+                      <td>$2274253</td>
+                      <td>$2274253</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    <tr class ="tr_sub">
+                      <td><input type="checkbox"/></td>
+                      <td>Alvin Fisher</td>
+                      <td>Ui design completed</td>
+                      <td>East Mayra</td>
+                      <td>$23230</td>
+                      <td>18 Jul 2018</td>
+                      <td>$83127</td>
+                      <td>$83127</td>
+                      <td>$83127</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Emily Cunningham</td>
+                      <td>support</td>
+                      <td>Makennaton</td>
+                      <td>$939</td>
+                      <td>16 Jul 2018</td>
+                      <td>$29177</td>
+                      <td>$29177</td>
+                      <td>$29177</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Minnie Farmer</td>
+                      <td>support</td>
+                      <td>Agustinaborough</td>
+                      <td>$30</td>
+                      <td>30 Apr 2018</td>
+                      <td>$44617</td>
+                      <td>$44617</td>
+                      <td>$44617</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Betty Hunt</td>
+                      <td>Ui design not completed</td>
+                      <td>Lake Sandrafort</td>
+                      <td>$571</td>
+                      <td>25 Jun 2018</td>
+                      <td>$78952</td>
+                      <td>$78952</td>
+                      <td>$78952</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Myrtie Lambert</td>
+                      <td>Ui design completed</td>
+                      <td>Cassinbury</td>
+                      <td>$36</td>
+                      <td>05 Nov 2018</td>
+                      <td>$36422</td>
+                      <td>$36422</td>
+                      <td>$36422</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Jacob Kennedy</td>
+                      <td>New project</td>
+                      <td>Cletaborough</td>
+                      <td>$314</td>
+                      <td>12 Jul 2018</td>
+                      <td>$34167</td>
+                      <td>$34167</td>
+                      <td>$34167</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"/></td>
+                      <td>Ernest Wade</td>
+                      <td>Levelled up</td>
+                      <td>West Fidelmouth</td>
+                      <td>$484</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>08 Sep 2018</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                      <td>$50862</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 公共底部引用 -->
+      <footer class="footer"/>
+  </div>
+</div>
+</div>
+</body>
+<!-- 引入js -->
+<script src="/vendors/base/vendor.bundle.base.js"></script>
+<script src="/vendors/chart.js/Chart.min.js"></script>
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/data-table.js"></script>
+<script src="/js/jquery.dataTables.js"></script>
+<script src="/js/dataTables.bootstrap4.js"></script>
+<script src="/js/olanguage.js"></script>
+<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<!-- 自定义jS -->
+<script>
+  /*初始化*/
+  $(document).ready(function(){
+    /*导入头部和尾部*/
+    $(".sidebar").load("/pages/commons/sidebar.html");
+    $(".header").load("/pages/commons/header.html");
+    $(".footer").load("/pages/commons/footer.html");
+
+    /* 日期选择插件*/
+    $(".timepicker").datetimepicker({
+      bootcssVer:3, //bootstrap 版本
+      format: 'yyyy-mm-dd',
+      language:'zh-CN',
+      minView: 2,
+      autoclose: true
+    });
+  });
+
+  /*表格点击事件*/
+  $(".tr_sub").click(function () {
+    $(".tr_sub").css("backgroundColor","");
+    $(this).css("backgroundColor","darkgray");
+    $(".recent-purchases-listing").find(":checkbox").attr("checked",false);
+    $(this).find(":checkbox").attr("checked", true);
+  })
+
+  /*更多搜索*/
+  function detailSearch() {
+    $("#detailSearch").slideToggle();
+  }
+</script>
+</html>
+
