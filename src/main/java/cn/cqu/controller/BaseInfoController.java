@@ -2,13 +2,11 @@ package cn.cqu.controller;
 
 import cn.cqu.pojo.DeviceType;
 import cn.cqu.service.BaseInfoService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,10 +38,32 @@ public class BaseInfoController {
      return "/deviceBrands";
     }
 
-    @PostMapping("/type/add")
+    @PostMapping("/type")
     @ResponseBody
     public int addtDeviceType(DeviceType deviceType){
         return baseInfoService.addtDeviceType(deviceType);
     }
 
+
+    /**
+     * 删除设备类型
+     * @param typeId
+     * @return
+     */
+    @DeleteMapping("/type/{typeId}")
+    @ResponseBody
+    public int delteDeviceTypByid(@PathVariable("typeId") String typeId){
+        return baseInfoService.deleteDeviceTypeById(typeId);
+    }
+
+    /**
+     * 修改类型
+     * @param deviceType
+     * @return
+     */
+    @PutMapping("/type")
+    @ResponseBody
+    public int updateDeviceType(DeviceType deviceType){
+        return baseInfoService.updateDeviceType(deviceType);
+    }
 }

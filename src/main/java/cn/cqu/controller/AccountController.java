@@ -32,7 +32,7 @@ public class AccountController {
      * @param map
      * @return
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public String listAccounts(ModelMap map){
        List<AccountDTO> accountList = accountService.listAccount();
         map.put("accountDTOList", accountList);
@@ -44,7 +44,7 @@ public class AccountController {
      * @param account
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("/")
     @ResponseBody
     public int addAccount(Account account){
         return accountService.addAccount(account);
@@ -56,7 +56,7 @@ public class AccountController {
      * @param uuid
      * @return
      */
-    @DeleteMapping("/delete/{uuid}")
+    @DeleteMapping("/{uuid}")
     @ResponseBody
     public int deleteAccount(@PathVariable("uuid")String uuid){
         return accountService.deleteAccountById(uuid);
@@ -68,7 +68,7 @@ public class AccountController {
      * @param password
      * @return
      */
-    @PutMapping("/update/password")
+    @PutMapping("/password")
     @ResponseBody
     public int updatePassword(String uuid, String password){
         return accountService.updatePasswordByid(uuid,password);
@@ -80,7 +80,7 @@ public class AccountController {
      * @param status
      * @return
      */
-    @PutMapping("/update/status")
+    @PutMapping("/status")
     @ResponseBody
     public int updateStatus(String uuid,int status){
         return accountService.updateStatusByid(uuid,status);

@@ -201,7 +201,7 @@
             status = 0;
           }
           $.ajax({
-            url: "/account/update/status",
+            url: "/account/status",
             type: "PUT",
             data:{
               "uuid": uuid,
@@ -254,6 +254,7 @@
         });
         initSwitch();
         initTr_onclick();
+        selectedObj = null;
       }
     });
   }
@@ -268,7 +269,7 @@
         toastr.warning("两次输入密码不一致!")
       }else{  //如果一致则发送ajax请求
         $.ajax({
-          url: "/account/add",
+          url: "/account",
           data: {
             userId: $("#userId_add").val(),
             password: $("#password_add").val(),
@@ -296,7 +297,7 @@
       if(selectedObj){
         var uuid = $(selectedObj).children("#uuId").attr("value");
         $.ajax({
-          url: "/account/delete/"+uuid,
+          url: "/account/"+uuid,
           type: "DELETE",
           dataType: "json",
           success: function(data) {
@@ -333,7 +334,7 @@
         toastr.warning("两次输入密码不一致!")
       }else{
         $.ajax({
-          url: "/account/update/password",
+          url: "/account/password",
           type: "PUT",
           data:{
             "uuid": uuid,

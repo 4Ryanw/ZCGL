@@ -30,6 +30,37 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public int addtDeviceType(DeviceType deviceType) {
-        return baseInfoDao.insertDeviceType(deviceType);
+        if(null == baseInfoDao.getDeviceTypeByName(deviceType.getType())){//先查询是否有同名类型
+            return baseInfoDao.insertDeviceType(deviceType);
+        }else {
+            return -1;
+        }
+    }
+
+    /**
+     * 删除设备类型
+     *
+     * @param typeId
+     * @return
+     */
+    @Override
+    public int deleteDeviceTypeById(String typeId) {
+        return baseInfoDao.deleteDeviceTypeById(typeId);
+    }
+
+    /**
+     * 更新设备类型
+     *
+     * @param deviceType
+     * @return
+     */
+    @Override
+    public int updateDeviceType(DeviceType deviceType) {
+        if(null == baseInfoDao.getDeviceTypeByName(deviceType.getType())){//先查询是否有同名类型
+            return baseInfoDao.updateDevicType(deviceType);
+        }else {
+            return -1;
+        }
+
     }
 }

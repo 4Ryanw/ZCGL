@@ -26,4 +26,18 @@ public interface BaseInfoService {
      */
     int addtDeviceType(DeviceType deviceType);
 
+    /**
+     * 删除设备类型
+     * @param typeId
+     * @return
+     */
+    int deleteDeviceTypeById(String typeId);
+
+    /**
+     * 更新设备类型
+     * @param deviceType
+     * @return
+     */
+    int updateDeviceType(DeviceType deviceType);
+
 }

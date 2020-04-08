@@ -27,7 +27,7 @@
                   <div class="col-md-8"></div>
                   <div class="col-md-4">
                   <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal">新增设备类型</button>
-                  <button type="button" class="btn btn-outline-success btn-fw mr-2" data-toggle="modal" data-target="#editModal">编辑</button>
+                  <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
                   <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
                   </div>
                 </div>
@@ -42,8 +42,8 @@
                     </thead>
                     <tbody>
                     <tr class ="tr_sub" th:each="type : ${typeList}">
-                      <td><input type="checkbox"/></td>
-                      <td th:text="${type.type}"></td>
+                      <td id="uuId" th:value="${type.typeId}"><input type="checkbox"/></td>
+                      <td id="typeName" th:text="${type.type}"></td>
                     </tr>
                     </tbody>
                   </table>
@@ -71,11 +71,11 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">关闭
               </button>
-              <button type="button" class="btn btn-danger">
+              <button type="button" class="btn btn-danger" onclick="deleteInfo()">
                 确定
               </button>
             </div>
-          </div><!-- /.modal-content -->
+        </div><!-- /.modal-content -->
         </div><!-- /.modal -->
   </div>
 
@@ -89,8 +89,8 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="devType">设备类型名</label>
-                <input id="devType" type="text" class="form-control" />
+                <label for="typeName_edit">设备类型名</label>
+                <input id="typeName_edit" type="text" class="form-control" />
               </div>
             </div>
             <div class="modal-footer">
@@ -168,13 +168,14 @@
           searching: true, paging: true, info: true
         });
         initTr_onclick();
+        selectedObj = null;
       }
     });
   }
   //新增设备类型
   function addInfo(){
         $.ajax({
-          url: "/baseInfos/type/add",
+          url: "/baseInfos/type",
           data: {
             type: $("#deviceType_name").val(),
           },
@@ -186,11 +187,77 @@
               cleanInfo();
               inittable();
             }
-            else if(data == 0)
-              toastr.warning('系统错误');
+            else if(data == -1){
+                toastr.warning('已经存在同名类型');
+            } else{
+                toastr.error('服务器异常')
+            }
           }
         });
   }
+  //删除设备类型
+  function deleteInfo(){
+    if(selectedObj){
+      var uuid = $(selectedObj).children("#uuId").attr("value");
+      $.ajax({
+        url: "/baseInfos/type/"+uuid,
+        type: "DELETE",
+        dataType: "json",
+        success: function(data) {
+          if(data == 1){
+            toastr.success('删除成功');
+            cleanInfo();
+            inittable();
+          }else{
+            toastr.warning('系统错误');
+          }
+        }
+      });
+    }else{
+      toastr.warning("请选择一条数据")
+      $('#deleteModal').modal('hide');
+    }
+  }
+
+  //打开编辑框
+  function openEdit(){
+      debugger;
+      if(selectedObj){
+          var typeName = $(selectedObj).find("#typeName")[0].innerText;
+          $("#typeName_edit").val(typeName);
+          $('#editModal').modal('show');
+      }else{
+          toastr.warning("请选择一条数据")
+      }
+  };
+    //编辑信息
+  function editInfo(){
+      var uuid = $(selectedObj).children("#uuId").attr("value");
+      var typeName = $("#typeName_edit").val();
+              $.ajax({
+                  url: "/baseInfos/type",
+                  type: "PUT",
+                  data:{
+                      "typeId": uuid,
+                      "type":typeName
+                  },
+                  dataType: "json",
+                  success: function(data) {
+                      if(data==1){
+                          toastr.success("修改成功");
+                          cleanInfo();
+                          inittable();
+                          $('.modal').modal('hide');
+                      }
+                      else if(data == -1){
+                          toastr.warning("已存在同名类型");
+                      }else{
+                          toastr.error("服务器异常");
+                      }
+                  }
+              });
+  };
+
   /*初始化*/
   $(document).ready(function(){
     inittable();
