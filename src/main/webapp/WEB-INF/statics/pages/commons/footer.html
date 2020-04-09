@@ -20,10 +20,12 @@
   <script src="/js/toastr.min.js"></script>
   <script src="/js/bootstrap-switch.min.js"></script>
   <script>
-    $(document).ready(function(){
+    $(document).ready(function(){ //页面加载完成后执行的js
       //设置提示信息显示位置 ,toast-bottom-right表示在右下角
       toastr.options.positionClass = 'toast-bottom-right';
     });
+
+    //侧边导航条缩放功能
     var body = $('body');
     (function($) {$('[data-toggle="minimize"]').on("click", function() {
       body.toggleClass('sidebar-icon-only');
@@ -41,7 +43,7 @@
       })
     }
 
-    //初始化表格 加载数据
+    //初始化表格 ，加载数据并绑定表格点击事件
     function inittable(url){
       $('.modal').modal('hide');
       $.ajax({

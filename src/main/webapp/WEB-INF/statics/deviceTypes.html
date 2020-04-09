@@ -18,22 +18,23 @@
       <p class="mytitle">设备类型</p>
       <!--内容-->
       <div class="content-wrapper">
+        <!--操作按钮组-->
+        <div class="row" style="margin-bottom: 1rem">
+          <div class="col-md-8"></div>
+          <div class="col-md-4">
+            <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal">新增设备类型</button>
+            <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
+            <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
+          </div>
+        </div>
         <!-- 表格-->
         <div class="row">
           <div class="col-md-12 stretch-card">
             <div class="card">
               <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8"></div>
-                  <div class="col-md-4">
-                  <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal">新增设备类型</button>
-                  <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
-                  <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
-                  </div>
-                </div>
                 <!--表格-->
                 <div class="table-responsive">
-                  <table id="device-type-listing" class="table table-hover table-refresh" th:fragment="table-refresh">
+                  <table id="table-listing" class="table table-hover table-refresh" th:fragment="table-refresh">
                     <thead>
                     <tr>
                       <th></th>
@@ -106,7 +107,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" >新增设备</h4>
+              <h4 class="modal-title" >新增设备类型</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">

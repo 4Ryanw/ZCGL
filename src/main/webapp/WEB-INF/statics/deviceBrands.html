@@ -18,19 +18,20 @@
       <p class="mytitle">设备品牌</p>
       <!--内容-->
       <div class="content-wrapper">
+        <!--操作按钮组-->
+        <div class="row" style="margin-bottom: 1rem">
+          <div class="col-md-8"></div>
+          <div class="col-md-4">
+            <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal">新增设备品牌</button>
+            <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
+            <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
+          </div>
+        </div>
         <!-- 表格-->
         <div class="row">
           <div class="col-md-12 stretch-card">
             <div class="card">
               <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8"></div>
-                  <div class="col-md-4">
-                    <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal">新增设备品牌</button>
-                    <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
-                    <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
-                  </div>
-                </div>
                 <!--表格-->
                 <div class="table-responsive">
                   <table id="table-listing" class="table table-hover table-refresh" th:fragment="table-refresh">
