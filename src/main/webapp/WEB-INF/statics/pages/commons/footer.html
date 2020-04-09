@@ -3,4 +3,72 @@
     <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &copy; 2020.MingzhuLiu All rights reserved. <a href="http://www.cqu.edu.cn/" target="_blank" title="">xx公司</a> </span>
     <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"></span>
   </div>
+<div th:fragment="common_js">
+  <!-- 引入js -->
+  <script src="/vendors/base/vendor.bundle.base.js"></script>
+  <script src="/vendors/chart.js/Chart.min.js"></script>
+  <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/hoverable-collapse.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/data-table.js"></script>
+  <script src="/js/jquery.dataTables.js"></script>
+  <script src="/js/dataTables.bootstrap4.js"></script>
+  <script src="/js/olanguage.js"></script>
+  <script src="/js/toastr.min.js"></script>
+  <script src="/js/bootstrap-switch.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      //设置提示信息显示位置 ,toast-bottom-right表示在右下角
+      toastr.options.positionClass = 'toast-bottom-right';
+    });
+    var body = $('body');
+    (function($) {$('[data-toggle="minimize"]').on("click", function() {
+      body.toggleClass('sidebar-icon-only');
+    });
+    })(jQuery);
+
+    //绑定表格点击事件
+    function initTr_onclick(){
+      $(".tr_sub").click(function () {
+        selectedObj = this;
+        $(".tr_sub").removeClass("active");
+        $(this).addClass("active");
+        $(".tr_sub").find(":checkbox").prop("checked",false);
+        $(this).find(":checkbox").prop("checked", true);
+      })
+    }
+
+    //初始化表格 加载数据
+    function inittable(url){
+      $('.modal').modal('hide');
+      $.ajax({
+        url:url,
+        type:"GET",
+        async:false,
+        success:function (data) {
+          $(".table-refresh").html(data);
+          $("#table-listing").dataTable().fnDestroy();
+          $('#table-listing').DataTable({
+            "aLengthMenu": [
+              [5, 10, 15, -1],
+              [5, 10, 15, "全部"]
+            ],
+            "iDisplayLength": 10,
+            "language": {
+              search: ""
+            },
+            "pagingType": "full_numbers",
+            searching: true, paging: true, info: true
+          });
+          initTr_onclick();
+          selectedObj = null;
+        }
+      });
+    }
+  </script>
+
+</div>
 </html>

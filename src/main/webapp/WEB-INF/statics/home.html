@@ -265,33 +265,37 @@
       <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
     </div>
   </div>
-  <!-- 自定义jS -->
-  <script>
-     /*初始化*/
-    $(document).ready(function(){
-      /* 日期选择插件*/
-      $(".timepicker").datetimepicker({
-        bootcssVer:3, //bootstrap 版本
-        format: 'yyyy-mm-dd',
-        language:'zh-CN',
-        minView: 2,
-        autoclose: true
-      });
-    });
-
-    /*表格点击事件*/
-    $(".tr_sub").click(function () {
-      $(".tr_sub").css("backgroundColor","");
-      $(this).css("backgroundColor","darkgray");
-      $(".recent-purchases-listing").find(":checkbox").attr("checked",false);
-      $(this).find(":checkbox").attr("checked", true);
-    })
-
-     /*更多搜索*/
-     function detailSearch() {
-       $("#detailSearch").slideToggle();
-     }
-  </script>
 </body>
+<!-- 公共js引用 -->
+<div th:replace="/pages/commons/footer::common_js"></div>
+<!--单独js引用-->
+<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<!-- 自定义jS -->
+<script>
+  /*初始化*/
+  $(document).ready(function(){
+    /* 日期选择插件*/
+    $(".timepicker").datetimepicker({
+      bootcssVer:3, //bootstrap 版本
+      format: 'yyyy-mm-dd',
+      language:'zh-CN',
+      minView: 2,
+      autoclose: true
+    });
+  });
+  /*表格点击事件*/
+  $(".tr_sub").click(function () {
+    $(".tr_sub").css("backgroundColor","");
+    $(this).css("backgroundColor","darkgray");
+    $(".recent-purchases-listing").find(":checkbox").attr("checked",false);
+    $(this).find(":checkbox").attr("checked", true);
+  })
+
+  /*更多搜索*/
+  function detailSearch() {
+    $("#detailSearch").slideToggle();
+  }
+</script>
 </html>
 

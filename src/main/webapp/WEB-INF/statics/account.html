@@ -38,6 +38,9 @@
                 <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0">
                   <a><i class="mdi mdi-magnify"></i> 搜索</a>
                 </button>
+                <button type="button" class="btn btn-outline-primary btn-fw mr-2"data-toggle="modal" data-target="#addModal">新增人员</button>
+                <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
+                <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
               </div>
             </div>
           </div>
@@ -50,14 +53,11 @@
                 <div class="row">
                   <div class="col-md-8"></div>
                   <div class="col-md-4">
-                  <button type="button" class="btn btn-outline-primary btn-fw mr-2"data-toggle="modal" data-target="#addModal">新增人员</button>
-                  <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
-                  <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
                   </div>
                 </div>
                 <!--表格-->
                 <div class="table-responsive"  >
-                  <table id="account-listing" class="table table-hover table-refresh"  th:fragment="table-refresh">
+                  <table id="table-listing" class="table table-hover table-refresh"  th:fragment="table-refresh">
                     <thead>
                     <tr>
                       <th></th>
@@ -175,11 +175,12 @@
   </div>
 </div>
 </body>
-
+<!-- 公共js引用 -->
+<div th:replace="/pages/commons/footer::common_js"></div>
 <!-- 自定义jS -->
 <script>
-  //被选中目标
-  var selectedObj = null;
+  var selectedObj = null;//被选中目标
+  var table_init_url = "/account/list";//表格加载请求地址
   //初始化开关的函数
   function initSwitch(){
     var switch_list = $('.account_status_switch');
@@ -220,44 +221,6 @@
       })
     })
   }
-  //绑定表格点击事件
-  function initTr_onclick(){
-    $(".tr_sub").click(function () {
-      selectedObj = this;
-      $(".tr_sub").removeClass("active");
-      $(this).addClass("active");
-       $(".tr_sub").find(":checkbox").prop("checked",false);
-       $(this).find(":checkbox").prop("checked", true);
-    })
-  }
-  //初始化表格 加载数据
-  function inittable(){
-    $('.modal').modal('hide');
-    $.ajax({
-      url:"/account/list",
-      type:"GET",
-      async:false,
-      success:function (data) {
-        $(".table-refresh").html(data);
-        $("#account-listing").dataTable().fnDestroy();
-        $('#account-listing').DataTable({
-          "aLengthMenu": [
-            [5, 10, 15, -1],
-            [5, 10, 15, "全部"]
-          ],
-          "iDisplayLength": 10,
-          "language": {
-            search: ""
-          },
-          "pagingType": "full_numbers",
-          searching: true, paging: true, info: true
-        });
-        initSwitch();
-        initTr_onclick();
-        selectedObj = null;
-      }
-    });
-  }
   //增加账户
   function addInfo(){
     var pwd1 = $("#password_add").val();
@@ -283,7 +246,8 @@
             if(data == 1){
               toastr.success('添加成功');
               cleanInfo();
-              inittable();
+              inittable(table_init_url);
+              initSwitch();
             }
             else if(data == 0)
               toastr.warning('账号已被使用');
@@ -303,7 +267,8 @@
           success: function(data) {
             toastr.success('删除成功');
             cleanInfo();
-            inittable();
+            inittable(table_init_url);
+            initSwitch();
           }
         });
       }else{
@@ -355,9 +320,8 @@
   };
   /*初始化*/
   $(document).ready(function(){
-    inittable();
-    //设置提示信息显示位置 ,toast-bottom-right表示在右下角
-   // toastr.options.positionClass = 'toast-bottom-right';
+    inittable(table_init_url);
+    initSwitch();
   });
 </script>
 </html>

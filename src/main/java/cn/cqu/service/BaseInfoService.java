@@ -2,6 +2,7 @@ package cn.cqu.service;
 
 
 import cn.cqu.dao.BaseInfoDao;
+import cn.cqu.pojo.DeviceBrand;
 import cn.cqu.pojo.DeviceType;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,5 +40,34 @@ public interface BaseInfoService {
      * @return
      */
     int updateDeviceType(DeviceType deviceType);
+
+
+    /**
+     * 获取所有设备品牌
+     * @return
+     */
+    List<DeviceBrand> listDeviceBrand();
+
+
+    /**
+     * 添加设备品牌
+     * @param deviceBrand
+     * @return
+     */
+    int addtDeviceBrand(DeviceBrand deviceBrand);
+
+    /**
+     * 删除设备品牌
+     * @param brandId
+     * @return
+     */
+    int deleteDeviceBrandById(String brandId);
+
+    /**
+     * 更新设备品牌
+     * @param deviceBrand
+     * @return
+     */
+    int updateDeviceBrand(DeviceBrand deviceBrand);
 
 }

@@ -130,48 +130,12 @@
   </div>
 </div>
 </body>
+<!-- 公共js引用 -->
+<div th:replace="/pages/commons/footer::common_js"></div>
 <!-- 自定义jS -->
 <script>
-  //被选中目标
-  var selectedObj = null;
-  //绑定表格点击事件
-  function initTr_onclick(){
-    $(".tr_sub").click(function () {
-      selectedObj = this;
-      $(".tr_sub").removeClass("active");
-      $(this).addClass("active");
-      $(".tr_sub").find(":checkbox").prop("checked",false);
-      $(this).find(":checkbox").prop("checked", true);
-    })
-  }
-  //初始化表格 加载数据
-  function inittable(){
-    debugger;
-    $('.modal').modal('hide');
-    $.ajax({
-      url:"/baseInfos/type/list",
-      type:"GET",
-      async:false,
-      success:function (data) {
-        $(".table-refresh").html(data);
-        $("#device-type-listing").dataTable().fnDestroy();
-        $('#device-type-listing').DataTable({
-          "aLengthMenu": [
-            [5, 10, 15, -1],
-            [5, 10, 15, "全部"]
-          ],
-          "iDisplayLength": 10,
-          "language": {
-            search: ""
-          },
-          "pagingType": "full_numbers",
-          searching: true, paging: true, info: true
-        });
-        initTr_onclick();
-        selectedObj = null;
-      }
-    });
-  }
+  var selectedObj = null;//被选中目标
+  var table_init_url = "/baseInfos/type/list";//表格加载请求地址
   //新增设备类型
   function addInfo(){
         $.ajax({
@@ -185,7 +149,7 @@
             if(data == 1){
               toastr.success('添加成功');
               cleanInfo();
-              inittable();
+              inittable(table_init_url);
             }
             else if(data == -1){
                 toastr.warning('已经存在同名类型');
@@ -207,7 +171,7 @@
           if(data == 1){
             toastr.success('删除成功');
             cleanInfo();
-            inittable();
+            inittable(table_init_url);
           }else{
             toastr.warning('系统错误');
           }
@@ -246,7 +210,7 @@
                       if(data==1){
                           toastr.success("修改成功");
                           cleanInfo();
-                          inittable();
+                          inittable(table_init_url);
                           $('.modal').modal('hide');
                       }
                       else if(data == -1){
@@ -260,7 +224,7 @@
 
   /*初始化*/
   $(document).ready(function(){
-    inittable();
+    inittable(table_init_url);
   });
 </script>
 </html>

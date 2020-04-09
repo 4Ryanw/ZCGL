@@ -44,7 +44,7 @@ public class AccountController {
      * @param account
      * @return
      */
-    @PostMapping("/")
+    @PostMapping
     @ResponseBody
     public int addAccount(Account account){
         return accountService.addAccount(account);
