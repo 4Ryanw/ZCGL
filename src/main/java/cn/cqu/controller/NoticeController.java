@@ -8,9 +8,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
-    @RequestMapping("/list")
-    public String manageInfo(){
-     return "/noticeList";
-    }
 
 }
