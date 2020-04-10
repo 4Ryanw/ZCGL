@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cqu.dao.OrganizationDao">
+    <select id="listOrganizationByExample" parameterType="Organization" resultType="Organization">
+        SELECT
+        *
+        FROM
+        t_organiztion
+        where
+        <if test ="orgId !=null">
+            org_id = #{orgId} and
+        </if>
+        <if test ="orgName !=null">
+            org_name = #{orgName} and
+        </if>
+        <if test ="orgLevel !=0">
+            org_level = #{orgLevel} and
+        </if>
+        <if test ="orgParentId !=null">
+            org_parent_id = #{orgParentId} and
+        </if>
+    </select>
+</mapper>
