@@ -70,6 +70,35 @@
         }
       });
     }
+
+    //按条件查询
+    function searchByexample(url,example){
+      $('.modal').modal('hide');
+      $.ajax({
+        url:url,
+        type:"POST",
+        async:false,
+        data:example,
+        success:function (data) {
+          $(".table-refresh").html(data);
+          $("#table-listing").dataTable().fnDestroy();
+          $('#table-listing').DataTable({
+            "aLengthMenu": [
+              [5, 10, 15, -1],
+              [5, 10, 15, "全部"]
+            ],
+            "iDisplayLength": 10,
+            "language": {
+              search: ""
+            },
+            "pagingType": "full_numbers",
+            searching: true, paging: true, info: true
+          });
+          initTr_onclick();
+          selectedObj = null;
+        }
+      });
+    }
   </script>
 
 </div>

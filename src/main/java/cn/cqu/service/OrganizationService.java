@@ -11,13 +11,29 @@ import java.util.List;
  */
 public interface OrganizationService {
 
+
     /**
-     * 按组织级别查询组织集合
-     * @param level
+     * 根据组织id查询
+     * @param orgId
      * @return
      */
-    List<Organization> listOrganizationByLevel(int level);
+    Organization  getOrganizationByid(String orgId);
 
+
+    /**
+     * 根据父级组织id查询
+     * @param parentId
+     * @return
+     */
+    List<Organization> listOrganizationByParentId(String parentId);
+
+
+    /**
+     * 根据条件动态查询
+     * @param example
+     * @return
+     */
+    List<Organization> listOrganizationByExample(Organization example);
 
 
     /**

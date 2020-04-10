@@ -136,15 +136,20 @@
 <!-- 自定义jS -->
 <script>
   var level = 1; //一级部门
+  var parent_id = 0; //固定上级组织为虚拟节点
   var selectedObj = null;//被选中目标
-  var table_init_url = "/organization/list/level/"+level;//表格加载请求地址
+  var table_init_url = "/organization/list";//表格加载请求地址
+  var example = {       //初始化查询参数
+          "orgLevel":level
+      }
   //新增部门
   function addInfo(){
     $.ajax({
       url: "/organization",
       data: {
         "orgName": $("#org_name").val(),
-        "orgLevel":level
+        "orgLevel":level,
+        "orgParentId":parent_id
       },
       type: "POST",
       dataType: "json",
@@ -152,7 +157,8 @@
         if(data == 1){
           toastr.success('添加成功');
           cleanInfo();
-          inittable(table_init_url);
+          //inittable(table_init_url);
+          searchByexample(table_init_url,example);
         }
         else if(data == -1){
           toastr.warning('已存在同名部门');
@@ -162,19 +168,19 @@
       }
     });
   }
-  //删除设备类型
+  //删除部门
   function deleteInfo(){
     if(selectedObj){
       var uuid = $(selectedObj).children("#uuId").attr("value");
       $.ajax({
-        url: "/organization"+uuid,
+        url: "/organization/"+uuid,
         type: "DELETE",
         dataType: "json",
         success: function(data) {
           if(data == 1){
             toastr.success('删除成功');
             cleanInfo();
-            inittable(table_init_url);
+              searchByexample(table_init_url,example);
           }else{
             toastr.warning('系统错误');
           }
@@ -205,14 +211,15 @@
       type: "PUT",
       data:{
         "orgId": uuid,
-        "orgName":orgName
+        "orgName":orgName,
+        "orgParentId":parent_id
       },
       dataType: "json",
       success: function(data) {
         if(data==1){
           toastr.success("修改成功");
           cleanInfo();
-          inittable(table_init_url);
+          searchByexample(table_init_url,example);
           $('.modal').modal('hide');
         }
         else if(data == -1){
@@ -224,9 +231,10 @@
     });
   };
 
+
   /*初始化*/
   $(document).ready(function(){
-    inittable(table_init_url);
+      searchByexample(table_init_url,example);
   });
 </script>
 </html>

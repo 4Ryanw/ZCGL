@@ -21,14 +21,15 @@ public class OrgController {
     private OrganizationService organizationService;
 
     /**
-     * 根据组织等级查询组织
+     * 根据条件动态查询组织，数据加载到表格
      */
-    @GetMapping("/list/level/{level}")
-    public String listOrganizationByLevel(@PathVariable("level") int level, ModelMap map){
-        List<Organization> list = organizationService.listOrganizationByLevel(level);
+    @PostMapping("/list")
+    public String listOrganizationByLevel(Organization example, ModelMap map){
+        List<Organization> list = organizationService.listOrganizationByExample(example);
+        int sublevel = example.getOrgLevel();
         map.put("dtoList",list);
         String pageName = null;
-        switch (level) {  //根据参数确定返回页面目标
+        switch (sublevel) {  //根据参数确定返回页面目标
             case  1: pageName= "friDepartments" ;break;
             case  2: pageName= "secDepartments" ;break;
             case  3: pageName= "macAddress" ;break;

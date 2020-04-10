@@ -14,11 +14,12 @@ import java.util.List;
 public interface OrganizationDao {
 
  /**
-  * 按等级查找组织
+  * 按id查找组织
   * @return
   */
- @Select("select * from t_organization where org_level = #{level}")
-  List<Organization> listOrganizationByLevel(int level);
+ @Select("select * from t_organization where org_id = #{id}")
+  Organization getOrganizationById(String id);
+
 
  /**
   * 根据传入条件动态查询组织
@@ -31,7 +32,7 @@ public interface OrganizationDao {
   * @param organization
   * @return
   */
- @Insert("insert into t_organization values(UUID(),#{orgLevel},#{orgParentId},#{orgName})")
+ @Insert("insert into t_organization values(UUID(),#{orgName},#{orgParentId},#{orgLevel})")
   int insertOrganization(Organization organization);
 
  /**

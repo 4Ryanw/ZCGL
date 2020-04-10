@@ -3,23 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cqu.dao.OrganizationDao">
+    <!-- where标签知道如何处理and ,or等连接词 -->
     <select id="listOrganizationByExample" parameterType="Organization" resultType="Organization">
         SELECT
         *
         FROM
-        t_organiztion
-        where
+        t_organization
+        <where>
         <if test ="orgId !=null">
-            org_id = #{orgId} and
+            org_id = #{orgId}
         </if>
         <if test ="orgName !=null">
-            org_name = #{orgName} and
+            AND org_name = #{orgName}
         </if>
         <if test ="orgLevel !=0">
-            org_level = #{orgLevel} and
+            AND org_level = #{orgLevel}
         </if>
         <if test ="orgParentId !=null">
-            org_parent_id = #{orgParentId} and
+            AND org_parent_id = #{orgParentId}
         </if>
+        </where>
     </select>
 </mapper>

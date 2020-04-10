@@ -17,16 +17,42 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     private OrganizationDao organizationDao;
 
+
     /**
-     * 按组织级别查询组织集合
+     * 根据组织id查询
      *
-     * @param level
+     * @param orgId
      * @return
      */
     @Override
-    public List<Organization> listOrganizationByLevel(int level) {
-        return organizationDao.listOrganizationByLevel(level);
+    public Organization getOrganizationByid(String orgId) {
+        return organizationDao.getOrganizationById(orgId);
     }
+
+    /**
+     * 根据父级组织id查询
+     *
+     * @param parentId
+     * @return
+     */
+    @Override
+    public List<Organization> listOrganizationByParentId(String parentId) {
+        Organization example = new Organization();
+        example.setOrgParentId(parentId);
+        return organizationDao.listOrganizationByExample(example);
+    }
+
+    /**
+     * 根据条件动态查询
+     *
+     * @param example
+     * @return
+     */
+    @Override
+    public List<Organization> listOrganizationByExample(Organization example) {
+        return organizationDao.listOrganizationByExample(example);
+    }
+
 
     /**
      * 根据id删除组织
@@ -50,14 +76,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         String orgName = organization.getOrgName();
         Organization example = new Organization();
         example.setOrgParentId(organization.getOrgParentId());
-        if(organization.getOrgLevel()>1){  //一级部门以下单位需要判断同父级部门内是否存在重名
             List<Organization> list =  organizationDao.listOrganizationByExample(example);
-            for (Organization org:list) {
+            for (Organization org:list) {   //判断同父级部门内是否存在重名
                 if (orgName.equals(org.getOrgName())){
                     return -1;
                 }
             }
-        }
             return organizationDao.updateOrganizationName(orgName,organization.getOrgId());
     }
 
@@ -68,14 +92,14 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public int insertOrganization(Organization organization) {
-        if(organization.getOrgLevel()>1){   //一级部门以下单位需要判断同父级部门内是否存在重名 ,第二种实现
-            Organization example = new Organization();
+            Organization example = new Organization();//判断同父级部门内是否存在重名 ,第二种实现
             example.setOrgParentId(organization.getOrgParentId());
             example.setOrgName(organization.getOrgName());
             List<Organization> cheakList = organizationDao.listOrganizationByExample(example);
             if(cheakList.size()>0)
                 return -1;
-        }
-            return insertOrganization(organization);
+            else
+                return organizationDao.insertOrganization(organization);
+
     }
 }
