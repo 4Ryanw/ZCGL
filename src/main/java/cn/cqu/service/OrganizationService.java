@@ -35,6 +35,14 @@ public interface OrganizationService {
      */
     List<Organization> listOrganizationByExample(Organization example);
 
+    /**
+     * 查询物理位置
+     * @param fristid
+     * @param secondId
+     * @return
+     */
+    List<Organization> listMacaddressByRootID(String fristid,String secondId);
+
 
     /**
      * 根据id删除组织

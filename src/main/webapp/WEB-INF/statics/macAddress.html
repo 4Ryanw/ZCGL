@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="cn" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
-
   <title>台账管理系统</title>
 </head>
 <body>
@@ -26,42 +24,34 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-8">
                     <!-- 一级部门级联下拉框-->
-                    <div class="input-group mb-3 col-md-10">
-                      <div class="input-group-append ">
+                    <div class="input-group mb-3 col-md-4">
+                      <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
                         <span class="input-group-text">一级部门</span>
                       </div>
-                      <select style="background:none;" class="custom-select" title="--请选择--" data-size="5">
-                        <option>综合服务中心</option>
-                        <option>其他虚拟机构</option>
-                        <option>企业领导</option>
-                        <option>安全监测部</option>
-                        <option>建设部门</option>
-                        <option>C</option>
-                      </select>
-                      <div class="input-group-append ">
-                        <span class="input-group-text">二级部门</span>
-                      </div>
-                      <select style="background:none;" class="custom-select" title="--请选择--" data-size="5">
-                        <option>xxx</option>
-                        <option>其他虚拟机构</option>
-                        <option>企业领导</option>
-                        <option>安全监测部</option>
-                        <option>建设部门</option>
-                        <option>C</option>
+                      <select id="parentOrg_1" style="background:none;" class="custom-select" title="--请选择--" data-size="5" onchange="onchangeSelect_1()">
+                        <option value="all">全部</option>
+                        <option th:each="org : ${parentOrg}" th:text="${org.orgName}" th:value="${org.orgId}"></option>
                       </select>
                     </div>
-                  </div>
+                    <!-- 二级部门级联下拉框-->
+                    <div class="input-group mb-3 col-md-4">
+                      <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
+                        <span class="input-group-text">二级部门</span>
+                      </div>
+                      <select id="parentOrg_2" style="background:none;" class="custom-select" title="--请选择--" data-size="5" onchange="onchangeSelect_2()">
+                        <option value="all">全部</option>
+                      </select>
+                    </div>
                   <div class="col-md-4">
-                    <button type="button" class="btn btn-outline-primary btn-fw mr-2">新增物理位置</button>
-                    <button type="button" class="btn btn-outline-success btn-fw mr-2" data-toggle="modal" data-target="#editModal">编辑</button>
+                    <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal">新增物理位置</button>
+                    <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
                     <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
                   </div>
                 </div>
                 <!--表格-->
                 <div class="table-responsive">
-                  <table id="recent-purchases-listing" class="table table-hover">
+                  <table id="table-listing" class="table table-hover table-refresh" th:fragment="table-refresh">
                     <thead>
                     <tr>
                       <th></th>
@@ -69,37 +59,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class ="tr_sub">
-                      <td><input type="checkbox"/></td>
-                      <td>Jeremy Ortega</td>
-                    </tr>
-                    <tr class ="tr_sub">
-                      <td><input type="checkbox"/></td>
-                      <td>Alvin Fisher</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox"/></td>
-                      <td>Emily Cunningham</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox"/></td>
-                      <td>Minnie Farmer</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox"/></td>
-                      <td>Betty Hunt</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox"/></td>
-                      <td>Myrtie Lambert</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox"/></td>
-                      <td>Jacob Kennedy</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox"/></td>
-                      <td>Ernest Wade</td>
+                    <tr class ="tr_sub" th:each="org : ${dtoList}">
+                      <td id="uuId" th:value="${org.orgId}"><input type="checkbox"/></td>
+                      <td id="orgName" th:text="${org.orgName}"></td>
+                      <input id="orgParentId" type="hidden" th:value="${org.orgParentId}" />
                     </tr>
                     </tbody>
                   </table>
@@ -127,13 +90,13 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">关闭
               </button>
-              <button type="button" class="btn btn-danger">
+              <button type="button" class="btn btn-danger" onclick="deleteInfo()">
                 确定
               </button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal -->
-  </div>
+      </div>
 
       <!--编辑模态框-->
       <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -145,13 +108,56 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="devType">物理位置</label>
-                <input id="devType" type="text" class="form-control" />
+                <label for="orgName_edit">物理位置</label>
+                <input id="orgName_edit" type="text" class="form-control" />
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" onclick="editInfo()">确定</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--新增模态框-->
+      <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" >新增物理位置</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <div class="input-group mb-3 col-md-8">
+                    <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
+                      <span class="input-group-text">一级部门</span>
+                    </div>
+                    <select id="parentOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" >
+                      <option th:each="org : ${parentOrg}" th:text="${org.orgName}" th:value="${org.orgId}"></option>
+                    </select>
+                  </div>
+                  <div class="input-group mb-3 col-md-8">
+                    <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
+                      <span class="input-group-text">二级部门</span>
+                    </div>
+                    <select id="parentOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" >
+                      <option th:each="org : ${parentOrg}" th:text="${org.orgName}" th:value="${org.orgId}"></option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="org_name" >部门名称</label>
+                  <input id="org_name" type="text" class="form-control" placeholder="请输入部门名称"/>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="addInfo()">确定</button>
+              <button type="button" class="btn btn-default " data-dismiss="modal" aria-hidden="true">取消</button>
             </div>
           </div>
         </div>
@@ -165,19 +171,140 @@
 <!-- 公共js引用 -->
 <div th:replace="/pages/commons/footer::common_js"></div>
 <!-- 自定义jS -->
+<!-- 自定义jS -->
 <script>
+    //定义参数变量
+  var example = {};//初始化example
+  var searchParam = {};
+  var selectedObj = null;//被选中目标
+  var table_init_url = "/organization/macAddress/list";//表格加载请求地址
+
+  //重置查询条件
+  function initexample() {
+      example = {
+          "orgId": null,
+          "orgName":null,
+          "orgParentId":null,
+          "orgLevel":3,  //物理位置
+      };
+      searchParam = {
+          "fristId":$("#parentOrg_1").val(),
+          "secondId":$("#parentOrg_2").val()
+      }
+  }
+  //新增部门
+  function addInfo(){
+      example.orgName = $("#org_name").val();
+      example.orgParentId = $("#parentOrg_add").val();
+    $.ajax({
+      url: "/organization",
+      data: example,
+      type: "POST",
+      dataType: "json",
+      success: function(data) {
+        if(data == 1){
+          toastr.success('添加成功');
+          cleanInfo();
+          initexample();
+          searchByexample(table_init_url,searchParam);
+        }
+        else if(data == -1){
+          toastr.warning('已存在同名部门');
+        } else{
+          toastr.error('服务器异常')
+        }
+      }
+    });
+  }
+  //删除部门
+  function deleteInfo(){
+    if(selectedObj){
+      var uuid = $(selectedObj).children("#uuId").attr("value");
+      $.ajax({
+        url: "/organization/"+uuid,
+        type: "DELETE",
+        dataType: "json",
+        success: function(data) {
+          if(data == 1){
+            toastr.success('删除成功');
+            cleanInfo();
+            initexample();
+            searchByexample(table_init_url,searchParam);
+          }else{
+            toastr.warning('系统错误');
+          }
+        }
+      });
+    }else{
+      toastr.warning("请选择一条数据")
+      $('#deleteModal').modal('hide');
+    }
+  }
+  //打开编辑框
+  function openEdit(){
+    if(selectedObj){
+      var orgName = $(selectedObj).find("#orgName")[0].innerText;
+      $("#orgName_edit").val(orgName);
+      $('#editModal').modal('show');
+    }else{
+      toastr.warning("请选择一条数据")
+    }
+  };
+  //编辑信息
+  function editInfo(){
+    example.orgId = $(selectedObj).children("#uuId").attr("value");
+    example.orgName = $("#orgName_edit").val();
+    $.ajax({
+      url: "/organization",
+      type: "PUT",
+      data:example,
+      dataType: "json",
+      success: function(data) {
+        initexample();
+        if(data==1){
+          toastr.success("修改成功");
+          cleanInfo();
+          searchByexample(table_init_url,searchParam);
+          $('.modal').modal('hide');
+        }
+        else if(data == -1){
+          toastr.warning("已存在同名部门");
+        }else{
+          toastr.error("服务器异常");
+        }
+      }
+    });
+  };
+  //下拉框选择
+  function onchangeSelect_1(){
+      initexample();
+      example.orgLevel = 2;
+      if($("#parentOrg_1").val()!= "all" ){
+          example.orgParentId = $("#parentOrg_1").val();
+      }
+      var html='<option value=\"all\">全部</option>';
+      jQuery("#parentOrg_2").html(html);
+      $.post('/organization/sub/list',example, function(result){
+          if(result.length>0){
+              var  optionHtml ='';
+              for(var i=0;i<result.length;i++){
+                  optionHtml+="<option value="+result[i].orgId+" >"+result[i].orgName+"</option>";
+              }
+              jQuery("#parentOrg_2").append(optionHtml);
+          }
+          onchangeSelect_2();
+      });
+  }
+
+  function onchangeSelect_2(){
+      initexample();
+      searchByexample(table_init_url,searchParam)
+  }
+
   /*初始化*/
   $(document).ready(function(){
+    onchangeSelect_1();
   });
-
-  /*表格点击事件*/
-  $(".tr_sub").click(function () {
-    $(".tr_sub").css("backgroundColor","");
-    $(this).css("backgroundColor","darkgray");
-    $(".recent-purchases-listing").find(":checkbox").attr("checked",false);
-    $(this).find(":checkbox").attr("checked", true);
-  })
-
 </script>
 </html>
 

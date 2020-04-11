@@ -72,13 +72,13 @@
     }
 
     //按条件查询
-    function searchByexample(url,example){
+    function searchByexample(url,param){
       $('.modal').modal('hide');
       $.ajax({
         url:url,
         type:"POST",
         async:false,
-        data:example,
+        data:param,
         success:function (data) {
           $(".table-refresh").html(data);
           $("#table-listing").dataTable().fnDestroy();

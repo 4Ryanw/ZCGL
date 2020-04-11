@@ -10,16 +10,16 @@
         FROM
         t_organization
         <where>
-        <if test ="orgId !=null">
+        <if test ="orgId !=null and orgId!=''">
             org_id = #{orgId}
         </if>
-        <if test ="orgName !=null">
+        <if test ="orgName !=null and orgName!=''">
             AND org_name = #{orgName}
         </if>
-        <if test ="orgLevel !=0">
+        <if test ="orgLevel !=0 and orgLevel!=''">
             AND org_level = #{orgLevel}
         </if>
-        <if test ="orgParentId !=null">
+        <if test ="orgParentId !=null and orgParentId!=''">
             AND org_parent_id = #{orgParentId}
         </if>
         </where>

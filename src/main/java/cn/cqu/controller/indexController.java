@@ -62,7 +62,12 @@ public class indexController {
     }
     //物理地址
     @GetMapping("/macAddress")
-    public void macAddress(){}
+    public void macAddress(ModelMap map){
+        Organization example = new Organization();
+        example.setOrgLevel(1);
+        List<Organization> organizationList = organizationService.listOrganizationByExample(example);
+        map.put("parentOrg",organizationList);
+    }
     //组织结构
     @GetMapping("/Organizations")
     public void Organizations(){}

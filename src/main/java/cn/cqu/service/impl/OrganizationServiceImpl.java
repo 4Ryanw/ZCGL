@@ -6,6 +6,7 @@ import cn.cqu.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,6 +52,38 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public List<Organization> listOrganizationByExample(Organization example) {
         return organizationDao.listOrganizationByExample(example);
+    }
+
+    /**
+     * 查询物理位置
+     * @param fristid
+     * @param secondId
+     * @return
+     */
+    @Override
+    public List<Organization> listMacaddressByRootID(String fristid,String secondId) {
+        //定义结果集
+        List<Organization> list = new ArrayList<>();
+        if(!secondId.equals("all")){ //如果二级部门id不是all,就用二级部门id查询
+            list = listOrganizationByParentId(secondId);
+        }else {//如果二级部门id是all,就用一级部门id查询
+            if(!fristid.equals("all")){
+                //查询该一级部门下的二级部门合集
+                List<Organization> listParent = listOrganizationByParentId(fristid);
+                //遍历二级部门合集取id
+                for (Organization o: listParent
+                ) {
+                    //取到各个二级部门的id按作parentid查物理位置
+                    list.addAll(listOrganizationByParentId(o.getOrgId()));
+                }
+            }else {
+                Organization example = new Organization();
+                example.setOrgLevel(3);
+                list = listOrganizationByExample(example);
+            }
+
+        }
+        return list;
     }
 
 

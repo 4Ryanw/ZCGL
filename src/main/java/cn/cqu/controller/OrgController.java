@@ -37,13 +37,34 @@ public class OrgController {
         return  pageName+"::table-refresh";
     }
 
+    /**
+     * 根据条件动态查询子级组织
+     */
+    @PostMapping("/sub/list")
+    @ResponseBody
+    public List listOrganization(Organization example){
+        List<Organization> list = organizationService.listOrganizationByExample(example);
+        return  list;
+    }
+
+    /**
+     * 根据一级部门和二级部门id查询物理位置
+     */
+    @PostMapping("/macAddress/list")
+    public String listMacaddress(String fristId,String secondId,ModelMap map){
+        List<Organization> list = organizationService.listMacaddressByRootID(fristId,secondId);
+        map.put("dtoList",list);
+        return  "macAddress::table-refresh";
+    }
+
+
 
     /**
      * 添加组织
      * @param organization
      * @return
      */
-    @PostMapping()
+    @PostMapping
     @ResponseBody
     public int addOrganization(Organization organization){
         return organizationService.insertOrganization(organization);
