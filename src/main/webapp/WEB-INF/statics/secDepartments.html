@@ -203,8 +203,11 @@
             toastr.success('删除成功');
             cleanInfo();
             searchByexample(table_init_url,example);
-          }else{
-            toastr.warning('系统错误');
+          }else if(data == -1){
+            toastr.warning('存在子节点');
+          }
+           else{
+            toastr.error('系统错误');
           }
         }
       });

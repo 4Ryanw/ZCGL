@@ -2,6 +2,7 @@ package cn.cqu.service;
 
 
 import cn.cqu.pojo.Organization;
+import cn.cqu.pojo.dto.OrganizationDTO;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -26,6 +27,12 @@ public interface OrganizationService {
      * @return
      */
     List<Organization> listOrganizationByParentId(String parentId);
+
+    /**
+     * 查询组织结构树
+     * @return
+     */
+    OrganizationDTO getOrgTree();
 
 
     /**

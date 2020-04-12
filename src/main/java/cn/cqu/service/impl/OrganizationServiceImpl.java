@@ -2,6 +2,7 @@ package cn.cqu.service.impl;
 
 import cn.cqu.dao.OrganizationDao;
 import cn.cqu.pojo.Organization;
+import cn.cqu.pojo.dto.OrganizationDTO;
 import cn.cqu.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,46 @@ public class OrganizationServiceImpl implements OrganizationService {
         example.setOrgParentId(parentId);
         return organizationDao.listOrganizationByExample(example);
     }
+
+    /**
+     * 查询组织结构树
+     * @return
+     */
+    @Override
+    public OrganizationDTO getOrgTree() {
+        Organization root = new Organization();
+        root.setOrgName("根节点");
+        root.setOrgId("0");
+        OrganizationDTO orgTree = listChildrenNode(root,null);
+        return orgTree;
+    }
+
+    /**
+     * 查询子节点并封装成DTO
+     * @param parentNode
+     * @return
+     */
+    private OrganizationDTO listChildrenNode(Organization parentNode,String parentName){
+
+        //先把Organization转化为DTO1
+        OrganizationDTO  organizationDTO= new OrganizationDTO(parentNode.getOrgName(),parentName);
+        //如果还有子节点,查询出来
+        List<Organization> childrenList = listOrganizationByParentId(parentNode.getOrgId());
+        OrganizationDTO d2  = null;
+        if(childrenList.size()>0){
+            for (Organization childrenNode:childrenList//再遍历递归调用自身
+            ) {
+                //System.out.println(organizationDTO.getName()+"循环");
+                 d2 =  listChildrenNode(childrenNode,parentNode.getOrgName());
+                if(d2!=null){
+                    //System.out.println(d2.getName()+"添加进"+organizationDTO.getName());
+                    organizationDTO.addChildrenNode(d2); //将子节点DTO2添加进父节点DTO1
+                }
+            }
+        }
+        //返回DTO1
+        return organizationDTO;
+    };
 
     /**
      * 根据条件动态查询
@@ -95,7 +136,12 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public int deleteOrganizationById(String id) {
-        return organizationDao.deleteOrganizationById(id);
+        //删除前先判断是否存在子节点
+        List<Organization> subList = listOrganizationByParentId(id);
+        if(subList.size()>0)
+            return -1;
+        else
+            return organizationDao.deleteOrganizationById(id);
     }
 
     /**

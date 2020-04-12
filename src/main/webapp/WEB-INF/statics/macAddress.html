@@ -44,7 +44,7 @@
                       </select>
                     </div>
                   <div class="col-md-4">
-                    <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal">新增物理位置</button>
+                    <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal" onclick="onchangeSelect_add()">新增物理位置</button>
                     <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
                     <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
                   </div>
@@ -135,7 +135,7 @@
                     <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
                       <span class="input-group-text">一级部门</span>
                     </div>
-                    <select id="parentOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" >
+                    <select id="fristOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" onchange="onchangeSelect_add()">
                       <option th:each="org : ${parentOrg}" th:text="${org.orgName}" th:value="${org.orgId}"></option>
                     </select>
                   </div>
@@ -143,8 +143,7 @@
                     <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
                       <span class="input-group-text">二级部门</span>
                     </div>
-                    <select id="parentOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" >
-                      <option th:each="org : ${parentOrg}" th:text="${org.orgName}" th:value="${org.orgId}"></option>
+                    <select id="secondOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" >
                     </select>
                   </div>
                 </div>
@@ -194,8 +193,9 @@
   }
   //新增部门
   function addInfo(){
+      initexample();
       example.orgName = $("#org_name").val();
-      example.orgParentId = $("#parentOrg_add").val();
+      example.orgParentId = $("#secondOrg_add").val();
     $.ajax({
       url: "/organization",
       data: example,
@@ -230,8 +230,10 @@
             cleanInfo();
             initexample();
             searchByexample(table_init_url,searchParam);
-          }else{
-            toastr.warning('系统错误');
+          }else if(data == -1){
+            toastr.warning('存在子节点');
+          } else{
+            toastr.error('系统错误');
           }
         }
       });
@@ -277,10 +279,12 @@
   };
   //下拉框选择
   function onchangeSelect_1(){
-      initexample();
+    var val = $("#parentOrg_1").val();
+    $("#fristOrg_add option[value="+val+"]").prop("selected", true);
+    initexample();
       example.orgLevel = 2;
-      if($("#parentOrg_1").val()!= "all" ){
-          example.orgParentId = $("#parentOrg_1").val();
+      if(val!= "all" ){
+          example.orgParentId = val;
       }
       var html='<option value=\"all\">全部</option>';
       jQuery("#parentOrg_2").html(html);
@@ -296,14 +300,41 @@
       });
   }
 
+
   function onchangeSelect_2(){
       initexample();
       searchByexample(table_init_url,searchParam)
   }
 
+    //绑定级联下拉框
+    function onchangeSelect_add() {
+      initexample();
+      example.orgLevel = 2;
+      if($("#fristOrg_add").val()!= "all" ){
+        example.orgParentId = $("#fristOrg_add").val();
+      }
+      $.post('/organization/sub/list',example, function(result){
+        if(result.length>0){
+          $("#secondOrg_add").attr("disabled",false);
+          var  optionHtml ='';
+          for(var i=0;i<result.length;i++){
+            optionHtml+="<option value="+result[i].orgId+" >"+result[i].orgName+"</option>";
+          }
+
+        }else {
+          optionHtml = "<option>暂无数据</option>"
+          $("#secondOrg_add").attr("disabled",true);
+        }
+        jQuery("#secondOrg_add").html(optionHtml);
+          var val = $('#parentOrg_2').val();
+          $('#secondOrg_add option[value='+val+']').prop('selected', true);
+      });
+
+    }
+
   /*初始化*/
   $(document).ready(function(){
-    onchangeSelect_1();
+    onchangeSelect_1();//加载表格
   });
 </script>
 </html>

@@ -1,6 +1,7 @@
 package cn.cqu.controller;
 
 import cn.cqu.pojo.Organization;
+import cn.cqu.pojo.dto.OrganizationDTO;
 import cn.cqu.service.OrganizationService;
 import org.apache.ibatis.annotations.Case;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,10 @@ public class OrgController {
         return organizationService.updateOrganizationName(organization);
     }
 
-
-
+    @GetMapping("/tree")
+    @ResponseBody
+    public OrganizationDTO getOrganizationTree(){
+        return organizationService.getOrgTree();
+    }
 
 }
