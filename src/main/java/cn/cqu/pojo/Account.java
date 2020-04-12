@@ -63,13 +63,6 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "uuid='" + uuid + '\'' +
-                ", userId='" + userId + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", userRole=" + userRole +
-                ", userStatus=" + userStatus +
-                '}';
+        return username;
     }
 }

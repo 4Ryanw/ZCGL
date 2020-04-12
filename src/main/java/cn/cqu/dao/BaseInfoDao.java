@@ -20,6 +20,14 @@ public interface BaseInfoDao {
     List<DeviceType> listDeviceType();
 
     /**
+     * 根据id查询设备类型
+     * @param typeId
+     * @return
+     */
+    @Select("select * from t_device_type where type_id = #{typeId}")
+    DeviceType getDeviceTypeById(String typeId);
+
+    /**
      * 根据类型名查找设备类型
      * @return
      */
@@ -51,17 +59,26 @@ public interface BaseInfoDao {
     int updateDevicType(DeviceType deviceType);
 
     /**
-     * 根据类型名查找设备品牌
+     * 根据品牌名查找设备品牌
      * @return
      */
     @Select("select * from t_device_brand where brand = #{brand}")
     DeviceBrand getDeviceBrandByName(String brand);
+
     /**
      * 查询所有设备品牌
      * @return
      */
     @Select("select * from t_device_brand")
     List<DeviceBrand> listDeviceBrand();
+
+    /**
+     * 根据id查询设备品牌
+     * @param brandId
+     * @return
+     */
+    @Select("select * from t_device_brand where brand_id = #{brandId}")
+    DeviceBrand getDeviceBrandById(String brandId);
 
     /**
      * 插入设备品牌
