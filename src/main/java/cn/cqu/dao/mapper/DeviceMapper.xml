@@ -16,4 +16,35 @@
         OR o.dep_sec = #{orgId}
         OR o.address = #{orgId}
     </select>
+
+    <select id="listDeviceDtoByExample" resultType="DeviceDTO">
+        SELECT
+        d.dev_id,d.dev_model,d.erp_code,d.last_Upate,d.purchase_time,
+        u.dev_status,u.domain_state,u.network,
+        r.cpu_info,r.hd_size,r.ip_address,r.mac_address,r.memory_Info,r.system_version,
+        b.brand,
+        t.type,
+        o1.org_name as depFri,
+        o2.org_name as depSec,
+        o3.org_name as address
+        FROM
+         t_device d
+        left join t_device_usage u on d.dev_id = u.dev_id
+        left join t_device_running r on d.dev_id = r.dev_id
+        left join t_device_brand b on d.brand_id = b.brand_id
+        left join t_device_type t on d.type_id = t.type_id
+        left join t_organization o1 on u.dep_fri = o1.org_id
+        left join t_organization o2 on u.dep_sec = o2.org_id
+        left join t_organization o3 on u.address = o3.org_id
+        <where>
+            <if test ="devId !=null and devId!=''">
+                d.dev_id = #{devId}
+            </if>
+            <if test ="devId !=null and devId!=''">
+                AND d.dev_id = #{devId}
+            </if>
+        </where>
+
+
+    </select>
 </mapper>

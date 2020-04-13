@@ -3,61 +3,201 @@ package cn.cqu.pojo.dto;
 import cn.cqu.pojo.*;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  * 设备数据传输对象
  */
 public class DeviceDTO implements Serializable {
-    private Device device;
-    private DeviceUseage deviceUseage;
-    private DeviceRunning deviceRunning;
-    private DeviceMaintain deviceMaintain;
-    private String deviceTpe;
-    private String deviceBrand;
-    private String dep_fri;
-    private String dep_sec;
-    private String dep_mac;
+    //基础信息
+    private String devId;
+    private String typeId;
+    private String brandId;
+    private String type;
+    private String brand;
+    private String devModel;
+    private Date purchaseTime;
+    private String erpCode;
+    private Date lastUpate;
+    //使用信息
+    private String depFri;
+    private String depSec;
+    private String depThir;
+    private String address;
+    private int devStatus;
+    private int domainStatus;
+    private int network;
+
+    //运行信息
+    private String macAddress;
+    private String ipAddress;
+    private String systemVersion;
+    private String hdSize;
+    private String cpuInfo;
+    private String memoryInfo;
+
+    //所属用户
     private List<Account> userList;
 
-    public String getDeviceTpe() {
-        return deviceTpe;
+    public String getDevId() {
+        return devId;
     }
 
-    public void setDeviceTpe(String deviceTpe) {
-        this.deviceTpe = deviceTpe;
+    public String getType() {
+        return type;
     }
 
-    public String getDeviceBrand() {
-        return deviceBrand;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setDeviceBrand(String deviceBrand) {
-        this.deviceBrand = deviceBrand;
+    public String getBrand() {
+        return brand;
     }
 
-    public String getDep_fri() {
-        return dep_fri;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public void setDep_fri(String dep_fri) {
-        this.dep_fri = dep_fri;
+    public void setDevId(String devId) {
+        this.devId = devId;
     }
 
-    public String getDep_sec() {
-        return dep_sec;
+    public String getDevModel() {
+        return devModel;
     }
 
-    public void setDep_sec(String dep_sec) {
-        this.dep_sec = dep_sec;
+    public void setDevModel(String devModel) {
+        this.devModel = devModel;
     }
 
-    public String getDep_mac() {
-        return dep_mac;
+    public Date getPurchaseTime() {
+        return purchaseTime;
     }
 
-    public void setDep_mac(String dep_mac) {
-        this.dep_mac = dep_mac;
+    public void setPurchaseTime(Date purchaseTime) {
+        this.purchaseTime = purchaseTime;
+    }
+
+    public String getErpCode() {
+        return erpCode;
+    }
+
+    public void setErpCode(String erpCode) {
+        this.erpCode = erpCode;
+    }
+
+    public Date getLastUpate() {
+        return lastUpate;
+    }
+
+    public void setLastUpate(Date lastUpate) {
+        this.lastUpate = lastUpate;
+    }
+
+    public String getDepFri() {
+        return depFri;
+    }
+
+    public void setDepFri(String depFri) {
+        this.depFri = depFri;
+    }
+
+    public String getDepSec() {
+        return depSec;
+    }
+
+    public void setDepSec(String depSec) {
+        this.depSec = depSec;
+    }
+
+    public String getDepThir() {
+        return depThir;
+    }
+
+    public void setDepThir(String depThir) {
+        this.depThir = depThir;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getDevStatus() {
+        return devStatus;
+    }
+
+    public void setDevStatus(int devStatus) {
+        this.devStatus = devStatus;
+    }
+
+    public int getDomainStatus() {
+        return domainStatus;
+    }
+
+    public void setDomainStatus(int domainStatus) {
+        this.domainStatus = domainStatus;
+    }
+
+    public int getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(int network) {
+        this.network = network;
+    }
+
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public String getSystemVersion() {
+        return systemVersion;
+    }
+
+    public void setSystemVersion(String systemVersion) {
+        this.systemVersion = systemVersion;
+    }
+
+    public String getHdSize() {
+        return hdSize;
+    }
+
+    public void setHdSize(String hdSize) {
+        this.hdSize = hdSize;
+    }
+
+    public String getCpuInfo() {
+        return cpuInfo;
+    }
+
+    public void setCpuInfo(String cpuInfo) {
+        this.cpuInfo = cpuInfo;
+    }
+
+    public String getMemoryInfo() {
+        return memoryInfo;
+    }
+
+    public void setMemoryInfo(String memoryInfo) {
+        this.memoryInfo = memoryInfo;
     }
 
     public List<Account> getUserList() {
@@ -66,37 +206,5 @@ public class DeviceDTO implements Serializable {
 
     public void setUserList(List<Account> userList) {
         this.userList = userList;
-    }
-
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
-    }
-
-    public DeviceUseage getDeviceUseage() {
-        return deviceUseage;
-    }
-
-    public void setDeviceUseage(DeviceUseage deviceUseage) {
-        this.deviceUseage = deviceUseage;
-    }
-
-    public DeviceRunning getDeviceRunning() {
-        return deviceRunning;
-    }
-
-    public void setDeviceRunning(DeviceRunning deviceRunning) {
-        this.deviceRunning = deviceRunning;
-    }
-
-    public DeviceMaintain getDeviceMaintain() {
-        return deviceMaintain;
-    }
-
-    public void setDeviceMaintain(DeviceMaintain deviceMaintain) {
-        this.deviceMaintain = deviceMaintain;
     }
 }

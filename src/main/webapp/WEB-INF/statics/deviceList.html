@@ -206,7 +206,7 @@
                       <td th:text="${deviceDTO.dep_sec}">$2274253</td>
                       <td th:text="${deviceDTO.dep_mac}">$2274253</td>
                       <td th:text="${deviceDTO.userList}">$2274253</td>
-                      <td th:text="${deviceDTO.deviceUseage.network}">08 Sep 2018</td>
+                      <td th:text="${not #lists.isEmpty(deviceDTO.deviceUseage)}?'无':${deviceDTO.deviceUseage.network}">08 Sep 2018</td>
                       <td th:text="${deviceDTO.deviceRunning.macAddress}">$50862</td>
                       <td th:text="${deviceDTO.device.lastUpate}">$50862</td>
                     </tr>

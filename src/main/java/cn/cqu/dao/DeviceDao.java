@@ -1,6 +1,7 @@
 package cn.cqu.dao;
 
 import cn.cqu.pojo.*;
+import cn.cqu.pojo.dto.DeviceDTO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,14 @@ import java.util.List;
  */
 @Repository
 public interface DeviceDao {
+
+
+ /**
+  * 按条件动态查询DTO
+  * @param example
+  * @return
+  */
+ List<DeviceDTO> listDeviceDtoByExample(DeviceDTO example);
 
  /**
   * 按id查询设备基础信息
