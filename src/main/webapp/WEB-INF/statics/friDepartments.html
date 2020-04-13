@@ -183,6 +183,8 @@
               searchByexample(table_init_url,example);
           }else if(data == -1){
             toastr.warning('存在子节点');
+          }else if(data == -2){
+            toastr.warning('此部门有绑定设备');
           }else{
             toastr.error('系统错误');
           }

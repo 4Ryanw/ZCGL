@@ -1,5 +1,6 @@
 package cn.cqu.service.impl;
 
+import cn.cqu.dao.DeviceDao;
 import cn.cqu.dao.OrganizationDao;
 import cn.cqu.pojo.Organization;
 import cn.cqu.pojo.dto.OrganizationDTO;
@@ -18,6 +19,8 @@ import java.util.List;
 public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     private OrganizationDao organizationDao;
+    @Autowired
+    private DeviceDao deviceDao;
 
 
     /**
@@ -138,10 +141,17 @@ public class OrganizationServiceImpl implements OrganizationService {
     public int deleteOrganizationById(String id) {
         //删除前先判断是否存在子节点
         List<Organization> subList = listOrganizationByParentId(id);
-        if(subList.size()>0)
+        if(subList.size()>0){
             return -1;
-        else
+        }
+        //查询其下是否存在设备
+        else if(deviceDao.listDeviceByOrgId(id).size()>0){
+            return -2;
+        }
+
+        else{
             return organizationDao.deleteOrganizationById(id);
+        }
     }
 
     /**

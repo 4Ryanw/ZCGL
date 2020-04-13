@@ -18,4 +18,16 @@
         t_account a
         LEFT JOIN t_role r ON a.user_role = r.role_id
     </select>
+
+    <select id="listUserByDeviceId" resultType="Account">
+        <!-- 具体的sql -->
+        SELECT
+        a.*
+        FROM
+        t_device_user d
+        INNER JOIN
+        t_account a ON a.uuid= d.user_uuid
+        where
+        d.dev_id = #{deviceId}
+    </select>
 </mapper>

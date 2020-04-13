@@ -36,11 +36,13 @@ public interface DeviceDao {
  DeviceUseage getDeviceUseageById(String devId);
 
  /**
-  * 按id查询设备所属人员
-  * @param deviceId
+  * 按组织id查询设备
+  * @param orgId
   * @return
   */
- List<Account> listUserByDeviceId(String deviceId);
+ List<Device> listDeviceByOrgId(String orgId);
+
+
 
  /**
   * 按id查询设备运行信息

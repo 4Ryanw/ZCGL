@@ -34,4 +34,11 @@ public interface AccountDao {
      @Update("update t_account set user_status = #{status} where uuid = #{uuid}")
      int updateStatusByUUId(@Param("uuid") String uuid, @Param("status") int status);
 
+     /**
+      * 按id查询设备所属人员
+      * @param deviceId
+      * @return
+      */
+     List<Account> listUserByDeviceId(String deviceId);
+
 }

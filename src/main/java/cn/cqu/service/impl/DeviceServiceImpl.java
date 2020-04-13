@@ -61,7 +61,7 @@ public class DeviceServiceImpl implements DeviceService {
         deviceDTO.setDep_fri(organizationDao.getOrganizationById(deviceUseage.getDepFri()).getOrgName());
         deviceDTO.setDep_sec(organizationDao.getOrganizationById(deviceUseage.getDepSec()).getOrgName());
         deviceDTO.setDep_mac(organizationDao.getOrganizationById(deviceUseage.getAddress()).getOrgName());
-        deviceDTO.setUserList(deviceDao.listUserByDeviceId(deviceId));
+        deviceDTO.setUserList(accountDao.listUserByDeviceId(deviceId));
         return deviceDTO;
     }
 }
