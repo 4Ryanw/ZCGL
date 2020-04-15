@@ -12,6 +12,23 @@ import java.util.List;
 public class DeviceDTO implements Serializable {
     //基础信息
     private String devId;
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
+
     private String typeId;
     private String brandId;
     private String type;
@@ -39,6 +56,9 @@ public class DeviceDTO implements Serializable {
 
     //所属用户
     private List<Account> userList;
+
+    public DeviceDTO() {
+    }
 
     public String getDevId() {
         return devId;

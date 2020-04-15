@@ -1,6 +1,7 @@
 package cn.cqu.service.impl;
 
 import cn.cqu.dao.AccountDao;
+import cn.cqu.dao.DeviceDao;
 import cn.cqu.pojo.dto.AccountDTO;
 import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public int deleteAccountById(String uuid) {
+        //删除前先删除其下绑定的设备
+        accountDao.deleteDeviceUserById(uuid);
+        //删除用户
         return accountDao.deleteAccountByUUId(uuid);
     }
 

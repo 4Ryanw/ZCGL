@@ -49,18 +49,10 @@ public class DeviceServiceImpl implements DeviceService {
      */
     @Override
     public DeviceDTO getDeviceDtoById(String deviceId) {
-        DeviceDTO deviceDTO = new DeviceDTO();
-        Device device = deviceDao.getDeviceById(deviceId);
-        deviceDTO.setDevice(device);
-        DeviceUseage deviceUseage = deviceDao.getDeviceUseageById(deviceId);
-        deviceDTO.setDeviceUseage(deviceUseage);
-        deviceDTO.setDeviceRunning(deviceDao.getDeviceRunningById(deviceId));
-        deviceDTO.setDeviceMaintain(deviceDao.getDeviceMaintainById(deviceId));
-        deviceDTO.setDeviceBrand(baseInfoDao.getDeviceBrandById(device.getBrandId()).getBrand());
-        deviceDTO.setDeviceTpe(baseInfoDao.getDeviceTypeById(device.getTypeId()).getType());
-        deviceDTO.setDep_fri(organizationDao.getOrganizationById(deviceUseage.getDepFri()).getOrgName());
-        deviceDTO.setDep_sec(organizationDao.getOrganizationById(deviceUseage.getDepSec()).getOrgName());
-        deviceDTO.setDep_mac(organizationDao.getOrganizationById(deviceUseage.getAddress()).getOrgName());
+        DeviceDTO example = new DeviceDTO();
+        example.setDevId(deviceId);
+        List<DeviceDTO> deviceDTOList = deviceDao.listDeviceDtoByExample(example);
+        DeviceDTO deviceDTO = deviceDTOList.get(0);
         deviceDTO.setUserList(accountDao.listUserByDeviceId(deviceId));
         return deviceDTO;
     }

@@ -2,6 +2,7 @@ package cn.cqu.dao;
 
 import cn.cqu.pojo.*;
 import cn.cqu.pojo.dto.DeviceDTO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -96,4 +97,23 @@ public interface DeviceDao {
   */
  @Insert("insert into t_device values (#{devId},#{maintainInfo},#{maintainDate})")
  int insertDeviceMaintain(DeviceMaintain deviceMaintain);
+
+    /**
+     * 插入设备使用者信息
+     * @param devId
+     * @param userId
+     * @return
+     */
+ @Insert("insert into t_device_user values(#{devId},#{userId})")
+ int insertDeviceUser(String devId,String userId);
+
+    /**
+     * 删除设备使用者信息
+     * @param userId
+     * @param devId
+     * @return
+     */
+ @Delete("delete from t_device_user where user_uuid = #{userId} and dev_id = #{devId}")
+ int deleteDeviceUserById(String userId,String devId);
+
 }

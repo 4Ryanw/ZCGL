@@ -41,4 +41,12 @@ public interface AccountDao {
       */
      List<Account> listUserByDeviceId(String deviceId);
 
+    /**
+     * 删除该用户的设备关联信息
+     * @param userId
+     * @return
+     */
+    @Delete("delete from t_device_user where user_uuid = #{userId}")
+    int deleteDeviceUserById(String userId);
+
 }
