@@ -43,8 +43,8 @@
                 <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0">
                   <a><i class="mdi mdi-magnify"></i> 搜索</a>
                 </button>
-                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="detailSearch()">
-                  <a><i class="mdi mdi-plus text-muted" id="detailSearchIcon"></i> 更多搜索</a>
+                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="advancedSearch()">
+                  <a><i class="mdi mdi-plus text-muted" id="advancedSearchIcon"></i> 更多搜索</a>
                 </button>
                 <button class="btn btn-primary mt-2 mt-xl-0">导出报表</button>
               </div>
@@ -52,7 +52,7 @@
           </div>
         </div>
         <!-- 高级搜索选项框 -->
-        <div id="detailSearch" style="display: none" >
+        <div id="advancedSearch" style="display: none" >
           <div class="row">
             <div class="col-md-1"></div>
             <div class="input-group mb-3 col-md-3">
@@ -179,7 +179,7 @@
                     <thead>
                     <tr>
                       <th></th>
-                      <th style="width: 10% ">设备标识</th>
+                      <th>设备标识</th>
                       <th>设备类型</th>
                       <th>设备品牌</th>
                       <th>设备型号</th>
@@ -194,11 +194,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class ="tr_sub" th:each="deviceDTO : ${dtoList}">
-                      <td th:value="${deviceDTO.devId}"><input type="checkbox"/></td>
+                    <tr class ="tr_sub" th:each="deviceDTO :  ${dtoList}">
+                      <td id="uuId" th:value="${deviceDTO.devId}"><input type="checkbox"/></td>
                       <td th:text="${deviceDTO.devId}"></td>
-                      <td th:text="${deviceDTOTpe}">Jeremy Ortega</td>
-                      <td th:text="${deviceDTOBrand}">Levelled up</td>
+                      <td th:text="${deviceDTO.type}">Jeremy Ortega</td>
+                      <td th:text="${deviceDTO.brand}">Levelled up</td>
                       <td th:text="${deviceDTO.devModel}">Catalinaborough</td>
                       <td th:text="${#dates.format(deviceDTO.purchaseTime, 'yyyy-MM-dd HH:mm')}"></td>
                       <td th:text="${deviceDTO.depFri != null?deviceDTO.depFri:'无'}"></td>
@@ -211,138 +211,140 @@
                     </tr>
                     </tbody>
                   </table>
+                  <!--模态框-->
+                  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                    <div class="modal-dialog" id="devModal" th:fragment="modal-refresh">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">设备详细信息</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body" style="font-size: 12px">
+                          <div id="device_information">
+                            <fieldset class="layui-elem-field layui-field-title">
+                              <legend>设备信息</legend>
+                            </fieldset>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>设备标识</span>
+                                <input type="text" id="ieqLogo" disabled="true" th:value="${detailDTO?.devId}" value="无">
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>设备类型</span>
+                                <input type="text" id="itpType" disabled="true" th:value="${detailDTO?.type}" value="无" >
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>设备品牌</span>
+                                <input type="text" id="ibrBrand" disabled="true" th:value="${detailDTO?.brand}"value="无">
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>设备型号</span>
+                                <input type="text" id="ivrVersion" disabled="true" th:value="${detailDTO?.devModel}" value="无">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>购置时间</span>
+                                <input type="text" id="ieqDatetime" disabled="true" th:value="${detailDTO!=null?#dates.format(detailDTO.purchaseTime, 'yyyy-MM-dd HH:mm'):'无'}"  >
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>ERP资产编码</span>
+                                <input type="text" id="ieqErp" disabled="true" th:value="${detailDTO?.erpCode}" value="无">
+                              </div>
+                            </div>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px;">
+                              <legend>设备使用信息</legend>
+                            </fieldset>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>设备状态</span>
+                                <input type="text" id="ieqState" disabled="true" th:value="${detailDTO!=null?(detailDTO.devStatus==1?'运行':'停用'):'无'}" >
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>域状态</span>
+                                <input type="text" id="ieqDomainstate" disabled="true" th:value="${detailDTO!=null?(detailDTO.domainStatus==1?'运行':'停用'):'无'}">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>一级部门</span>
+                                <input type="text" id="ileName" disabled="true" th:value="${detailDTO?.depFri}" value="无">
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>二级部门</span>
+                                <input type="text" id="ideName" disabled="true" th:value="${detailDTO?.depSec}" value="无">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>物理位置</span>
+                                <input type="text" id="ieqLocation" disabled="true" th:value="${detailDTO?.address}" value="无">
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>三级部门</span>
+                                <input type="text" id="ieqDepartment" disabled="true" th:value="${detailDTO?.depThir}" value="无">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>所属网络</span>
+                                <input type="text" id="ieqNetword" disabled="true" th:value="${detailDTO?.network}" value="无">
+                              </div>
+
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12 stretch-card">
+                                <span style="width: 20%">使用人</span>
+                                <textarea  id="idoName"  disabled="true" th:value="${detailDTO?.userList}" value="无"></textarea>
+                              </div>
+                            </div>
+
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px;">
+                              <legend>设备运行信息</legend>
+                            </fieldset>
+
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>MAC地址</span>
+                                <input type="text" id="ieqMac" disabled="true" th:value="${detailDTO?.macAddress}" value="无">
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>IP地址</span>
+                                <input type="text" id="ieqIp" disabled="true" th:value="${detailDTO?.ipAddress}" value="无">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>系统版本</span>
+                                <input type="text" id="ieqSysversion" disabled="true" th:value="${detailDTO?.systemVersion}" value="无">
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>硬盘容量</span>
+                                <input type="text" id="ieqHarddisk" disabled="true" th:value="${detailDTO?.hdSize}" value="无">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 stretch-card">
+                                <span>内存信息</span>
+                                <input type="text" id="ieqInternal" disabled="true" th:value="${detailDTO?.memoryInfo}" value="无">
+                              </div>
+                              <div class="col-md-6 stretch-card">
+                                <span>CPU信息</span>
+                                <input type="text" id="ieqCpu" disabled="true" th:value="${detailDTO?.cpuInfo}" value="无">
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger "  data-dismiss="modal" aria-hidden="true" >关闭</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--模态框-->
-        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">设备详细信息</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              </div>
-              <div class="modal-body">
-                <div class="information">
-                  <fieldset class="layui-elem-field layui-field-title">
-                    <legend>设备信息</legend>
-                  </fieldset>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>设备标识</span>
-                      <input type="text" id="ieqLogo" disabled="true" value="C1002">
-                    </div>
-                    <div class="detailed2">
-                      <span>设备类型</span>
-                      <input type="text" id="itpType" disabled="true" value="台式机">
-                    </div>
-                  </div>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>设备品牌</span>
-                      <input type="text" id="ibrBrand" disabled="true" value="联想MH57">
-                    </div>
-                    <div class="detailed2">
-                      <span>设备型号</span>
-                      <input type="text" id="ivrVersion" disabled="true">
-                    </div>
-                  </div>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>购置时间</span>
-                      <input type="text" id="ieqDatetime" disabled="true" value="2011-03-19">
-                    </div>
-                    <div class="detailed2">
-                      <span>ERP资产编码</span>
-                      <input type="text" id="ieqErp" disabled="true">
-                    </div>
-                  </div>
-                  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px;">
-                    <legend>设备使用信息</legend>
-                  </fieldset>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>设备状态</span>
-                      <input type="text" id="ieqState" disabled="true" value="已投运">
-                    </div>
-                    <div class="detailed2">
-                      <span>域状态</span>
-                      <input type="text" id="ieqDomainstate" disabled="true" value="未加域">
-                    </div>
-                  </div>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>一级部门</span>
-                      <input type="text" id="ileName" disabled="true" value="党委组织部（人力资源部）">
-                    </div>
-                    <div class="detailed2">
-                      <span>二级部门</span>
-                      <input type="text" id="ideName" disabled="true">
-                    </div>
-                  </div>
-                  <div class="detailed">
-                    <div class="detailed2">
-                      <span>物理位置</span>
-                      <input type="text" id="ieqLocation" disabled="true" value="">
-                    </div>
-                    <div class="detailed1">
-                      <span>三级部门</span>
-                      <input type="text" id="ieqDepartment" disabled="true" value="">
-                    </div>
-                  </div>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>所属网络</span>
-                      <input type="text" id="ieqNetword" disabled="true" value="信息内网">
-                    </div>
-
-                  </div>
-                  <div class="detailed_Addreess">
-                    <span>使用人</span>
-                    <!-- <input type="text" id="idoName" disabled=true /> -->
-                    <textarea id="idoName" disabled="true">夏川</textarea>
-                  </div>
-                  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px;">
-                    <legend>设备运行信息</legend>
-                  </fieldset>
-
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>MAC地址</span>
-                      <input type="text" id="ieqMac" disabled="true" value="10-78-d2-cd-22-eb">
-                    </div>
-                    <div class="detailed2">
-                      <span>IP地址</span>
-                      <input type="text" id="ieqIp" disabled="true" value="10.186.112.115">
-                    </div>
-                  </div>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>系统版本</span>
-                      <input type="text" id="ieqSysversion" disabled="true">
-                    </div>
-                    <div class="detailed2">
-                      <span>硬盘容量</span>
-                      <input type="text" id="ieqHarddisk" disabled="true">
-                    </div>
-                  </div>
-                  <div class="detailed">
-                    <div class="detailed1">
-                      <span>内存信息</span>
-                      <input type="text" id="ieqInternal" disabled="true">
-                    </div>
-                    <div class="detailed2">
-                      <span>CPU信息</span>
-                      <input type="text" id="ieqCpu" disabled="true">
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="">x</button>
               </div>
             </div>
           </div>
@@ -372,8 +374,7 @@
       $(this).addClass("active");
       $(".tr_sub").find(":checkbox").prop("checked",false);
       $(this).find(":checkbox").prop("checked", true);
-      //打开详细信息模态框
-      $("#detailModal").modal('show');
+      detailInfo();
     })
   }
   /*初始化*/
@@ -386,12 +387,23 @@
       minView: 2,
       autoclose: true
     });
-    inittable(table_init_url)
+    inittable(table_init_url);
   });
 
   /*更多搜索*/
-  function detailSearch() {
-    $("#detailSearch").slideToggle();
+  function advancedSearch() {
+    $("#advancedSearch").slideToggle();
+  }
+
+  /*设备详情*/
+  function detailInfo() {
+    var uuid = $(selectedObj).children("#uuId").attr("value");
+      var url = "/device/"+uuid;
+      $("#devModal").load(url,function () {
+        //打开详细信息模态框
+        $("#detailModal").modal('show');
+      });
+
   }
 
   //改变排序方式

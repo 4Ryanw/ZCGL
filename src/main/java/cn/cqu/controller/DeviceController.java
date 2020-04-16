@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -22,10 +23,23 @@ public class DeviceController {
      * @return
      */
     @GetMapping("/list")
-    public String listAccounts(ModelMap map){
+    public String listDevices(ModelMap map){
         List<DeviceDTO> deviceDTOList = deviceService.listDeviceDto();
         map.put("dtoList", deviceDTOList);
         return "deviceList::table-refresh";
     }
+    /**
+     * 根据id获取设备信息
+     * @param map
+     * @return
+     */
+    @GetMapping("/{devId}")
+    public String getDeviceById(ModelMap map,@PathVariable("devId") String devId){
+        DeviceDTO dto = deviceService.getDeviceDtoById(devId);
+        map.put("detailDTO", dto);
+        return "deviceList::modal-refresh";
+    }
+
+
 
 }

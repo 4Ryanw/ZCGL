@@ -23672,8 +23672,28 @@ dl li {
   font-size: .875rem;
   font-weight: bold;
 }
+/*自定义*/
 .active.tr_sub{
   background-color: darkgray!important;
 }
-
+#device_information span{
+  width: 40%;
+  color: #115467;
+}
+#device_information legend{
+  font-size: 20px;
+  font-weight: 300;
+}
+#device_information input{
+  margin-bottom: 8px;
+  background-color: #FFF;
+  border: none;
+}
+#device_information textarea{
+  OVERFLOW:visible;
+  width: 70%;
+  height: 3rem;
+  border: none;
+  background-color: #FFF
+}
 /*# sourceMappingURL=maps/style.css.map */
