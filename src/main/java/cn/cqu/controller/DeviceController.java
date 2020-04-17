@@ -22,11 +22,11 @@ public class DeviceController {
      * @param map
      * @return
      */
-    @GetMapping("/list")
-    public String listDevices(ModelMap map){
+    @GetMapping("/list/{pageName}")
+    public String listDevices(ModelMap map,@PathVariable("pageName") String pageName){
         List<DeviceDTO> deviceDTOList = deviceService.listDeviceDto();
         map.put("dtoList", deviceDTOList);
-        return "deviceList::table-refresh";
+        return pageName+"::table-refresh";
     }
     /**
      * 根据id获取设备信息
