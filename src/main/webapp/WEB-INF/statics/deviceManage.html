@@ -22,7 +22,7 @@
     <!--内容-->
     <div class="content-wrapper">
       <!-- 搜索相关 -->
-      <div class="row">
+      <div class="row" id="toolbar">
         <div class="col-md-12 grid-margin">
           <div class="d-flex justify-content-between flex-wrap">
             <ul class="navbar-nav mr-lg-4" style="width: 60%;">
@@ -124,15 +124,15 @@
         </div>
       </div>
       <!-- 操作相关 -->
-      <div class="row" style="margin: 10px;">
+      <div class="row" style="margin: 10px;" >
         <button type="submit" class="btn btn-primary mr-2">新增设备</button>
         <!-- 排序下拉框-->
         <div class="input-group-prepend col-md-7">
           <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">排序方式</button>
-          <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 47px, 0px);">
-            <a class="dropdown-item" href="#">购置时间升序</a>
-            <a class="dropdown-item" href="#">购置时间降序</a>
-          </div>
+            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 47px, 0px);">
+              <a class="dropdown-item" href="#">购置时间升序</a>
+              <a class="dropdown-item" href="#">购置时间降序</a>
+            </div>
         </div>
         <!-- 操作按钮组-->
         <div class="btn-group" role="group" aria-label="Basic example">
@@ -147,11 +147,11 @@
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-listing" class="table table-hover table-refresh"  th:fragment="table-refresh">
+                <table id="table-listing" class="table dataTable table-hover table-refresh"  th:fragment="table-refresh">
                   <thead>
                   <tr>
                     <th></th>
-                    <th style="width: 10% ">设备标识</th>
+                    <th>设备标识</th>
                     <th>设备类型</th>
                     <th>设备品牌</th>
                     <th>设备型号</th>

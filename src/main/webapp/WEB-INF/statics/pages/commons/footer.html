@@ -7,15 +7,17 @@
   <!-- 引入js -->
   <script src="/vendors/base/vendor.bundle.base.js"></script>
   <script src="/vendors/chart.js/Chart.min.js"></script>
-  <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
-  <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+
+<!--  <script src="/vendors/datatables.net/jquery.dataTables.js"></script>-->
+<!--  <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>-->
+  <script src="/js/jquery.dataTables.js"></script>
+  <script src="/js/dataTables.bootstrap4.js"></script>
+
   <script src="/js/off-canvas.js"></script>
   <script src="/js/hoverable-collapse.js"></script>
   <script src="/js/template.js"></script>
   <script src="/js/dashboard.js"></script>
   <script src="/js/data-table.js"></script>
-  <script src="/js/jquery.dataTables.js"></script>
-  <script src="/js/dataTables.bootstrap4.js"></script>
   <script src="/js/olanguage.js"></script>
   <script src="/js/toastr.min.js"></script>
   <script src="/js/bootstrap-switch.min.js"></script>
@@ -54,6 +56,7 @@
           $(".table-refresh").html(data);
           $("#table-listing").dataTable().fnDestroy();
           $('#table-listing').DataTable({
+            toolbar: '#toolbar',
             "aLengthMenu": [
               [5, 10, 15, -1],
               [5, 10, 15, "全部"]
@@ -63,7 +66,12 @@
               search: ""
             },
             "pagingType": "full_numbers",
-            searching: true, paging: true, info: true
+            //初始化datatable，但对序号为0列的列不进行排序，别的列均可进行排序
+            "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0 ] }],
+            "aaSorting": [
+                    [1, 'asc']
+            ],
+            searching: true, paging: true, info: true, striped: false
           });
           initTr_onclick();
           selectedObj = null;
@@ -92,6 +100,8 @@
               search: ""
             },
             "pagingType": "full_numbers",
+            //初始化datatable，但对序号为0列的列不进行排序，别的列均可进行排序
+            // "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0 ] }],
             searching: true, paging: true, info: true
           });
           initTr_onclick();
