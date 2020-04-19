@@ -52,8 +52,23 @@ public class DeviceServiceImpl implements DeviceService {
         DeviceDTO example = new DeviceDTO();
         example.setDevId(deviceId);
         List<DeviceDTO> deviceDTOList = deviceDao.listDeviceDtoByExample(example);
-        DeviceDTO deviceDTO = deviceDTOList.get(0);
-        deviceDTO.setUserList(accountDao.listUserByDeviceId(deviceId));
-        return deviceDTO;
+        if(deviceDTOList.size()>0){
+            DeviceDTO deviceDTO = deviceDTOList.get(0);
+            deviceDTO.setUserList(accountDao.listUserByDeviceId(deviceId));
+            return deviceDTO;
+        }
+        else return null;
+
+    }
+
+    /**
+     * 新增设备
+     *
+     * @param example
+     * @return
+     */
+    @Override
+    public int addDevice(Device example) {
+        return deviceDao.insertDevice(example);
     }
 }

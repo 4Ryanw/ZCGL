@@ -1,12 +1,19 @@
 package cn.cqu.controller;
 
+import cn.cqu.dao.BaseInfoDao;
+import cn.cqu.pojo.DeviceBrand;
+import cn.cqu.pojo.DeviceType;
 import cn.cqu.pojo.Organization;
+import cn.cqu.pojo.dto.DeviceDTO;
+import cn.cqu.service.BaseInfoService;
+import cn.cqu.service.DeviceService;
 import cn.cqu.service.OrganizationService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,6 +25,10 @@ import java.util.List;
 public class indexController {
     @Autowired
     private OrganizationService organizationService;
+    @Autowired
+    private BaseInfoService baseInfoService;
+    @Autowired
+    private DeviceService deviceService;
 
     /**
      *  跳转主页
@@ -71,6 +82,25 @@ public class indexController {
     //组织结构
     @GetMapping("/Organizations")
     public void Organizations(){}
+    //新增设备
+    @GetMapping("/addDevice")
+    public void addDevice(ModelMap map){
+          List<DeviceBrand> deviceBrandList =  baseInfoService.listDeviceBrand();
+          map.put("deviceBrandList",deviceBrandList);
+          List<DeviceType> deviceTypeList =  baseInfoService.listDeviceType();
+          map.put("deviceTypeList",deviceTypeList);
+    }
+    //编辑设备
+    @GetMapping("/editDevice/{devId}")
+    public String editDevice(ModelMap map,@PathVariable String devId){
+          DeviceDTO deviceDTO = deviceService.getDeviceDtoById(devId);
+          map.put("deviceDTO",deviceDTO);
+          List<DeviceBrand> deviceBrandList =  baseInfoService.listDeviceBrand();
+          map.put("deviceBrandList",deviceBrandList);
+          List<DeviceType> deviceTypeList =  baseInfoService.listDeviceType();
+          map.put("deviceTypeList",deviceTypeList);
+          return "editDevice";
+    }
     //系统管理
     @GetMapping("/system")
     public void system(){}

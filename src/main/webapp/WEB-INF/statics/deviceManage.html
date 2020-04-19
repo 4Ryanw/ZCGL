@@ -125,7 +125,7 @@
       </div>
       <!-- 操作相关 -->
       <div class="row" style="margin: 10px;" >
-        <button type="submit" class="btn btn-primary mr-2">新增设备</button>
+        <button type="submit" class="btn btn-primary mr-2" onclick="window.location.href='/addDevice'" >新增设备</button>
         <!-- 排序下拉框-->
         <div class="input-group-prepend col-md-7">
           <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">排序方式</button>
@@ -136,7 +136,7 @@
         </div>
         <!-- 操作按钮组-->
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary">编辑</button>
+          <button type="button" class="btn btn-primary" onclick= editInfo()>编辑</button>
           <button type="button" class="btn btn-danger">分配</button>
           <button type="button" class="btn btn-success" >域管理</button>
         </div>
@@ -214,6 +214,15 @@
   /*更多搜索*/
   function detailSearch() {
     $("#detailSearch").slideToggle();
+  }
+  function editInfo() {
+    if(selectedObj){
+      var devId = $(selectedObj).children("#uuId").attr("value");
+      window.location.href ='/editDevice/'+devId;
+      // $.get('/editDevice/'+devId);
+    }else {
+      toastr.warning("请选择一条数据")
+    }
   }
 </script>
 </html>

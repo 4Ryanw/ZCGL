@@ -74,7 +74,7 @@ public interface DeviceDao {
   * @param device
   * @return
   */
- @Insert("insert into t_device values (UUID(),#{typeId},#{devModel},#{brandId},#{devModel},#{purchaseTime},#{lastUpate})")
+ @Insert("insert into t_device values (#{devId},#{typeId},#{brandId},#{devModel},#{purchaseTime},#{erpCode},#{lastUpate})")
  int insertDevice(Device device);
  /**
   * 插入设备使用信息

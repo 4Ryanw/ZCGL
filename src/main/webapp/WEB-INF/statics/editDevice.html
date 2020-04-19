@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
+
+  <!--  meta 标签 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>台账管理系统</title>
+</head>
+<body>
+<div class="container-scroller">
+  <!-- 公共头部引用 -->
+  <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"   th:include="/pages/commons/header::common_head"></nav>
+  <!-- 主体流式布局 -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- 导航边条 -->
+    <nav  class="sidebar sidebar-offcanvas" th:include="/pages/commons/sidebar::common_sidebar" ></nav>
+
+    <!-- 主体部分 -->
+    <div class="main-panel">
+      <!--标题-->
+      <button style="border: none;width:7rem" class="btn btn-outline-dark btn-icon-text" onclick="window.location.href='/deviceManage'">
+        <i class="mdi mdi-step-backward btn-icon-prepend"></i>
+        <span class="d-inline-block text-left">返回</span>
+      </button>
+      <p class="mytitle">
+        编辑设备
+      </p>
+      <!--内容-->
+      <div class="content-wrapper">
+        <div class="card">
+          <div class="card-body">
+            <form id="device_information" class="form-sample" action="/device" method="post">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备标识</label>
+                    <div class="col-sm-6">
+                      <input type="text" id="devId" name="devId" class="form-control" th:value="${deviceDTO.devId}" disabled="disabled">
+                    </div>
+                    <span id="checkSuccess" class="col-sm-3" style="display: none;font-size: 12px;line-height:50px"><i class="mdi mdi-check"></i>该设备标识可用</span>
+                    <span id="checkFailed" class="col-sm-3" style="color: red;display: none;font-size: 12px;line-height:50px"><i class="mdi mdi-close"></i>设备标识重复!</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">ERP编码</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="erpCode" class="form-control" th:value="${deviceDTO.erpCode}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备类型</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" name="typeId" >
+                        <option th:each="type : ${deviceTypeList}" th:value="${type.typeId}" th:text="${type.type}"></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备品牌</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" name="brandId">
+                        <option th:each="brand : ${deviceBrandList}" th:value="${brand.brandId}" th:text="${brand.brand}"></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">购买日期</label>
+                    <div class="col-sm-9">
+                      <input class="form-control timepicker" name="purchaseTime" placeholder="dd/mm/yyyy">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备型号</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="devModel" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-7"></div>
+                <div class="template-demo mt-2">
+                  <button type="submit" class="btn btn-outline-success btn-icon-text">
+                    <i class="mdi mdi-file-check btn-icon-prepend"></i>
+                    提交
+                  </button>
+                  <button type="button" class="btn btn-outline-info btn-icon-text" onclick="
+                    $('#device_information')[0].reset();
+                      ">
+                    <i class="mdi mdi-reload btn-icon-prepend"></i>
+                    重置
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- 公共底部引用 -->
+      <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
+
+
+  </div>
+</div>
+</div>
+</body>
+<!-- 公共js引用 -->
+<div th:replace="/pages/commons/footer::common_js"></div>
+<!--其他js引用-->
+<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<!-- 自定义jS -->
+<script>
+  /*初始化*/
+  $(document).ready(function(){
+    var checkFlag = false;
+    /* 日期选择插件*/
+    $(".timepicker").datetimepicker({
+      bootcssVer:3, //bootstrap 版本
+      format: 'yyyy-mm-dd',
+      language:'zh-CN',
+      minView: 2,
+      autoclose: true
+    });
+
+    //设备标识ajax异步验证
+    $("#devId").blur(function(){
+      if ($(this).val()!=''){
+        $.ajax({
+          data: {
+            devId:$(this).val()
+          },
+          type:"GET",
+          url:"/device/checkDevId",
+          async:false,
+          success:function (res) {
+            if (res == 1){
+              $("#checkFailed").css('display','none');
+              $("#checkSuccess").css('display','block');
+              $("#devId").css('border','none');
+              checkFlag = true;
+            }else {
+              $("#checkSuccess").css('display','none');
+              $("#checkFailed").css('display','block');
+              checkFlag = false;
+            }
+          }
+        })
+      }
+    });
+
+    $("#device_information").submit(function () {
+      //判断devId是否重复
+      if(!checkFlag){
+        $("#devId").focus();
+        $("#devId").css('border','1px solid red')
+
+        return false;
+      }
+      //判断表单数据是否为空
+      var t = $('form').serializeArray();
+      for (var i = 0; i < t.length; i++) {
+        if(t[i]['value']==''){
+          toastr.error("表格信息不全!");
+          return false
+        }
+      }
+    })
+  });
+
+</script>
+</html>
+

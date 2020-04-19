@@ -24,4 +24,11 @@ public interface DeviceService {
      */
     DeviceDTO getDeviceDtoById(String deviceId);
 
+    /**
+     * 新增设备
+     * @param example
+     * @return
+     */
+    int addDevice(Device example);
+
 }
