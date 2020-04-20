@@ -31,13 +31,14 @@
       <div class="content-wrapper">
         <div class="card">
           <div class="card-body">
-            <form id="device_information" class="form-sample" action="/device" method="post">
+            <form id="device_information" class="form-sample" action="/device/baseInfo" method="post">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group row">
+                    <input type="hidden"  name="_method" value="PUT"/><!--隐藏域提交方式-->
                     <label class="col-sm-3 col-form-label">设备标识</label>
                     <div class="col-sm-6">
-                      <input type="text" id="devId" name="devId" class="form-control" th:value="${deviceDTO.devId}" disabled="disabled">
+                      <input type="text" id="devId" name="devId" class="form-control" th:value="${deviceDTO.devId}" readonly="readonly">
                     </div>
                     <span id="checkSuccess" class="col-sm-3" style="display: none;font-size: 12px;line-height:50px"><i class="mdi mdi-check"></i>该设备标识可用</span>
                     <span id="checkFailed" class="col-sm-3" style="color: red;display: none;font-size: 12px;line-height:50px"><i class="mdi mdi-close"></i>设备标识重复!</span>
@@ -59,7 +60,8 @@
                     <label class="col-sm-3 col-form-label">设备类型</label>
                     <div class="col-sm-9">
                       <select class="form-control" name="typeId" >
-                        <option th:each="type : ${deviceTypeList}" th:value="${type.typeId}" th:text="${type.type}"></option>
+                        <option th:each="type : ${deviceTypeList}" th:value="${type.typeId}" th:text="${type.type}"
+                                th:selected="${type.typeId == deviceDTO.typeId}"></option>
                       </select>
                     </div>
                   </div>
@@ -69,7 +71,8 @@
                     <label class="col-sm-3 col-form-label">设备品牌</label>
                     <div class="col-sm-9">
                       <select class="form-control" name="brandId">
-                        <option th:each="brand : ${deviceBrandList}" th:value="${brand.brandId}" th:text="${brand.brand}"></option>
+                        <option th:each="brand : ${deviceBrandList}" th:value="${brand.brandId}" th:text="${brand.brand}"
+                                th:selected="${brand.brandId == deviceDTO.brandId}"></option>
                       </select>
                     </div>
                   </div>
@@ -80,7 +83,10 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">购买日期</label>
                     <div class="col-sm-9">
-                      <input class="form-control timepicker" name="purchaseTime" placeholder="dd/mm/yyyy">
+                      <input class="form-control timepicker" name="purchaseTime" placeholder="dd/mm/yyyy"
+                             th:value="${#dates.format(deviceDTO.purchaseTime, 'yyyy-MM-dd HH:mm')}"
+                      >
+                      <input type="hidden"  name="" value="PUT"/><!--最后更新时间-->
                     </div>
                   </div>
                 </div>
@@ -88,7 +94,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">设备型号</label>
                     <div class="col-sm-9">
-                      <input type="text" name="devModel" class="form-control">
+                      <input type="text" name="devModel" class="form-control" th:value="${deviceDTO.devModel}">
                     </div>
                   </div>
                 </div>
@@ -105,6 +111,10 @@
                       ">
                     <i class="mdi mdi-reload btn-icon-prepend"></i>
                     重置
+                  </button>
+                  <button type="submit" class="btn btn-outline-danger btn-icon-text">
+                    <i class="mdi mdi-close btn-icon-prepend"></i>
+                    删除
                   </button>
                 </div>
               </div>
@@ -139,40 +149,8 @@
       autoclose: true
     });
 
-    //设备标识ajax异步验证
-    $("#devId").blur(function(){
-      if ($(this).val()!=''){
-        $.ajax({
-          data: {
-            devId:$(this).val()
-          },
-          type:"GET",
-          url:"/device/checkDevId",
-          async:false,
-          success:function (res) {
-            if (res == 1){
-              $("#checkFailed").css('display','none');
-              $("#checkSuccess").css('display','block');
-              $("#devId").css('border','none');
-              checkFlag = true;
-            }else {
-              $("#checkSuccess").css('display','none');
-              $("#checkFailed").css('display','block');
-              checkFlag = false;
-            }
-          }
-        })
-      }
-    });
 
     $("#device_information").submit(function () {
-      //判断devId是否重复
-      if(!checkFlag){
-        $("#devId").focus();
-        $("#devId").css('border','1px solid red')
-
-        return false;
-      }
       //判断表单数据是否为空
       var t = $('form').serializeArray();
       for (var i = 0; i < t.length; i++) {

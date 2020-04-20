@@ -19,7 +19,7 @@
 
     <select id="listDeviceDtoByExample" resultType="DeviceDTO">
         SELECT
-        d.dev_id,d.dev_model,d.erp_code,d.last_Upate,d.purchase_time,
+        d.dev_id,d.type_id,d.brand_id,d.dev_model,d.erp_code,d.last_Upate,d.purchase_time,
         u.dev_status,u.domain_state,u.network,
         r.cpu_info,r.hd_size,r.ip_address,r.mac_address,r.memory_Info,r.system_version,
         b.brand,

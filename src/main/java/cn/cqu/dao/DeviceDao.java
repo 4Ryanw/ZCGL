@@ -5,6 +5,7 @@ import cn.cqu.pojo.dto.DeviceDTO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -115,5 +116,13 @@ public interface DeviceDao {
      */
  @Delete("delete from t_device_user where user_uuid = #{userId} and dev_id = #{devId}")
  int deleteDeviceUserById(String userId,String devId);
+
+ /**
+  * 修改设备基础信息
+  * @param device
+  * @return
+  */
+ @Update("update t_device set type_id =#{typeId},brand_id =#{brandId},dev_model=#{devModel},purchase_time=#{purchaseTime},erp_code=#{erpCode},last_Upate=#{lastUpate} where dev_id=#{devId}")
+ int updateDevice(Device device);
 
 }

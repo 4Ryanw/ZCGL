@@ -68,6 +68,21 @@ public class DeviceController {
             return 1;
     }
 
+    @PutMapping("/baseInfo")
+    public String updateDevicveBaseInfo(HttpServletRequest request) throws ParseException {
+        Device device = new Device();
+        device.setDevId(request.getParameter("devId"));
+        device.setTypeId(request.getParameter("typeId"));
+        device.setBrandId(request.getParameter("brandId"));
+        device.setDevModel(request.getParameter("devModel"));
+        device.setErpCode(request.getParameter("erpCode"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        device.setPurchaseTime(sdf.parse(request.getParameter("purchaseTime")));
+        device.setLastUpate(new Date());
+        deviceService.updateDevice(device);
+        return "deviceManage";
+    }
+
 
 
 }

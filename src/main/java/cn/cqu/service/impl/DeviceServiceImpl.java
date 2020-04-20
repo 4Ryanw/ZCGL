@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class DeviceServiceImpl implements DeviceService {
@@ -70,5 +71,17 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public int addDevice(Device example) {
         return deviceDao.insertDevice(example);
+    }
+
+    /**
+     * 修改设备信息
+     *
+     * @param example
+     * @return
+     */
+    @Override
+    public int updateDevice(Device example) {
+        example.setLastUpate(new Date());
+        return deviceDao.updateDevice(example);
     }
 }

@@ -31,4 +31,12 @@ public interface DeviceService {
      */
     int addDevice(Device example);
 
+
+    /**
+     * 修改设备信息
+     * @param example
+     * @return
+     */
+    int updateDevice(Device example);
+
 }
