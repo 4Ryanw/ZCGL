@@ -84,4 +84,15 @@ public class DeviceServiceImpl implements DeviceService {
         example.setLastUpate(new Date());
         return deviceDao.updateDevice(example);
     }
+
+    /**
+     * 根据Id删除设备
+     *
+     * @param devId
+     * @return
+     */
+    @Override
+    public int deleteDeviceById(String devId) {
+        return deviceDao.deleteDeviceById(devId);
+    }
 }

@@ -15,7 +15,7 @@ public class LoginFormAuthenticationFilter extends FormAuthenticationFilter {
     public void issueSuccessRedirect(ServletRequest request, ServletResponse response)throws Exception {
 
         //将原始的successUrl写死
-        String SUCCESSURL = "/home";
+        String SUCCESSURL = "/deviceManage";
         WebUtils.issueRedirect(request, response, SUCCESSURL, null, true);
 
     }

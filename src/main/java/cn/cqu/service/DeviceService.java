@@ -39,4 +39,11 @@ public interface DeviceService {
      */
     int updateDevice(Device example);
 
+    /**
+     * 根据Id删除设备
+     * @param devId
+     * @return
+     */
+    int deleteDeviceById(String devId);
+
 }

@@ -83,6 +83,13 @@ public class DeviceController {
         return "deviceManage";
     }
 
+    @DeleteMapping
+    @ResponseBody
+    public  int deleteDeviceById(@RequestBody  String devId){
+        System.out.println(0);
+        return deviceService.deleteDeviceById(devId);
+    }
+
 
 
 }

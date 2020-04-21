@@ -112,7 +112,7 @@
                     <i class="mdi mdi-reload btn-icon-prepend"></i>
                     重置
                   </button>
-                  <button type="submit" class="btn btn-outline-danger btn-icon-text">
+                  <button type="button" class="btn btn-outline-danger btn-icon-text" data-toggle="modal" data-target="#deleteModal">
                     <i class="mdi mdi-close btn-icon-prepend"></i>
                     删除
                   </button>
@@ -122,6 +122,31 @@
           </div>
         </div>
       </div>
+
+    <!--删除确认模态框-->
+    <div class="modal fade " id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+          <span style="vertical-align: inherit;margin-left: auto;text-align: center">
+            是否确认删除?
+          </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="deleteInfo()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
       <!-- 公共底部引用 -->
       <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
 
@@ -149,7 +174,6 @@
       autoclose: true
     });
 
-
     $("#device_information").submit(function () {
       //判断表单数据是否为空
       var t = $('form').serializeArray();
@@ -162,6 +186,24 @@
     })
   });
 
+  function deleteInfo() {
+    var devId = $("#devId").val();
+    $.ajax({
+      url: '/device',
+      data:devId,
+      datatype:"json",
+      type: 'DELETE',
+      success: function(result) {
+        if(result==1){
+          $("#deleteModal").modal('hide');
+          toastr.success("删除成功!");
+          setTimeout(function(){
+            window.location.href='/deviceManage'
+          }, 1000);
+        }
+      }
+    });
+  }
 </script>
 </html>
 

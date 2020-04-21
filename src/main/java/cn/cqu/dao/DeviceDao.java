@@ -125,4 +125,12 @@ public interface DeviceDao {
  @Update("update t_device set type_id =#{typeId},brand_id =#{brandId},dev_model=#{devModel},purchase_time=#{purchaseTime},erp_code=#{erpCode},last_Upate=#{lastUpate} where dev_id=#{devId}")
  int updateDevice(Device device);
 
+ /**
+  * 根据id删除设备
+  * @param devId
+  * @return
+  */
+ @Delete("delete from t_device where dev_id = #{devId}")
+ int deleteDeviceById(String devId);
+
 }
