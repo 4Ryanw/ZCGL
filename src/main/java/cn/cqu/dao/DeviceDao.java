@@ -126,6 +126,13 @@ public interface DeviceDao {
  int updateDevice(Device device);
 
  /**
+  *修改设备使用信息
+  * @param deviceUseage
+  * @return
+  */
+ int updateDeviceUseage(DeviceUseage deviceUseage);
+
+ /**
   * 根据id删除设备
   * @param devId
   * @return

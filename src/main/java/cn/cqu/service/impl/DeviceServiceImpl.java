@@ -95,4 +95,19 @@ public class DeviceServiceImpl implements DeviceService {
     public int deleteDeviceById(String devId) {
         return deviceDao.deleteDeviceById(devId);
     }
+
+    /**
+     * 修改设备状态
+     *
+     * @param devId
+     * @param status
+     * @return
+     */
+    @Override
+    public int updateStatusByid(String devId, int status) {
+        DeviceUseage deviceUseage = new DeviceUseage();
+        deviceUseage.setDevId(devId);
+        deviceUseage.setDevStatus(status);
+        return deviceDao.updateDeviceUseage(deviceUseage);
+    }
 }

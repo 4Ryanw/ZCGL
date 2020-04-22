@@ -88,29 +88,43 @@
 
               <div class="row">
 
-                <div class="col-md-3">
+                <div class="col-md-9">
                   <div class="form-group row">
                     <h4 class="myh4">设备状态</h4>
                     <input id="devStatus"  type='checkbox' class='device_status_switch' th:value="${deviceDTO.devStatus}" name='devStatus'>
                   </div>
                 </div>
-
-                <div class="col-md-3">
+              </div>
+              <div class="row" style="margin-bottom: 2rem">
+                <div class="col-md-9">
                   <div class="form-group row">
                     <h4>已分配使用人</h4>
                   </div>
+                  <span  style="font-weight: bold;margin-left: 2rem" th:each="user :${deviceDTO.userList}" th:text="${user.username}"></span>
                 </div>
+              </div>
 
-                <div class="col-md-3">
+              <div class="row" style="margin-bottom: 2rem">
+                <div class="col-md-9">
                   <div class="form-group row">
                     <h4>设备使用部门</h4>
                   </div>
+                  <h4> 一级部门: <small class="text-muted" th:text="${deviceDTO.depFri}"></small></h4>
+                  <h4> 二级部门: <small class="text-muted" th:text="${deviceDTO.depSec}"></small></h4>
+                  <h4> 物理位置: <small class="text-muted" th:text="${deviceDTO.address}"></small></h4>
                 </div>
+              </div>
 
-                <div class="col-md-3">
+              <div class="row" style="margin-bottom: 2rem">
+                <div class="col-md-9">
                   <div class="form-group row">
                     <h4>所属网络</h4>
                   </div>
+                  <small style="margin-left: 3rem" class="text-muted" th:text="${deviceDTO.ipAddress}"></small>
+                  <small style="margin-left: 3rem" class="text-muted" th:text="${deviceDTO.macAddress}"></small>
+                  <small class="text-muted" th:if="${deviceDTO.network==1}">信息外网</small>
+                  <small class="text-muted" th:if="${deviceDTO.network==2}">信息内网</small>
+                  <small class="text-muted" th:if="${deviceDTO.network==0}">未入网</small>
                 </div>
               </div>
 
@@ -202,6 +216,7 @@
         }
       }
     })
+    debugger;
     //初始化状态开关
     $("#devStatus").bootstrapSwitch({
       onText : "启用",      // 设置ON文本
@@ -209,20 +224,20 @@
       onColor : "success",// 设置ON文本颜色(info/success/warning/danger/primary)
       offColor : "danger",  // 设置OFF文本颜色 (info/success/warning/danger/primary)
       size : "small",    // 设置控件大小,从小到大  (mini/small/normal/large)
-      state:($(this).val()==1?true:false),
+      state:($("#devStatus").val()==1?true:false),
       // 当开关状态改变时触发
       onSwitchChange : function(event, state) {
-        var status;
+        var status ;
         if (state == true) {
           status = 1;
         } else {
           status = 0;
         }
         $.ajax({
-          url: "/account/status",
+          url: "/device/status",
           type: "PUT",
           data:{
-            "uuid": devId,
+            "devId": devId,
             "status":status
           },
           dataType: "json",

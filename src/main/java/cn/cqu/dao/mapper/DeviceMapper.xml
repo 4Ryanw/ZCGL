@@ -44,7 +44,17 @@
                 AND d.dev_id = #{devId}
             </if>
         </where>
-
-
     </select>
+
+    <update id="updateDeviceUseage">
+        UPDATE
+        t_device_usage
+        SET
+        <if test ="devStatus !=null and devId!=''">
+            dev_status = #{devStatus}
+        </if>
+
+        WHERE
+            dev_id = #{devId}
+    </update>
 </mapper>

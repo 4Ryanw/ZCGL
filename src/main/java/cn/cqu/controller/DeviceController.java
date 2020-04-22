@@ -83,11 +83,28 @@ public class DeviceController {
         return "deviceManage";
     }
 
+    /**
+     * 根据id删除设备
+     * @param devId
+     * @return
+     */
     @DeleteMapping
     @ResponseBody
     public  int deleteDeviceById(@RequestBody  String devId){
         System.out.println(0);
         return deviceService.deleteDeviceById(devId);
+    }
+
+    /**
+     * 修改设备状态
+     * @param devId
+     * @param status
+     * @return
+     */
+    @PutMapping("/status")
+    @ResponseBody
+    public int updateStatus(String devId,int status){
+        return deviceService.updateStatusByid(devId,status);
     }
 
 
