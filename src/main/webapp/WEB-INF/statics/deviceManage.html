@@ -137,7 +137,7 @@
         <!-- 操作按钮组-->
         <div class="btn-group" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-primary" onclick= editInfo()>编辑</button>
-          <button type="button" class="btn btn-danger">分配</button>
+          <button type="button" class="btn btn-danger" onclick="allotDev()">分配</button>
           <button type="button" class="btn btn-success" >域管理</button>
         </div>
       </div>
@@ -215,11 +215,20 @@
   function detailSearch() {
     $("#detailSearch").slideToggle();
   }
+
   function editInfo() {
     if(selectedObj){
       var devId = $(selectedObj).children("#uuId").attr("value");
       window.location.href ='/editDevice/'+devId;
-      // $.get('/editDevice/'+devId);
+    }else {
+      toastr.warning("请选择一条数据")
+    }
+  }
+
+  function allotDev(){
+    if(selectedObj){
+      var devId = $(selectedObj).children("#uuId").attr("value");
+      window.location.href ='/allotDevice/'+devId;
     }else {
       toastr.warning("请选择一条数据")
     }

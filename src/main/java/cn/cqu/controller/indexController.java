@@ -101,6 +101,13 @@ public class indexController {
           map.put("deviceTypeList",deviceTypeList);
           return "editDevice";
     }
+
+    @GetMapping("/allotDevice/{devId}")
+    public String allotDevice(ModelMap map,@PathVariable String devId){
+        DeviceDTO deviceDTO = deviceService.getDeviceDtoById(devId);
+        map.put("deviceDTO",deviceDTO);
+        return "allotDevice";
+    }
     //系统管理
     @GetMapping("/system")
     public void system(){}

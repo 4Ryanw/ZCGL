@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
+
+  <!--  meta 标签 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>台账管理系统</title>
+</head>
+<body>
+<div class="container-scroller">
+  <!-- 公共头部引用 -->
+  <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"   th:include="/pages/commons/header::common_head"></nav>
+  <!-- 主体流式布局 -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- 导航边条 -->
+    <nav  class="sidebar sidebar-offcanvas" th:include="/pages/commons/sidebar::common_sidebar" ></nav>
+
+    <!-- 主体部分 -->
+    <div class="main-panel">
+      <!--标题-->
+      <button style="border: none;width:7rem" class="btn btn-outline-dark btn-icon-text" onclick="window.location.href='/deviceManage'">
+        <i class="mdi mdi-step-backward btn-icon-prepend"></i>
+        <span class="d-inline-block text-left">返回</span>
+      </button>
+      <p class="mytitle">
+        设备分配
+      </p>
+      <!--内容-->
+      <div class="content-wrapper">
+        <div class="card">
+          <div class="card-body">
+            <form id="device_info" class="form-sample">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备标识</label>
+                    <div class="col-sm-6">
+                      <input type="text" id="devId" name="devId" class="form-control" th:value="${deviceDTO.devId}" readonly="readonly">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">ERP编码</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="erpCode" class="form-control" th:value="${deviceDTO.erpCode}" readonly="readonly">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备类型</label>
+                      <div class="col-sm-6">
+                        <input type="text" class="form-control" th:value="${deviceDTO.type}" readonly="readonly">
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备品牌</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" th:value="${deviceDTO.brand}" readonly="readonly"></input>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">购买日期</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" name="purchaseTime"
+                             th:value="${#dates.format(deviceDTO.purchaseTime, 'yyyy-MM-dd HH:mm')}" readonly="readonly">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">设备型号</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="devModel" class="form-control" th:value="${deviceDTO.devModel}" readonly="readonly">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <h4 class="myh4">设备状态</h4>
+                    <input id="devStatus"  type='checkbox' class='device_status_switch' th:value="${deviceDTO.devStatus}" name='devStatus'>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <h4>已分配使用人</h4>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <h4>设备使用部门</h4>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <h4>所属网络</h4>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-7"></div>
+                <div class="template-demo mt-2">
+                  <button type="submit" class="btn btn-outline-success btn-icon-text">
+                    <i class="mdi mdi-file-check btn-icon-prepend"></i>
+                    提交
+                  </button>
+                  <button type="button" class="btn btn-outline-info btn-icon-text" onclick="
+                    $('#device_info')[0].reset();
+                      ">
+                    <i class="mdi mdi-reload btn-icon-prepend"></i>
+                    重置
+                  </button>
+                  <button type="button" class="btn btn-outline-danger btn-icon-text" data-toggle="modal" data-target="#deleteModal">
+                    <i class="mdi mdi-close btn-icon-prepend"></i>
+                    删除
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+    <!--删除确认模态框-->
+    <div class="modal fade " id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+          <span style="vertical-align: inherit;margin-left: auto;text-align: center">
+            是否确认删除?
+          </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="deleteInfo()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+      <!-- 公共底部引用 -->
+      <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
+
+
+  </div>
+</div>
+</div>
+</body>
+<!-- 公共js引用 -->
+<div th:replace="/pages/commons/footer::common_js"></div>
+<!--其他js引用-->
+<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<!-- 自定义jS -->
+<script>
+  //全局变量
+  var devId =  $("#devId").val();
+  /*初始化*/
+  $(document).ready(function(){
+    /* 日期选择插件*/
+    $(".timepicker").datetimepicker({
+      bootcssVer:3, //bootstrap 版本
+      format: 'yyyy-mm-dd',
+      language:'zh-CN',
+      minView: 2,
+      autoclose: true
+    });
+    //表单提交触发函数
+    $("#device_info").submit(function () {
+      //判断表单数据是否为空
+      var t = $('form').serializeArray();
+      for (var i = 0; i < t.length; i++) {
+        if(t[i]['value']==''){
+          toastr.error("表格信息不全!");
+          return false
+        }
+      }
+    })
+    //初始化状态开关
+    $("#devStatus").bootstrapSwitch({
+      onText : "启用",      // 设置ON文本
+      offText : "停用",    // 设置OFF文本
+      onColor : "success",// 设置ON文本颜色(info/success/warning/danger/primary)
+      offColor : "danger",  // 设置OFF文本颜色 (info/success/warning/danger/primary)
+      size : "small",    // 设置控件大小,从小到大  (mini/small/normal/large)
+      state:($(this).val()==1?true:false),
+      // 当开关状态改变时触发
+      onSwitchChange : function(event, state) {
+        var status;
+        if (state == true) {
+          status = 1;
+        } else {
+          status = 0;
+        }
+        $.ajax({
+          url: "/account/status",
+          type: "PUT",
+          data:{
+            "uuid": devId,
+            "status":status
+          },
+          dataType: "json",
+          success: function(data) {
+            if(data==1)
+              toastr.success("修改成功");
+            else
+              toastr.error("服务器异常");
+          }
+        });
+      }
+    })
+  });
+
+  function deleteInfo() {
+    $.ajax({
+      url: '/device',
+      data:devId,
+      datatype:"json",
+      type: 'DELETE',
+      success: function(result) {
+        if(result==1){
+          $("#deleteModal").modal('hide');
+          toastr.success("删除成功!");
+          setTimeout(function(){
+            window.location.href='/deviceManage'
+          }, 1000);
+        }
+      }
+    });
+  }
+</script>
+</html>
+
