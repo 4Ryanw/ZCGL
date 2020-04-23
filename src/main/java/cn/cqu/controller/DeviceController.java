@@ -43,6 +43,12 @@ public class DeviceController {
         return "deviceList::modal-refresh";
     }
 
+    /**
+     * 新增设备
+     * @param request
+     * @return
+     * @throws ParseException
+     */
     @PostMapping
     public String addDevice(HttpServletRequest request) throws ParseException {
         Device device = new Device();
@@ -54,10 +60,16 @@ public class DeviceController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         device.setPurchaseTime(sdf.parse(request.getParameter("purchaseTime")));
         device.setLastUpate(new Date());
+        //新增设备基本信息时,触发器会自动新增设备使用信息和运行信息
         deviceService.addDevice(device);
         return "deviceManage";
     }
 
+    /**
+     * 检查设备id是否重复
+     * @param devId
+     * @return
+     */
     @GetMapping("/checkDevId")
     @ResponseBody
     public int checkDevId(String devId){
@@ -68,6 +80,12 @@ public class DeviceController {
             return 1;
     }
 
+    /**
+     * 修改设备基础信息
+     * @param request
+     * @return
+     * @throws ParseException
+     */
     @PutMapping("/baseInfo")
     public String updateDevicveBaseInfo(HttpServletRequest request) throws ParseException {
         Device device = new Device();
@@ -91,7 +109,6 @@ public class DeviceController {
     @DeleteMapping
     @ResponseBody
     public  int deleteDeviceById(@RequestBody  String devId){
-        System.out.println(0);
         return deviceService.deleteDeviceById(devId);
     }
 
