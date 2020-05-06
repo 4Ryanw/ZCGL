@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.cqu.pojo.Account;
 import cn.cqu.service.AccountService;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * 账户service,处理业务逻辑
@@ -88,5 +89,36 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public int updateStatusByid(String uuid, int status) {
         return accountDao.updateStatusByUUId(uuid,status);
+    }
+
+    /**
+     * 设备持有者列表
+     *
+     * @param devId
+     * @return
+     */
+    @Override
+    public Map listOwenrByDevId(String devId) {
+        List<AccountDTO> allList =accountDao.listAccount();
+        List<Account> ownerList =  accountDao.listUserByDeviceId(devId);
+        List<String> ownerIdList = new ArrayList();
+        for (Account owner:ownerList
+             ) {
+           ownerIdList.add(owner.getUuid());
+        };
+        //剔除设备持有者
+        Iterator  iterator = allList.iterator();
+        while(iterator.hasNext()){
+            AccountDTO accountDTO = (AccountDTO) iterator.next();
+            String id =  accountDTO.getUuid();
+            if (ownerIdList.contains(id)){
+                iterator.remove();
+            }
+        }
+
+        Map resMap = new HashMap();
+        resMap.put("ownerList",ownerList);
+        resMap.put("allList",allList);
+        return resMap;
     }
 }

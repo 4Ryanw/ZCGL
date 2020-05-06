@@ -4,6 +4,7 @@ import cn.cqu.pojo.Account;
 import cn.cqu.pojo.dto.AccountDTO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 账户service接口
@@ -46,4 +47,11 @@ public interface AccountService {
      * @return
      */
     int updateStatusByid(String uuid,int status);
+
+    /**
+     * 设备持有者列表
+     * @return
+     */
+    Map listOwenrByDevId(String devId);
+
 }

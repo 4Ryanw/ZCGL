@@ -9,6 +9,7 @@ import cn.cqu.pojo.Account;
 import cn.cqu.service.AccountService;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/account")
@@ -37,6 +38,20 @@ public class AccountController {
        List<AccountDTO> accountList = accountService.listAccount();
         map.put("accountDTOList", accountList);
         return "account::table-refresh";
+    }
+
+
+    /**
+     * 获取设备使用人信息
+     * @param map
+     * @param devId
+     * @return
+     */
+    @GetMapping("/ownerList")
+    public String getOwnerList(ModelMap map, String devId){
+        Map resMap  = accountService.listOwenrByDevId(devId);
+        map.put("ownerMap", resMap);
+        return "allotDevice::list-refresh";
     }
 
     /**

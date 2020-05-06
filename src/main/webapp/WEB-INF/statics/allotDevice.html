@@ -52,7 +52,7 @@
                 <div class="col-md-4">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">设备类型</label>
-                      <div class="col-sm-6">
+                      <div class="col-sm-9">
                         <input type="text" class="form-control" th:value="${deviceDTO.type}" readonly="readonly">
                       </div>
                   </div>
@@ -87,11 +87,10 @@
               </div>
 
               <div class="row">
-
                 <div class="col-md-9">
                   <div class="form-group row">
                     <h4 class="myh4">设备状态</h4>
-                    <input id="devStatus"  type='checkbox' class='device_status_switch' th:value="${deviceDTO.devStatus}" name='devStatus'>
+                    <input id="devStatus"  type='checkbox'  th:value="${deviceDTO.devStatus}" name='devStatus'>
                   </div>
                 </div>
               </div>
@@ -101,14 +100,14 @@
                     <div class="form-group row">
                       <h4>已分配使用人</h4>
                       <button type="button" class="btn btn-outline-primary btn-icon-text"
-                              data-toggle="modal" data-target="#userModal"
-                              style="padding: 0.25rem 1rem;margin-left: 1rem;text-align: center">
+                              onclick="getOwnerList()"
+                              style="padding: 0.25rem 1rem;margin-left: 1rem;text-align: center" >
                       <i class="mdi mdi-account-multiple-plus"></i>
                       新增
                     </button>
                     </div>
                     <span th:if="${#lists.isEmpty(deviceDTO.userList)}">暂无</span>
-                    <span  style="font-weight: bold;margin-left: 2rem" th:each="user :${deviceDTO.userList}" th:text="${user.username}"></span>
+<!--                    <span th:if="!${#lists.isEmpty(deviceDTO.userList)}" style="font-weight: bold;margin-left: 2rem" th:each="user :${deviceDTO.userList}" th:text="${user.username}"></span>-->
                   </div>
                 </div>
 
@@ -174,27 +173,104 @@
 
     <!--分配使用人模态框-->
     <div class="modal fade " id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog"  th:if="${ownerMap != null}"  th:fragment="list-refresh">
+            <div class="modal-content" style="width: 600px">
                 <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">更改分配人员</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
                 </div>
                 <div class="modal-body">
-                  <div id="userList" style="overflow-y: scroll">
-                    <span th:value="${userList.username}"></span>
+                  <div id="userList" class="row">
+                      <div class="col-5" style="border: #c9c8c8 solid 1px">
+                          <div class="form-check form-check-flat form-check-primary">
+                              <label class="form-check-label">
+                                  <input type="checkbox" class="form-check-input">
+                                  全部人员
+                                  <i class="input-helper"></i></label>
+                          </div>
+                          <!--搜索条-->
+                          <div class="row">
+                              <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12">
+                                  <div class="form-group">
+                                      <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-magnify"></i>
+                                                </span>
+                                          <input type="text" id="search" name="search" class="form-control" placeholder="关键词搜索">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                            <!--全部用户列表-->
+                              <ul>
+                                 <li  th:each="user : ${ownerMap['allList']}" >
+                                     <div class="form-check form-check-flat form-check-primary">
+                                         <label class="form-check-label">
+                                             <input  name="addOwner" type="checkbox" class="form-check-input"
+                                             th:text="${user.username}+'/'+ ${user.userId}" th:value="${user.uuid}">
+                                             <i class="input-helper"></i>
+                                         </label>
+                                     </div>
+                                 </li>
+                              </ul>
+
+                      </div>
+                      <!--添加/删除人员按钮-->
+                      <div class="col-2" style="display:flex;justify-content:center;align-items:center;">
+                          <div style="text-align: center" >
+                              <button class="btn btn-outline-primary btn-fw" onclick="addOwner()" style="margin-bottom: 1rem"> >> </button>
+                              <button class="btn btn-outline-primary btn-fw"> << </button>
+                          </div>
+                      </div>
+
+                      <div class="col-5" style="border: #c9c8c8 solid 1px">
+
+                          <div class="form-check form-check-flat form-check-primary">
+                              <label class="form-check-label">
+                                  <input type="checkbox" class="form-check-input">
+                                  使用人员
+                                  <i class="input-helper"></i></label>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12">
+                                  <div class="form-group">
+                                      <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-magnify"></i>
+                                                </span>
+                                          <input type="text" id="search" name="search" class="form-control" placeholder="关键词搜索">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <ul>
+                              <li  th:each="user : ${ownerMap['ownerList']}" >
+                                  <div class="form-check form-check-flat form-check-primary">
+                                      <label class="form-check-label">
+                                          <input name="delOwner" type="checkbox" class="form-check-input"
+                                                 th:text="${user.username}+'/'+ ${user.userId}">
+                                          <i class="input-helper"></i></label>
+                                  </div>
+                              </li>
+                          </ul>
+
+                      </div>
                   </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="deleteInfo()">
+                    <button type="button" class="btn btn-danger" onclick="">
                         确定
                     </button>
                 </div>
             </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+        </div>
     </div>
       <!-- 公共底部引用 -->
       <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
@@ -273,22 +349,22 @@
     }
   });
 
-  function deleteInfo() {
-    $.ajax({
-      url: '/device',
-      data:devId,
-      datatype:"json",
-      type: 'DELETE',
-      success: function(result) {
-        if(result==1){
-          $("#deleteModal").modal('hide');
-          toastr.success("删除成功!");
-          setTimeout(function(){
-            window.location.href='/deviceManage'
-          }, 1000);
-        }
-      }
-    });
+    //获取持有者列表
+  function getOwnerList() {
+      var url = '/account/ownerList?devId='+devId;
+      $("#userModal").load(url,function(){
+          $('#userModal').modal('show');
+      });
+  }
+
+  //添加持有者
+  function addOwner(){
+      var owner_id =[];
+      $('input[name="addOwner"]:checked').each(function(){//遍历每一个名字为nodes的复选框，其中选中的执行函数
+          owner_id.push($(this).val());//将选中的值添加到数组owner_id中
+          $(this).parent().remove();
+      });
+      var groups = owner_id.join(",");
   }
 </script>
 </html>

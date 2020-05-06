@@ -44,7 +44,10 @@ public class indexController {
     public void index(){}
     //设备管理
     @GetMapping("/deviceManage")
-    public void deviceManage(){}
+    public void deviceManage(HttpServletRequest request){
+        String user = (String) SecurityUtils.getSubject().getPrincipal();
+        request.getSession().setAttribute("loginUser",user);
+    }
     //账户信息
     @GetMapping("/account")
     public void account(){}
