@@ -46,7 +46,6 @@ public interface DeviceService {
      */
     int deleteDeviceById(String devId);
 
-
     /**
      * 修改设备状态
      * @param devId
@@ -54,4 +53,12 @@ public interface DeviceService {
      * @return
      */
     int updateStatusByid(String devId, int status);
+
+    /**
+     * 更新设备持有者
+     * @param devId
+     * @param groups
+     * @return
+     */
+    int updateDevOwnersByDevId(String devId,String[] groups);
 }

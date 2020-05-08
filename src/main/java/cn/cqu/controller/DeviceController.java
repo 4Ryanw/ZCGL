@@ -124,6 +124,29 @@ public class DeviceController {
         return deviceService.updateStatusByid(devId,status);
     }
 
+    /**
+     * 添加设备持有者
+     * @return
+     */
+    @PutMapping("/owner")
+    @ResponseBody
+    public int updateDevOwner(HttpServletRequest request){
+        String devId = request.getParameter("devId");
+        String[] groups = request.getParameter("groups").split(",");
+        return  deviceService.updateDevOwnersByDevId(devId,groups);
+    };
 
+    /**
+     * 刷新使用信息模块
+     * @param map
+     * @param devId
+     * @return
+     */
+    @GetMapping("/useage_info")
+    public String allotDevice(ModelMap map,String devId){
+        DeviceDTO deviceDTO = deviceService.getDeviceDtoById(devId);
+        map.put("deviceDTO",deviceDTO);
+        return "allotDevice::useage_info";
+    }
 
 }
