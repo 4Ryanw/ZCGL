@@ -109,6 +109,12 @@ public class indexController {
     public String allotDevice(ModelMap map,@PathVariable String devId){
         DeviceDTO deviceDTO = deviceService.getDeviceDtoById(devId);
         map.put("deviceDTO",deviceDTO);
+
+        Organization example = new Organization();
+        example.setOrgLevel(1);
+        List<Organization> organizationList = organizationService.listOrganizationByExample(example);
+        map.put("parentOrg",organizationList);
+
         return "allotDevice";
     }
     //系统管理

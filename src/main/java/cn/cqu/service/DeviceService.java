@@ -61,4 +61,14 @@ public interface DeviceService {
      * @return
      */
     int updateDevOwnersByDevId(String devId,String[] groups);
+
+    /**
+     * 更新设备部门
+     * @param devId
+     * @param fri_org
+     * @param sec_org
+     * @param orgid_addr
+     * @return
+     */
+    int updateDevOrgsByDevId(String devId,String fri_org,String sec_org,String orgid_addr );
 }

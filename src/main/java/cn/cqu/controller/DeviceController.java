@@ -125,7 +125,7 @@ public class DeviceController {
     }
 
     /**
-     * 添加设备持有者
+     * 分配设备持有者
      * @return
      */
     @PutMapping("/owner")
@@ -134,6 +134,22 @@ public class DeviceController {
         String devId = request.getParameter("devId");
         String[] groups = request.getParameter("groups").split(",");
         return  deviceService.updateDevOwnersByDevId(devId,groups);
+    };
+
+
+    /**
+     * 分配设备使用部门
+     * @param request
+     * @return
+     */
+    @PutMapping("/org")
+    @ResponseBody
+    public int updateDevOrg(HttpServletRequest request){
+        String devId = request.getParameter("devId");
+        String fri_org = request.getParameter("fri_org");
+        String sec_org = request.getParameter("sec_org");
+        String orgid_addr = request.getParameter("orgid_addr");
+        return  deviceService.updateDevOrgsByDevId(devId,fri_org,sec_org,orgid_addr);
     };
 
     /**

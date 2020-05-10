@@ -105,7 +105,7 @@
                                   onclick="getOwnerList()"
                                   style="padding: 0.25rem 1rem;margin-left: 1rem;text-align: center" >
                           <i class="mdi mdi-account-multiple-plus"></i>
-                          新增
+                          分配
                         </button>
                         </div>
                         <span th:if="${#lists.isEmpty(deviceDTO.userList)}">暂无</span>
@@ -117,9 +117,12 @@
                       <div class="col-md-9">
                         <div class="form-group row">
                           <h4>设备使用部门</h4>
-                          <button type="button" class="btn btn-outline-primary btn-icon-text" style="padding: 0.25rem 1rem;margin-left: 1rem;text-align: center">
-                            <i class="mdi mdi-account-multiple-plus"></i>
-                            新增
+                          <button type="button" class="btn btn-outline-primary btn-icon-text"
+                                   data-toggle="modal" data-target="#orgModal"
+                                  onclick="onchangeSelect_add()"
+                                  style="padding: 0.25rem 1rem;margin-left: 1rem;text-align: center">
+                            <i class="mdi mdi mdi-library-plus"></i>
+                              分配
                           </button>
                         </div>
                         <span th:if ="${deviceDTO.depFri == null&&deviceDTO.depSec==null&&deviceDTO.address==null}">暂无</span>
@@ -134,8 +137,8 @@
                         <div class="form-group row">
                           <h4>所属网络</h4>
                           <button type="button" class="btn btn-outline-primary btn-icon-text" style="padding: 0.25rem 1rem;margin-left: 1rem;text-align: center">
-                            <i class="mdi mdi-account-multiple-plus"></i>
-                            新增
+                            <i class="mdi mdi mdi-plus-network"></i>
+                              分配
                           </button>
                         </div>
                         <small style="margin-left: 3rem" class="text-muted" th:text="${deviceDTO.ipAddress}"></small>
@@ -266,17 +269,62 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                    </button>
                     <button type="button" class="btn btn-danger" onclick="updateOwner()">
                         确定
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>
                 </div>
             </div><!-- /.modal-content -->
         </div>
     </div>
-      <!-- 公共底部引用 -->
-      <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
+    <!--分配部门模态框-->
+    <div class="modal fade" id="orgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" >分配部门</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <div class="input-group mb-3 col-md-8">
+                                    <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
+                                        <span class="input-group-text">一级部门</span>
+                                    </div>
+                                    <select id="fristOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" onchange="onchangeSelect_fri()">
+                                        <option value="0">请选择</option>
+                                        <option th:each="org : ${parentOrg}" th:text="${org.orgName}" th:value="${org.orgId}"></option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3 col-md-8">
+                                    <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
+                                        <span class="input-group-text">二级部门</span>
+                                    </div>
+                                    <select id="secondOrg_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" onchange="onchangeSelect_sec()">
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3 col-md-8">
+                                    <div class="input-group-append " style="height: calc(1.5em + 0.75rem + 2px)">
+                                        <span class="input-group-text">物理位置</span>
+                                    </div>
+                                    <select id="address_add" style="background:none;" class="custom-select" title="--请选择--" data-size="5" >
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" onclick="updateOrg()">确定</button>
+                        <button type="button" class="btn btn-default " data-dismiss="modal" aria-hidden="true">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- 公共底部引用 -->
+    <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
 
 
   </div>
@@ -381,7 +429,7 @@
               };
           })
       })
-  }
+  };
 
     //获取持有者列表
   function getOwnerList() {
@@ -390,7 +438,7 @@
           allpick();
           $('#userModal').modal('show');
       });
-  }
+  };
 
   //添加持有者
   function addOwner(){
@@ -403,7 +451,7 @@
           allpick()
           $(this).parent().remove();
       });
-  }
+  };
 
   //删除持有者
   function delOwner(){
@@ -414,17 +462,16 @@
           allpick()
           $(this).parent().remove();
       });
-  }
-
+  };;
   //加载使用信息模块
   function loadUseInfo(){
       var url = '/device/useage_info?devId='+devId;
       $("#dev_useage_info").load(url,function(){
           allpick();
       });
-  }
+  };
   //确定更改持有者
-    function updateOwner(){
+  function updateOwner(){
         var owner_id =[];
         $('input[name="delOwner"]').each(function() {//遍历每一个名字为nodes的复选框，其中选中的执行函数
               owner_id.push($(this).val());//将选中的值添加到数组owner_id中
@@ -449,6 +496,90 @@
 
       });
     };
+  //重置查询条件
+  function initexample() {
+      example = {
+          "orgId": null,
+          "orgName":null,
+          "orgParentId":null,
+          "orgLevel":null,  //物理位置
+      };
+  }
+  //绑定级联下拉框
+  function onchangeSelect_fri() {
+      initexample();
+      example.orgLevel = 2;
+      if($("#fristOrg_add").val()!= "all" ){
+          example.orgParentId = $("#fristOrg_add").val();
+      }
+      $.post('/organization/sub/list',example, function(result){
+          if(result.length>0){
+              $("#secondOrg_add").attr("disabled",false);
+              var  optionHtml ='';
+              for(var i=0;i<result.length;i++){
+                  optionHtml+="<option value="+result[i].orgId+" >"+result[i].orgName+"</option>";
+              }
+
+          }else {
+              optionHtml = "<option>暂无数据</option>"
+              $("#secondOrg_add").attr("disabled",true);
+          }
+          jQuery("#secondOrg_add").html(optionHtml);
+          onchangeSelect_sec()
+      });
+
+  }
+  //绑定级联下拉框-二级部门
+  function onchangeSelect_sec() {
+      initexample();
+      example.orgLevel = 3;
+      if($("#secondOrg_add").val()!= "all" ){
+          example.orgParentId = $("#secondOrg_add").val();
+      }
+      $.post('/organization/sub/list',example, function(result){
+          if(result.length>0){
+              $("#address_add").attr("disabled",false);
+              var  optionHtml ='';
+              for(var i=0;i<result.length;i++){
+                  optionHtml+="<option value="+result[i].orgId+" >"+result[i].orgName+"</option>";
+              }
+          }else {
+              optionHtml = "<option>暂无数据</option>"
+              $("#address_add").attr("disabled",true);
+          }
+          jQuery("#address_add").html(optionHtml);
+      });
+
+  }
+  //确定修改部门
+  function updateOrg(){
+      var orgid_fri= $("#fristOrg_add").val();
+      var orgid_sec = $("#secondOrg_add").val();
+      var orgid_addr = $("#address_add").val();
+      if (orgid_fri == '0'){
+          toastr.warning("请选择一级部门");
+          return;
+      }
+      $.ajax({
+          url: "/device/org",
+          type: "PUT",
+          data:{
+              "devId": devId,
+              "fri_org":orgid_fri,
+              "sec_org":orgid_sec,
+              "orgid_addr":orgid_addr,
+          },
+          success: function(data) {
+              if (data ==1 )
+                  toastr.success("修改成功");
+              else
+                  toastr.error("服务器异常");
+              $('#orgModal').modal('hide');
+              loadUseInfo();
+          }
+
+      });
+  };
 
 </script>
 </html>

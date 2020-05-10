@@ -154,4 +154,23 @@ public class DeviceServiceImpl implements DeviceService {
         }
 
     }
+
+    /**
+     * 更新设备部门
+     *
+     * @param devId
+     * @param fri_org
+     * @param sec_org
+     * @param orgid_addr
+     * @return
+     */
+    @Override
+    public int updateDevOrgsByDevId(String devId, String fri_org, String sec_org, String orgid_addr) {
+        DeviceUseage example = new DeviceUseage();
+        example.setDevId(devId);
+        example.setDepFri(fri_org);
+        example.setDepSec(sec_org);
+        example.setAddress(orgid_addr);
+        return deviceDao.updateDeviceUseage(example);
+    }
 }

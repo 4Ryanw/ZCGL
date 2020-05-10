@@ -49,10 +49,20 @@
     <update id="updateDeviceUseage">
         UPDATE
         t_device_usage
-        SET
-        <if test ="devStatus !=null and devId!=''">
-            dev_status = #{devStatus}
-        </if>
+        <set>
+            <if test ="devStatus !=null and devStatus!=''">
+                dev_status = #{devStatus} ,
+            </if>
+            <if test ="depFri !=null and depFri!=''">
+                 dep_fri = #{depFri} ,
+            </if>
+            <if test ="depSec !=null and depSec!=''">
+                 dep_sec = #{depSec} ,
+            </if>
+            <if test ="address !=null and address!=''">
+                 address = #{address} ,
+            </if>
+        </set>
 
         WHERE
             dev_id = #{devId}

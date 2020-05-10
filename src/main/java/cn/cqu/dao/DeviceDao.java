@@ -79,7 +79,7 @@ public interface DeviceDao {
   * @param deviceUseage
   * @return
   */
- @Insert("insert into t_device values (#{devId},#{devStatus},#{domainStatus},#{depFri},#{depSec},#{depThir},#{network},#{address})")
+ @Insert("insert into t_device_usage values (#{devId},#{devStatus},#{domainStatus},#{depFri},#{depSec},#{depThir},#{network},#{address})")
  int insertDeviceUseage(DeviceUseage deviceUseage);
  /**
   * 插入设备运行信息
