@@ -71,4 +71,12 @@ public interface DeviceService {
      * @return
      */
     int updateDevOrgsByDevId(String devId,String fri_org,String sec_org,String orgid_addr );
+
+    /**
+     * 根据条件动态查询设备
+     * @param example
+     * @return
+     */
+    List<DeviceDTO> listDeviceDTOByexample(DeviceDTO example);
+
 }

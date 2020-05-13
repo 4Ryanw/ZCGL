@@ -362,14 +362,14 @@
       onColor : "success",// 设置ON文本颜色(info/success/warning/danger/primary)
       offColor : "danger",  // 设置OFF文本颜色 (info/success/warning/danger/primary)
       size : "small",    // 设置控件大小,从小到大  (mini/small/normal/large)
-      state:($("#devStatus").val()==1?true:false),
+      state:($("#devStatus").val()==2?true:false),
       // 当开关状态改变时触发
       onSwitchChange : function(event, state) {
         var status ;
         if (state == true) {
-          status = 1;
+          status = 2;
         } else {
-          status = 0;
+          status = 1;
         }
         $.ajax({
           url: "/device/status",
@@ -395,7 +395,7 @@
     })
 
     //初始化使用信息展示div
-    if($("#devStatus").val()==0){
+    if($("#devStatus").val()==1){
       $("#dev_useage_info").css("display","none");
     }
   });
@@ -521,7 +521,7 @@
               }
 
           }else {
-              optionHtml = "<option>暂无数据</option>"
+              optionHtml = "<option value='none'>暂无数据</option>"
               $("#secondOrg_add").attr("disabled",true);
           }
           jQuery("#secondOrg_add").html(optionHtml);
@@ -544,7 +544,7 @@
                   optionHtml+="<option value="+result[i].orgId+" >"+result[i].orgName+"</option>";
               }
           }else {
-              optionHtml = "<option>暂无数据</option>"
+              optionHtml = "<option value='none'>暂无数据</option>"
               $("#address_add").attr("disabled",true);
           }
           jQuery("#address_add").html(optionHtml);

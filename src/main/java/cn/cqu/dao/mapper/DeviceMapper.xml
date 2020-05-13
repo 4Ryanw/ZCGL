@@ -38,10 +38,52 @@
         left join t_organization o3 on u.address = o3.org_id
         <where>
             <if test ="devId !=null and devId!=''">
-                d.dev_id = #{devId}
+                d.dev_id like "%"#{devId}"%"
             </if>
-            <if test ="devId !=null and devId!=''">
-                AND d.dev_id = #{devId}
+            <if test ="typeId !=null and typeId!=''">
+                AND d.type_id = #{typeId}
+            </if>
+            <if test ="brandId !=null and brandId!=''">
+                AND d.brand_id = #{brandId}
+            </if>
+            <if test ="devModel !=null and devModel!=''">
+                AND d.dev_model = #{devModel}
+            </if>
+            <if test ="erpCode !=null and erpCode!=''">
+                AND d.erp_code = #{erpCode}
+            </if>
+            <if test ="lastUpate !=null and lastUpate!=''">
+                AND d.last_Upate = #{lastUpate}
+            </if>
+            <if test ="purchaseTime !=null and purchaseTime!=''">
+                AND d.purchase_time = #{purchaseTime}
+            </if>
+            <if test ="devStatus !=null and devStatus!=''">
+                AND u.dev_status = #{devStatus}
+            </if>
+            <if test ="domainStatus !=null and domainStatus!=''">
+                AND u.domain_state = #{domainStatus}
+            </if>
+            <if test ="network !=null and network!=''">
+                AND u.network = #{network}
+            </if>
+            <if test ="cpuInfo !=null and cpuInfo!=''">
+                AND r.cpu_info = #{cpuInfo}
+            </if>
+            <if test ="hdSize !=null and hdSize!=''">
+                AND r.hd_size = #{hdSize}
+            </if>
+            <if test ="ipAddress !=null and ipAddress!=''">
+                AND r.ip_address = #{ipAddress}
+            </if>
+            <if test ="macAddress !=null and macAddress!=''">
+                AND r.mac_address = #{macAddress}
+            </if>
+            <if test ="memoryInfo !=null and memoryInfo!=''">
+                AND r.memory_Info = #{memoryInfo}
+            </if>
+            <if test ="systemVersion !=null and systemVersion!=''">
+                AND r.system_version = #{systemVersion}
             </if>
         </where>
     </select>
@@ -56,10 +98,16 @@
             <if test ="depFri !=null and depFri!=''">
                  dep_fri = #{depFri} ,
             </if>
-            <if test ="depSec !=null and depSec!=''">
+            <if test =" depSec == 'none' ">
+                dep_sec = null ,
+            </if>
+            <if test ="depSec !=null and depSec!='' and depSec != 'none' ">
                  dep_sec = #{depSec} ,
             </if>
-            <if test ="address !=null and address!=''">
+            <if test =" address == 'none' ">
+                address = null ,
+            </if>
+            <if test ="address !=null and address!='' and address != 'none' ">
                  address = #{address} ,
             </if>
         </set>

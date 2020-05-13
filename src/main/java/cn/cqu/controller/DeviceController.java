@@ -31,6 +31,20 @@ public class DeviceController {
         map.put("dtoList", deviceDTOList);
         return pageName+"::table-refresh";
     }
+
+
+    /**
+     * 按条件查询设备
+     * @param map
+     * @param pageName
+     * @return
+     */
+    @PostMapping("/list")
+    public String listDeviceDTOByExample(ModelMap map,DeviceDTO example,String pageName,String userName){
+      List<DeviceDTO> deviceDTOList = deviceService.listDeviceDTOByexample(example);
+      map.put("dtoList", deviceDTOList);
+      return pageName+"::table-refresh";
+    };
     /**
      * 根据id获取设备信息
      * @param map

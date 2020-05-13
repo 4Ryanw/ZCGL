@@ -173,4 +173,20 @@ public class DeviceServiceImpl implements DeviceService {
         example.setAddress(orgid_addr);
         return deviceDao.updateDeviceUseage(example);
     }
+
+    /**
+     * 根据条件动态查询设备
+     *
+     * @param example
+     * @return
+     */
+    @Override
+    public List<DeviceDTO> listDeviceDTOByexample(DeviceDTO example) {
+        List<DeviceDTO> deviceDTOList = deviceDao.listDeviceDtoByExample(example);
+        for (DeviceDTO deviceDTO: deviceDTOList
+             ) {
+            deviceDTO.setUserList(accountDao.listUserByDeviceId(deviceDTO.getDevId()));
+        }
+        return deviceDTOList;
+    }
 }

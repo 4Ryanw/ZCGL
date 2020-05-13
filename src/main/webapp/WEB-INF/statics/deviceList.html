@@ -35,12 +35,12 @@
                           <i class="mdi mdi-magnify"></i>
                         </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="输入设备标识搜索" aria-label="search" aria-describedby="search">
+                    <input type="text" id="detailSearch_devId2" class="form-control" placeholder="输入设备标识搜索" aria-label="search" aria-describedby="search">
                   </div>
                 </li>
               </ul>
               <div class="d-flex justify-content-between align-items-end flex-wrap" style="float: right">
-                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0">
+                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="search()">
                   <a><i class="mdi mdi-magnify"></i> 搜索</a>
                 </button>
                 <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="advancedSearch()">
@@ -59,34 +59,26 @@
               <div class="input-group-append ">
                 <span class="input-group-text" >设备标识</span>
               </div>
-              <input type="text" class="form-control" placeholder="输入设备标识" aria-label="设备标识" aria-describedby="basic-addon2">
+              <input type="text" id="detailSearch_devId" class="form-control" placeholder="输入设备标识" aria-label="设备标识" aria-describedby="basic-addon2">
             </div>
 
             <div class="input-group mb-3 col-md-3">
               <div class="input-group-append ">
                 <span class="input-group-text" >设备类型</span>
               </div>
-              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-                <option>B</option>
-                <option>C</option>
-                <option>D</option>
-                <option>E</option>
-                <option>B</option>
-                <option>C</option>
+              <select id="detailSearch_devType"  class="custom-select select-append" title="--请选择--"  data-size="5">
+                <option value="">全部</option>
+                <option th:each="type :${deviceTypeList}" th:text="${type.type}" th:value="${type.typeId}"></option>
               </select>
             </div>
 
             <div class="input-group mb-3 col-md-3">
               <div class="input-group-append ">
-                <span class="input-group-text" >设备品牌&nbsp&nbsp</span>
+                <span class="input-group-text" >设备品牌&nbsp</span>
               </div>
-              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-                <option>B</option>
-                <option>C</option>
-                <option>D</option>
-                <option>E</option>
-                <option>B</option>
-                <option>C</option>
+              <select id="detailSearch_devBrand" class="custom-select select-append" title="--请选择--"  data-size="5">
+                <option value="">全部</option>
+                <option th:each="brand :${deviceBrandList}" th:text="${brand.brand}" th:value="${brand.brandId}"></option>
               </select>
             </div>
           </div>
@@ -96,20 +88,16 @@
               <div class="input-group-append ">
                 <span class="input-group-text" >购买时间</span>
               </div>
-              <input type="text" class="form-control timepicker" placeholder="选择时间">
+              <input id="detailSearch_purchaseTime" type="text" class="form-control timepicker" placeholder="选择时间">
             </div>
 
             <div class="input-group mb-3 col-md-3">
               <div class="input-group-append ">
                 <span class="input-group-text" >一级部门</span>
               </div>
-              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-                <option>B</option>
-                <option>C</option>
-                <option>D</option>
-                <option>E</option>
-                <option>B</option>
-                <option>C</option>
+              <select id="detailSearch_friOrg" class="custom-select select-append" title="--请选择--"  onchange="onchangeSelect_fri()" data-size="5">
+                <option value="">全部</option>
+                <option th:each="org :${parentOrg}" th:text="${org.orgName}" th:value="${org.orgId}"></option>
               </select>
             </div>
 
@@ -117,13 +105,7 @@
               <div class="input-group-append ">
                 <span class="input-group-text" >二级部门</span>
               </div>
-              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-                <option>B</option>
-                <option>C</option>
-                <option>D</option>
-                <option>E</option>
-                <option>B</option>
-                <option>C</option>
+              <select id="detailSearch_secOrg" style="background:none;" class="custom-select select-append" title="--请选择--"  data-size="5">
               </select>
             </div>
           </div>
@@ -133,14 +115,14 @@
               <div class="input-group-append ">
                 <span class="input-group-text" >使用人</span>
               </div>
-              <input type="text" class="form-control" placeholder="输入使用人" aria-label="使用人" aria-describedby="basic-addon2">
+              <input type="text" class="form-control" id="detailSearch_user" placeholder="输入使用人" aria-label="使用人" aria-describedby="basic-addon2">
             </div>
 
             <div class="input-group mb-3 col-md-3">
               <div class="input-group-append ">
                 <span class="input-group-text" >所属网络</span>
               </div>
-              <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
+              <select style="background:none;" class="custom-select select-append" title="--请选择--"  data-size="5">
                 <option>B</option>
                 <option>C</option>
                 <option>D</option>
@@ -154,7 +136,7 @@
               <div class="input-group-append ">
                 <span class="input-group-text" >设备标识</span>
               </div>
-              <input type="text" class="form-control" placeholder="输入MCC地址" aria-label="MCC地址" aria-describedby="basic-addon2">
+              <input type="text" class="form-control select-append" placeholder="输入MAC地址" aria-label="MCC地址" aria-describedby="basic-addon2">
             </div>
 
           </div>
@@ -204,7 +186,8 @@
                       <td th:text="${deviceDTO.depFri != null?deviceDTO.depFri:'无'}"></td>
                       <td th:text="${deviceDTO.depSec != null?deviceDTO.depSec:'无'}"></td>
                       <td th:text="${deviceDTO.address != null?deviceDTO.address:'无'}"></td>
-                      <td th:text="${deviceDTO.userList.size() >0?deviceDTO.userList:'无'}"></td>
+                      <td th:if="${#lists.isEmpty(deviceDTO.userList)}">暂无</td>
+                      <td th:if="!${#lists.isEmpty(deviceDTO.userList)}" th:text="${deviceDTO.userList}"></td>
                       <td th:text="${not #strings.isEmpty(deviceDTO.network)}?'无':${deviceDTO.network}"></td>
                       <td th:text="${deviceDTO.macAddress != null?deviceDTO.macAddress:'无'}"></td>
                       <td th:text="${deviceDTO.lastUpate != null?#dates.format(deviceDTO.lastUpate, 'yyyy-MM-dd HH:mm'):'无'}"></td>
@@ -260,11 +243,11 @@
                             <div class="row">
                               <div class="col-md-6 stretch-card">
                                 <span>设备状态</span>
-                                <input type="text" id="ieqState" disabled="true" th:value="${detailDTO!=null?(detailDTO.devStatus==1?'运行':'停用'):'无'}" >
+                                <input type="text" id="ieqState" disabled="true" th:value="${detailDTO!=null?(detailDTO.devStatus==2?'运行':'停用'):'无'}" >
                               </div>
                               <div class="col-md-6 stretch-card">
                                 <span>域状态</span>
-                                <input type="text" id="ieqDomainstate" disabled="true" th:value="${detailDTO!=null?(detailDTO.domainStatus==1?'运行':'停用'):'无'}">
+                                <input type="text" id="ieqDomainstate" disabled="true" th:value="${detailDTO!=null?(detailDTO.domainStatus==2?'已加域':'未加域'):'无'}">
                               </div>
                             </div>
                             <div class="row">
@@ -365,6 +348,7 @@
 <script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <!-- 自定义jS -->
 <script>
+  var searchFlag = false; //高级搜索标志
   var table_init_url = "/device/list/deviceList";//表格加载请求地址
   //重写绑定表格点击事件
   function initTr_onclick(){
@@ -392,7 +376,32 @@
 
   /*更多搜索*/
   function advancedSearch() {
+    searchFlag = !searchFlag;//切换搜索标志,决定搜索方式
     $("#advancedSearch").slideToggle();
+  }
+  //搜索按钮
+  function search(){
+    if(searchFlag){  //高级搜索
+      var example = {
+        "devId": $("#detailSearch_devId").val(),
+        "typeId":$("#detailSearch_devType").val(),
+        "brandId":$("#detailSearch_devBrand").val(),
+        "depFri":$("#detailSearch_friOrg").val(),
+        "depSec":$("#detailSearch_secOrg").val(),
+        "userName":$("#detailSearch_user").val(),
+        "pageName":"deviceList"
+      };
+
+      if($("#detailSearch_purchaseTime").val()!="")
+        example.purchaseTime=$("#detailSearch_purchaseTime").val();
+        searchByexample("/device/list",example);
+    }else {//id模糊搜索
+      var example = {
+        "devId":$("#detailSearch_devId2").val(),
+        "pageName":"deviceList"
+      }
+      searchByexample("/device/list",example);
+    }
   }
 
   /*设备详情*/
@@ -410,6 +419,30 @@
   function changeSortWay(obj){
     var value = $(obj).text();
     $("#sortWay-menu").text(value);
+  }
+
+  //绑定级联下拉框
+  function onchangeSelect_fri() {
+    var example ={};
+    example.orgLevel = 2;
+    if($("#detailSearch_friOrg").val()!= "all" ){
+      example.orgParentId = $("#detailSearch_friOrg").val();
+    }
+    $.post('/organization/sub/list',example, function(result){
+      if(result.length>0){
+        $("#detailSearch_secOrg").attr("disabled",false);
+        var  optionHtml ='';
+        for(var i=0;i<result.length;i++){
+          optionHtml+="<option value="+result[i].orgId+" >"+result[i].orgName+"</option>";
+        }
+
+      }else {
+        optionHtml = "<option>暂无数据</option>"
+        $("#secondOrg_add").attr("disabled",true);
+      }
+      jQuery("#detailSearch_secOrg").html(optionHtml);
+    });
+
   }
 </script>
 </html>

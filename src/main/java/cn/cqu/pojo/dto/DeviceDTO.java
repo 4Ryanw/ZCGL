@@ -1,6 +1,7 @@
 package cn.cqu.pojo.dto;
 
 import cn.cqu.pojo.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,28 +14,15 @@ public class DeviceDTO implements Serializable {
     //基础信息
     private String devId;
 
-    public String getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(String brandId) {
-        this.brandId = brandId;
-    }
-
     private String typeId;
     private String brandId;
     private String type;
     private String brand;
     private String devModel;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date purchaseTime;
+
     private String erpCode;
     private Date lastUpate;
     //使用信息
@@ -42,8 +30,8 @@ public class DeviceDTO implements Serializable {
     private String depSec;
     private String depThir;
     private String address;
-    private int devStatus;
-    private int domainStatus;
+    private int devStatus ;
+    private int domainStatus ;
     private int network;
 
     //运行信息
@@ -82,6 +70,21 @@ public class DeviceDTO implements Serializable {
 
     public void setDevId(String devId) {
         this.devId = devId;
+    }
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
     }
 
     public String getDevModel() {

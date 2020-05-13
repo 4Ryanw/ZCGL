@@ -33,12 +33,12 @@
                           <i class="mdi mdi-magnify"></i>
                         </span>
                   </div>
-                  <input type="text" class="form-control" placeholder="输入设备标识搜索" aria-label="search" aria-describedby="search">
+                  <input type="text" id="detailSearch_devId2" class="form-control" placeholder="输入设备标识搜索" aria-label="search" aria-describedby="search">
                 </div>
               </li>
             </ul>
             <div class="d-flex justify-content-between align-items-end flex-wrap" style="float: right">
-              <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0">
+              <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="search()">
                 <a><i class="mdi mdi-magnify"></i> 搜索</a>
               </button>
               <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="detailSearch()">
@@ -57,32 +57,24 @@
             <div class="input-group-append ">
               <span class="input-group-text" >设备标识</span>
             </div>
-            <input type="text" class="form-control" placeholder="输入设备标识" aria-label="设备标识" aria-describedby="basic-addon2">
+            <input id="detailSearch_devId" type="text" class="form-control" placeholder="输入设备标识" aria-label="设备标识" aria-describedby="basic-addon2">
           </div>
           <div class="input-group mb-3 col-md-3">
-            <div class="input-group-append ">
+            <div class="input-group-append">
               <span class="input-group-text" >设备类型</span>
             </div>
-            <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-              <option>B</option>
-              <option>C</option>
-              <option>D</option>
-              <option>E</option>
-              <option>B</option>
-              <option>C</option>
+            <select id="detailSearch_devType"  class="custom-select select-append" title="--请选择--"  data-size="5">
+              <option value="">全部</option>
+              <option th:each="type :${deviceTypeList}" th:text="${type.type}" th:value="${type.typeId}"></option>
             </select>
           </div>
           <div class="input-group mb-3 col-md-3">
             <div class="input-group-append ">
-              <span class="input-group-text" >设备品牌&nbsp&nbsp</span>
+              <span class="input-group-text" >设备品牌</span>
             </div>
-            <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-              <option>B</option>
-              <option>C</option>
-              <option>D</option>
-              <option>E</option>
-              <option>B</option>
-              <option>C</option>
+            <select id="detailSearch_devBrand" class="custom-select select-append" title="--请选择--"  data-size="5">
+              <option value="">全部</option>
+              <option th:each="brand :${deviceBrandList}" th:text="${brand.brand}" th:value="${brand.brandId}"></option>
             </select>
           </div>
         </div>
@@ -92,32 +84,26 @@
             <div class="input-group-append ">
               <span class="input-group-text" >购买时间</span>
             </div>
-            <input type="text" class="form-control timepicker" placeholder="选择时间">
+            <input id="detailSearch_purchaseTime" type="text" class="form-control timepicker" placeholder="选择时间">
           </div>
           <div class="input-group mb-3 col-md-3">
             <div class="input-group-append ">
               <span class="input-group-text" >使用状态</span>
             </div>
-            <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-              <option>B</option>
-              <option>C</option>
-              <option>D</option>
-              <option>E</option>
-              <option>B</option>
-              <option>C</option>
+            <select id="detailSearch_devStatus" class="custom-select select-append" title="--请选择--"  data-size="5">
+              <option value="all">全部</option>
+              <option value="2">运行</option>
+              <option value="1">停用</option>
             </select>
           </div>
           <div class="input-group mb-3 col-md-3">
             <div class="input-group-append ">
               <span class="input-group-text" >域管理状态</span>
             </div>
-            <select style="background:none;" class="custom-select" title="--请选择--"  data-size="5">
-              <option>B</option>
-              <option>C</option>
-              <option>D</option>
-              <option>E</option>
-              <option>B</option>
-              <option>C</option>
+            <select id="detailSearch_domainStatus" class="custom-select select-append" title="--请选择--"  data-size="5">
+              <option value="all">全部</option>
+              <option value="2">已加域</option>
+              <option value="1">未加域</option>
             </select>
           </div>
 
@@ -165,13 +151,13 @@
                   <tr class ="tr_sub" th:each="deviceDTO : ${dtoList}">
                     <td id="uuId" th:value="${deviceDTO.devId}"><input type="checkbox"/></td>
                     <td th:text="${deviceDTO.devId}"></td>
-                    <td th:text="${deviceDTO.type}">Jeremy Ortega</td>
-                    <td th:text="${deviceDTO.brand}">Levelled up</td>
-                    <td th:text="${deviceDTO.devModel}">Catalinaborough</td>
-                    <td th:text="${#dates.format(deviceDTO.purchaseTime, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${deviceDTO.erpCode}">Levelled up</td>
-                    <td th:text="${deviceDTO.devStatus}">Levelled up</td>
-                    <td th:text="${deviceDTO.domainStatus}">Levelled up</td>
+                    <td th:text="${deviceDTO.type}"></td>
+                    <td th:text="${deviceDTO.brand}"></td>
+                    <td th:text="${deviceDTO.devModel}"></td>
+                    <td th:text="${#dates.format(deviceDTO.purchaseTime, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${deviceDTO.erpCode}"></td>
+                    <td th:text="${deviceDTO.devStatus==1?'停用':'运行'}"></td>
+                    <td th:text="${deviceDTO.domainStatus==1?'未加域':'已加域'}"></td>
                   </tr>
                   </tbody>
                 </table>
@@ -196,6 +182,7 @@
 <script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <!-- 自定义jS -->
 <script>
+  var searchFlag = false; //高级搜索标志
   var table_init_url = "/device/list/deviceManage";//表格加载请求地址
   /*初始化*/
   $(document).ready(function(){
@@ -211,9 +198,37 @@
   });
 
 
-  /*更多搜索*/
+  /*更多搜索弹框*/
   function detailSearch() {
+    searchFlag = !searchFlag;//切换搜索标志,决定搜索方式
     $("#detailSearch").slideToggle();
+  }
+
+  //搜索按钮
+  function search(){
+    if(searchFlag){  //高级搜索
+     var example = {
+        "devId": $("#detailSearch_devId").val(),
+        "typeId":$("#detailSearch_devType").val(),
+        "brandId":$("#detailSearch_devBrand").val(),
+         "pageName":"deviceManage"
+      };
+
+     if($("#detailSearch_devStatus").val()!="all")
+         example.devStatus = $("#detailSearch_devStatus").val();
+     if($("#detailSearch_domainStatus").val()!="all")
+         example.domainStatus = $("#detailSearch_domainStatus").val();
+     if($("#detailSearch_purchaseTime").val()!="")
+         example.purchaseTime=$("#detailSearch_purchaseTime").val();
+
+        searchByexample("/device/list",example);
+    }else {//id模糊搜索
+      var example = {
+        "devId":$("#detailSearch_devId2").val(),
+        "pageName":"deviceManage"
+      }
+      searchByexample("/device/list",example);
+    }
   }
 
   function editInfo() {
@@ -233,6 +248,7 @@
       toastr.warning("请选择一条数据")
     }
   }
+
 </script>
 </html>
 

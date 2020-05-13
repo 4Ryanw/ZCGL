@@ -44,16 +44,29 @@ public class indexController {
     public void index(){}
     //设备管理
     @GetMapping("/deviceManage")
-    public void deviceManage(HttpServletRequest request){
+    public void deviceManage(HttpServletRequest request,ModelMap map){
         String user = (String) SecurityUtils.getSubject().getPrincipal();
         request.getSession().setAttribute("loginUser",user);
+        List<DeviceType> typeList = baseInfoService.listDeviceType();
+        List<DeviceBrand> deviceBrandList =  baseInfoService.listDeviceBrand();
+        map.put("deviceBrandList",deviceBrandList);
+        map.put("deviceTypeList",typeList);
     }
     //账户信息
     @GetMapping("/account")
     public void account(){}
     //设备台账
     @GetMapping("/deviceList")
-    public void deviceList(){}
+    public void deviceList(ModelMap map){
+        List<DeviceType> typeList = baseInfoService.listDeviceType();
+        List<DeviceBrand> deviceBrandList =  baseInfoService.listDeviceBrand();
+        Organization example = new Organization();
+        example.setOrgLevel(1);
+        List<Organization> organizationList = organizationService.listOrganizationByExample(example);
+        map.put("parentOrg",organizationList);
+        map.put("deviceBrandList",deviceBrandList);
+        map.put("deviceTypeList",typeList);
+    }
     //信息公告
     @GetMapping("/notice")
     public void noticeList(){}
