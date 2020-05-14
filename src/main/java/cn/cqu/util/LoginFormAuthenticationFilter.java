@@ -1,4 +1,4 @@
-package cn.cqu.filter;
+package cn.cqu.util;
 
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;

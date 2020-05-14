@@ -9,10 +9,15 @@ import cn.cqu.pojo.Device;
 import cn.cqu.pojo.DeviceUseage;
 import cn.cqu.pojo.dto.DeviceDTO;
 import cn.cqu.service.DeviceService;
+import cn.cqu.util.ExcelExportUtil;
+import org.apache.ibatis.annotations.Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -188,5 +193,81 @@ public class DeviceServiceImpl implements DeviceService {
             deviceDTO.setUserList(accountDao.listUserByDeviceId(deviceDTO.getDevId()));
         }
         return deviceDTOList;
+    }
+
+    /**
+     * 导出Excel
+     *
+     * @param response
+     * @param pageName
+     */
+    @Override
+    public void exportExcel(HttpServletResponse response, String pageName,String[] headers) {
+            String sheetName = "工作表1";
+            String fileName="" ;
+            List<DeviceDTO> deviceList = listDeviceDto();
+            List<String[]> dataList = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            //根据pageName不同 填充不同的数据
+        switch (pageName){
+            case  "deviceManage":
+                fileName = "设备管理报表";
+                for (DeviceDTO deviceDTO:deviceList
+                     ) {
+                    List<String> arr = new ArrayList();
+                    arr.add(deviceDTO.getDevId());
+                    arr.add(deviceDTO.getType());
+                    arr.add(deviceDTO.getBrand());
+                    arr.add(deviceDTO.getDevModel());
+                    arr.add(sdf.format(deviceDTO.getPurchaseTime()));
+                    arr.add(deviceDTO.getErpCode());
+                    arr.add(deviceDTO.getDevStatus()==1?"停用":"启用");
+                    arr.add(deviceDTO.getDomainStatus()==1?"未加域":"已加域");
+                    String[] arrStr = arr.toArray(new String[0]);
+                    dataList.add(arrStr);
+                };break;
+            case  "deviceList":
+                fileName = "设备台账报表";
+                for (DeviceDTO deviceDTO:deviceList
+            ) {
+                List<String> arr = new ArrayList();
+                arr.add(deviceDTO.getDevId());
+                arr.add(deviceDTO.getType());
+                arr.add(deviceDTO.getBrand());
+                arr.add(deviceDTO.getDevModel());
+                arr.add(sdf.format(deviceDTO.getPurchaseTime()));
+                arr.add(deviceDTO.getDepFri());
+                arr.add(deviceDTO.getDepSec());
+                arr.add(deviceDTO.getAddress());
+                arr.add(deviceDTO.getUserNameList());
+                arr.add(deviceDTO.getNetwork()==1?"内网":"外网");
+                arr.add(deviceDTO.getMacAddress());
+                arr.add(sdf2.format(deviceDTO.getLastUpate()));
+                String[] arrStr = arr.toArray(new String[0]);
+                dataList.add(arrStr);
+            };break;
+        }
+            ExcelExportUtil.downloadExcelFile(response,sheetName,headers,dataList,fileName);
+        }
+
+    /**
+     * 按用户名筛选设备
+     * @param dataList
+     * @param userName
+     * @return
+     */
+    public List<DeviceDTO> selectDeviceDTObyUserName(List<DeviceDTO> dataList,String userName) {
+        if (dataList != null) {
+            Iterator iterator = dataList.iterator();
+            while (iterator.hasNext()) {
+                DeviceDTO deviceDTO = (DeviceDTO) iterator.next();
+                String userNameList = deviceDTO.getUserNameList();
+                if (!userNameList.contains(userName)) {
+                    iterator.remove();
+                }
+            }
+        }
+        return dataList;
     }
 }

@@ -3,6 +3,7 @@ package cn.cqu.pojo.dto;
 import cn.cqu.pojo.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.xml.transform.Result;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -229,5 +230,20 @@ public class DeviceDTO implements Serializable {
 
     public void setUserList(List<Account> userList) {
         this.userList = userList;
+    }
+
+    public String getUserNameList(){
+        String names = "";
+        if (this.userList.size()>0){
+            for (Account account:this.userList
+                 ) {
+                names += account.getUsername();
+                names += " ";
+            }
+        }else {
+            names = "暂无";
+        }
+
+        return names;
     }
 }

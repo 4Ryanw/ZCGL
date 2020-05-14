@@ -44,7 +44,7 @@
               <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="detailSearch()">
                 <a><i class="mdi mdi-plus text-muted" id="detailSearchIcon"></i> 更多搜索</a>
               </button>
-              <button class="btn btn-primary mt-2 mt-xl-0">导出报表</button>
+              <button class="btn btn-primary mt-2 mt-xl-0" onclick="exportExcel('/device/exportExcel','deviceManage')">导出报表</button>
             </div>
           </div>
         </div>
@@ -231,6 +231,7 @@
     }
   }
 
+  //编辑信息
   function editInfo() {
     if(selectedObj){
       var devId = $(selectedObj).children("#uuId").attr("value");
@@ -240,6 +241,7 @@
     }
   }
 
+  //分配设备
   function allotDev(){
     if(selectedObj){
       var devId = $(selectedObj).children("#uuId").attr("value");

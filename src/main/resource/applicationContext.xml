@@ -57,7 +57,7 @@
         <property name="acquireRetryAttempts" value="2" />
     </bean>
     <!--securityManager 安全管理器-->
-    <bean id="loginFormAuthenticationFilter" class="cn.cqu.filter.LoginFormAuthenticationFilter"/>
+    <bean id="loginFormAuthenticationFilter" class="cn.cqu.util.LoginFormAuthenticationFilter"/>
     <!--realm 自定义域-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="userRealm"/>

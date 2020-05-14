@@ -6,9 +6,11 @@ import cn.cqu.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,6 +44,9 @@ public class DeviceController {
     @PostMapping("/list")
     public String listDeviceDTOByExample(ModelMap map,DeviceDTO example,String pageName,String userName){
       List<DeviceDTO> deviceDTOList = deviceService.listDeviceDTOByexample(example);
+      if(!StringUtils.isEmpty(userName)){
+          deviceDTOList = deviceService.selectDeviceDTObyUserName(deviceDTOList,userName);
+      }
       map.put("dtoList", deviceDTOList);
       return pageName+"::table-refresh";
     };
@@ -177,6 +182,18 @@ public class DeviceController {
         DeviceDTO deviceDTO = deviceService.getDeviceDtoById(devId);
         map.put("deviceDTO",deviceDTO);
         return "allotDevice::useage_info";
+    }
+
+    /**
+     * 导出表格
+     * @param response
+     * @param request
+     */
+    @GetMapping("/exportExcel")
+    public  void exportExcel(HttpServletRequest request,HttpServletResponse response){
+        String pageName = request.getParameter("pageName");
+        String[] headers = request.getParameter("headers").split(",");
+        deviceService.exportExcel(response,pageName,headers);
     }
 
 }

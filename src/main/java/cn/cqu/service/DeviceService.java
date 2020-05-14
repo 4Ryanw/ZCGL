@@ -4,6 +4,7 @@ package cn.cqu.service;
 import cn.cqu.pojo.Device;
 import cn.cqu.pojo.dto.DeviceDTO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -78,5 +79,20 @@ public interface DeviceService {
      * @return
      */
     List<DeviceDTO> listDeviceDTOByexample(DeviceDTO example);
+
+    /**
+     * 导出Excel
+     * @param response
+     * @param pageName
+     */
+    void exportExcel(HttpServletResponse response, String pageName,String[] headers);
+
+    /**
+     * 按用户名筛选设备
+     * @param dataList
+     * @param userName
+     * @return
+     */
+    public List<DeviceDTO> selectDeviceDTObyUserName(List<DeviceDTO> dataList,String userName);
 
 }
