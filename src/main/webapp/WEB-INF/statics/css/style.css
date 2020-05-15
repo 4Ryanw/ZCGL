@@ -23716,5 +23716,19 @@ dl li {
   height: 46px;
   background:none;
 }
-
+.index-m-div{
+  border :1px solid darkgray;
+  height: 200px;
+  margin: 10px;
+  padding: 0px;
+  text-align: center;
+}
+.index-m-div:hover{
+  cursor:pointer;
+  box-shadow: 0 0 2px #000;
+}
+.index-m-title{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 /*# sourceMappingURL=maps/style.css.map */

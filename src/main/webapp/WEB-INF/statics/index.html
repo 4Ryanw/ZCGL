@@ -4,11 +4,148 @@
   Time: 1:04
   To change this template use File | Settings | File Templates.-->
  <html lang="cn" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
     <title>首页</title>
+    <title>资产管理系统</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>首页先将就着看, 在做了..</h1>
-    <a href="deviceManage">访问主页</a>
+<header class="header-section fixed">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a  href="deviceManage" class="navbar-brand"><b>主页</b>
+                </a>
+            </div>
+        </div><!-- /.container -->
+    </nav>
+</header>
+
+<div id="demo" class="carousel slide" data-ride="carousel" style="margin: auto">
+
+    <!-- 指示符 -->
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+
+    <!-- 轮播图片 -->
+    <div  class="carousel-inner" style="width:80%;height:360px;overflow:hidden;margin: auto;margin-top: 2rem">
+        <div class="carousel-item active">
+            <img src="/images/auth/lockscreen-bg.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="/images/auth/homebg2.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="/images/auth/homebg1.jpg">
+        </div>
+    </div>
+    <!-- 左右切换按钮 -->
+    <a class="carousel-control-prev" style="width: 25%" href="#demo" data-slide="prev" >
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" style="width: 25%" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 col-sm-6" style="margin-top: 1rem">
+            <div >
+                <h3>信息公告</h3>
+                <!--表格-->
+                <div class="table-responsive">
+                    <table id="recent-purchases-listing" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>发布时间</th>
+                            <th>文章标题</th>
+                            <th>内容简介</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class ="tr_sub">
+                            <td>2020-05</td>
+                            <td> <a href="#">Levelled up</a> </td>
+                            <td>描述 渐渐大撒大撒阿达啊</td>
+                        </tr>
+                        <tr class ="tr_sub">
+                            <td>2020-05</td>
+                            <td>Alvin Fisher</td>
+                            <td>Ui design completed</td>
+                        </tr>
+                        <tr>
+                            <td>2020-05</td>
+                            <td>Emily Cunningham</td>
+                            <td>support</td>
+                        </tr>
+                        <tr>
+                            <td>2020-05</td>
+                            <td>Minnie Farmer</td>
+                            <td>support</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 col-sm-6" style="margin-top: 1rem">
+            <div >
+                <h3>用户功能</h3>
+                <div class="row">
+                    <div  class="col-md-3 col-sm-6 index-m-div">
+                        <img style="width: 100%;height: 80px" src="/images/auth/indexgb1.jpg">
+                        <div class="index-m-title">审批填报</div>
+                            <button  type="button" class="btn btn-outline-secondary btn-rounded btn-icon">
+                                <i class="mdi mdi-information-variant"></i>
+                            </button>
+                    </div>
+                    <div  class="col-md-3 col-sm-6 index-m-div" onclick="window.location.href='deviceManage'">
+                        <img style="width: 100%;height: 80px" src="/images/auth/indexbg2.jpg">
+                        <div class="index-m-title" >台账管理</div>
+                        <button  type="button" class="btn btn-outline-secondary btn-rounded btn-icon">
+                            <i class="mdi mdi-checkbox-multiple-blank"></i>
+                        </button>
+                    </div>
+                    <div   class="col-md-3 col-sm-6 index-m-div dropdown">
+                        <div class=" dropdown-toggle  bg-transparent"   id="dropdownMenuLinkA" data-toggle="dropdown">
+                        <img style="width: 100%;height: 80px" src="/images/auth/indexbg3.jpg">
+                        <div class="index-m-title">快捷访问</div>
+                        <button  type="button" class="btn btn-outline-secondary btn-rounded btn-icon">
+                            <i class="mdi mdi-assistant"></i>
+                        </button>
+                        </div>
+
+<!--                            <div class=" dropdown-toggle  bg-transparent"   id="dropdownMenuLinkA" data-toggle="dropdown" >-->
+<!--                            </div>-->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkA" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 19px, 0px);">
+                                <a class="dropdown-item" target="_blank" href="http://www.baidu.com/">百度</a>
+                                <a class="dropdown-item"  target="_blank" href="http://www.sina.com.cn/">新浪</a>
+                                <a class="dropdown-item" target="_blank" href="http://www.souhu.com/">搜狐</a>
+                            </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer style="margin-left: 50%;margin-top: 5rem" class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
+    </div>
+</div>
+<!-- 公共js引用 -->
+<div th:replace="/pages/commons/footer::common_js"></div>
 </body>
+ <script>
+     //激活弹出脚本
+     $(function () { $("[data-toggle='popover']").popover(); });
+ </script>
+
 </html>
