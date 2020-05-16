@@ -17,42 +17,17 @@
       <!--标题-->
       <p class="mytitle">信息公告</p>
       <!--内容-->
-      <div class="content-wrapper">
-        <!-- 表格-->
-        <div class="row">
-          <div class="col-md-12 stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8"></div>
-                  <div class="col-md-4">
-                  <button type="button" class="btn btn-outline-primary btn-fw mr-2">新增公告</button>
-                  <button type="button" class="btn btn-outline-success btn-fw mr-2" onclick="window.location.href='/notice/dsadas'">查看</button>
-                  <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
-                  </div>
-                </div>
-                <!--表格-->
-                <div class="table-responsive">
-                    <table id="table-listing" class="table table-hover table-refresh" th:fragment="table-refresh">
-                    <thead>
-                    <tr>
-                      <th></th>
-                      <th>发布时间</th>
-                      <th>文章标题</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class ="tr_sub" th:each="notice : ${noticeList}">
-                      <td id="id" th:value="${notice.noticeId}"><input type="checkbox"/></td>
-                      <td id="date" th:text="${#dates.format(notice.noticeDate, 'yyyy-MM-dd')}"></td>
-                      <td id="title" th:text="${notice.noticeTitle}"></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+      <div class="card">
+        <div class="content-wrapper">
+          <div class="card-body">
+            <h4 class="card-title" th:text="${notice.noticeTitle}"></h4>
+            <p style="margin-left: 2rem" class="card-description" th:text="${notice.noticeContent}">
+            </p>
+            <div class="template-demo">
+              <h6 style="float: right" th:text="${#dates.format(notice.noticeDate, 'yyyy-MM-dd')}"></h6>
             </div>
           </div>
+
         </div>
       </div>
 
