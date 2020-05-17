@@ -7,9 +7,7 @@ import cn.cqu.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +34,30 @@ public class NoticeController {
         List<Notice> noticeList = noticeService.listAll();
         map.addAttribute("noticeList",noticeList);
         return "notice::table-refresh";
+    }
+
+
+    /**
+     * 新增公告
+     * @param notice
+     * @return
+     */
+    @PostMapping
+    public String addNotice(Notice notice){
+       noticeService.addNotice(notice);
+        return "notice";
+    }
+
+
+    /**
+     * 按id删除公告
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public int deleteNotice(@PathVariable("id")String id){
+        return noticeService.deleteNoticeById(id);
     }
 
 }

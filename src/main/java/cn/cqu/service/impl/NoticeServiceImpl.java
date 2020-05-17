@@ -6,6 +6,7 @@ import cn.cqu.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,5 +34,28 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public Notice getNoticeById(String id) {
         return noticeDao.getNoticeById(id);
+    }
+
+    /**
+     * 新增公告
+     *
+     * @param notice
+     * @return
+     */
+    @Override
+    public int addNotice(Notice notice) {
+        notice.setNoticeDate(new Date());
+        return noticeDao.insertNotice(notice);
+    }
+
+    /**
+     * 按id删除公告
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public int deleteNoticeById(String id) {
+        return noticeDao.deleteNoticeById(id);
     }
 }

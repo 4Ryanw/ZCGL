@@ -25,10 +25,10 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-8"></div>
-                  <div class="col-md-4">
-                  <button type="button" class="btn btn-outline-primary btn-fw mr-2">新增公告</button>
-                  <button type="button" class="btn btn-outline-success btn-fw mr-2" onclick="window.location.href='/notice/dsadas'">查看</button>
-                  <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
+                  <div class="col-md-4" style="margin-bottom: 2rem">
+                  <button type="button" class="btn btn-outline-primary btn-fw mr-2" onclick="window.location.href='/noticeEdit'">新增公告</button>
+                  <button type="button" class="btn btn-outline-success btn-fw mr-2" onclick="readNotice()">查看</button>
+                  <button type="button" class="btn btn-outline-danger btn-fw mr-2"  onclick="deleteCheck()">删除</button>
                   </div>
                 </div>
                 <!--表格-->
@@ -44,7 +44,7 @@
                     <tbody>
                     <tr class ="tr_sub" th:each="notice : ${noticeList}">
                       <td id="id" th:value="${notice.noticeId}"><input type="checkbox"/></td>
-                      <td id="date" th:text="${#dates.format(notice.noticeDate, 'yyyy-MM-dd')}"></td>
+                      <td id="date" th:text="${#dates.format(notice.noticeDate, 'yyyy年 MM月dd日')}"></td>
                       <td id="title" th:text="${notice.noticeTitle}"></td>
                     </tr>
                     </tbody>
@@ -73,7 +73,7 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">关闭
               </button>
-              <button type="button" class="btn btn-danger">
+              <button type="button" class="btn btn-danger" onclick="deleteNotice()">
                 确定
               </button>
             </div>
@@ -96,6 +96,43 @@
   $(document).ready(function(){
       inittable(url);
   });
+
+  function readNotice() {
+    if(selectedObj==null){
+      toastr.warning("请选择一条公告");
+      return;
+    }
+    var id = $(selectedObj).children("#id").attr("value");
+    window.location.href='/notice/'+id;
+  }
+
+  function deleteCheck() {
+    if(selectedObj==null){
+      toastr.warning("请选择一条公告");
+      return;
+    }else {
+      $('#deleteModal').modal('show');
+    }
+  }
+
+  function  deleteNotice() {
+    var id = $(selectedObj).children("#id").attr("value");
+    $.ajax({
+      url:"/notice/"+id,
+      type:"DELETE",
+      async:false,
+      success:function (data) {
+        if(data == 1){
+          toastr.success("删除成功");
+          inittable(url);
+        }else {
+          toastr.error("服务器错误");
+        }
+        $('#deleteModal').modal('hide');
+        selectedObj = null;
+      }
+    });
+  }
 
 </script>
 </html>

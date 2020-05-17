@@ -118,6 +118,12 @@ public class indexController {
           return "editDevice";
     }
 
+    /**
+     * 分配设备
+     * @param map
+     * @param devId
+     * @return
+     */
     @GetMapping("/allotDevice/{devId}")
     public String allotDevice(ModelMap map,@PathVariable String devId){
         DeviceDTO deviceDTO = deviceService.getDeviceDtoById(devId);
@@ -129,6 +135,14 @@ public class indexController {
         map.put("parentOrg",organizationList);
 
         return "allotDevice";
+    }
+
+    /**
+     * 编辑公告
+     */
+    @GetMapping("/noticeEdit")
+    public void noticeEdit(){
+
     }
     //系统管理
     @GetMapping("/system")

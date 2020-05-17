@@ -36,9 +36,9 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">设备标识</label>
+                    <label class="col-sm-3 col-form-label" >设备标识</label>
                     <div class="col-sm-6">
-                      <input type="text" id="devId" name="devId" class="form-control">
+                      <input style="border: 1px solid rgba(201,200,200,0.24)" type="text" id="devId" name="devId" class="form-control">
                     </div>
                     <span id="checkSuccess" class="col-sm-3" style="display: none;font-size: 12px;line-height:50px"><i class="mdi mdi-check"></i>该设备标识可用</span>
                     <span id="checkFailed" class="col-sm-3" style="color: red;display: none;font-size: 12px;line-height:50px"><i class="mdi mdi-close"></i>设备标识重复!</span>
@@ -47,8 +47,8 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">ERP编码</label>
-                    <div class="col-sm-9">
-                      <input type="text" name="erpCode" class="form-control">
+                    <div class="col-sm-6">
+                      <input style="border: 1px solid rgba(201,200,200,0.24)" type="text" name="erpCode" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">设备类型</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                       <select class="form-control" name="typeId">
                         <option th:each="type : ${deviceTypeList}" th:value="${type.typeId}" th:text="${type.type}"></option>
                       </select>
@@ -68,7 +68,7 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">设备品牌</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                       <select class="form-control" name="brandId">
                         <option th:each="brand : ${deviceBrandList}" th:value="${brand.brandId}" th:text="${brand.brand}"></option>
                       </select>
@@ -80,16 +80,16 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">购买日期</label>
-                    <div class="col-sm-9">
-                      <input class="form-control timepicker" name="purchaseTime" placeholder="dd/mm/yyyy">
+                    <div class="col-sm-6">
+                      <input style="border: 1px solid rgba(201,200,200,0.24)" class="form-control timepicker" name="purchaseTime" placeholder="dd/mm/yyyy">
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">设备型号</label>
-                    <div class="col-sm-9">
-                      <input type="text" name="devModel" class="form-control">
+                    <div class="col-sm-6">
+                      <input style="border: 1px solid rgba(201,200,200,0.24)" type="text" name="devModel" class="form-control">
                     </div>
                   </div>
                 </div>

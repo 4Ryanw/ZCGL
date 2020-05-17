@@ -22,44 +22,29 @@
       <!--标题-->
       <p class="mytitle">信息公告</p>
       <!--内容-->
-      <div class="card">
-        <div class="content-wrapper">
-          <div class="card-body">
-            <h4 class="card-title" th:text="${notice.noticeTitle}"></h4>
-            <p style="margin-left: 2rem" class="card-description" th:text="${notice.noticeContent}">
-            </p>
-            <div class="template-demo">
-              <h6 style="float: right" th:text="${#dates.format(notice.noticeDate, 'yyyy MM.dd')}"></h6>
+      <div class="card" style="border: none">
+        <div class="row">
+              <div class="card-body">
+                <h4 class="card-title">新增公告</h4>
+                <form class="forms-sample" id="editForm" action="/notice" method="post">
+                  <div class="form-group">
+                    <label for="exampleInputCity1">标题</label>
+                    <input name="noticeTitle" type="text" class="form-control" id="exampleInputCity1" placeholder="请输入标题">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleTextarea1">内容</label>
+                    <textarea name="noticeContent" class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                  </div>
+                  <div style="float: right">
+                    <button type="submit" class="btn btn-primary mr-2">提交</button>
+                    <button class="btn btn-light" onclick="$('#editForm')[0].reset();">重置</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
 
-        </div>
-      </div>
-
       <!--删除确认模态框-->
-      <div class="modal fade " id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                &times;
-              </button>
-            </div>
-            <div class="modal-body">
-              <span style="vertical-align: inherit;margin-left: auto">
-                是否确认删除?
-              </span>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-              </button>
-              <button type="button" class="btn btn-danger">
-                确定
-              </button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-  </div>
 
       <!-- 公共底部引用 -->
       <footer class="d-sm-flex justify-content-center justify-content-sm-center" th:include="/pages/commons/footer::common_foot"/>
@@ -71,10 +56,18 @@
 <div th:replace="/pages/commons/footer::common_js"></div>
 <!-- 自定义jS -->
 <script>
-    var url = "/notice/list"
   /*初始化*/
   $(document).ready(function(){
-      inittable(url);
+    $("#editForm").submit(function () {
+      //判断表单数据是否为空
+      var t = $('form').serializeArray();
+      for (var i = 0; i < t.length; i++) {
+        if(t[i]['value']==''){
+          toastr.error("表格信息不全!");
+          return false
+        }
+      }
+    })
   });
 
 </script>

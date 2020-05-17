@@ -85,6 +85,12 @@
             <if test ="systemVersion !=null and systemVersion!=''">
                 AND r.system_version = #{systemVersion}
             </if>
+            <if test ="depFri !=null and depFri!=''">
+                AND u.dep_fri = #{depFri}
+            </if>
+            <if test ="depSec !=null and depSec!=''">
+                AND u.dep_sec = #{depSec}
+            </if>
         </where>
     </select>
 

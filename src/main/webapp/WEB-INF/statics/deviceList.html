@@ -123,12 +123,9 @@
                 <span class="input-group-text" >所属网络</span>
               </div>
               <select style="background:none;" class="custom-select select-append" title="--请选择--"  data-size="5">
-                <option>B</option>
-                <option>C</option>
-                <option>D</option>
-                <option>E</option>
-                <option>B</option>
-                <option>C</option>
+                <option>内网</option>
+                <option>外网</option>
+                <option>未入网</option>
               </select>
             </div>
 
@@ -423,25 +420,25 @@
 
   //绑定级联下拉框
   function onchangeSelect_fri() {
+    var  optionHtml ='';
     var example ={};
     example.orgLevel = 2;
-    if($("#detailSearch_friOrg").val()!= "all" ){
+    if($("#detailSearch_friOrg").val()!= "" ){
       example.orgParentId = $("#detailSearch_friOrg").val();
-    }
     $.post('/organization/sub/list',example, function(result){
       if(result.length>0){
         $("#detailSearch_secOrg").attr("disabled",false);
-        var  optionHtml ='';
         for(var i=0;i<result.length;i++){
           optionHtml+="<option value="+result[i].orgId+" >"+result[i].orgName+"</option>";
         }
-
-      }else {
-        optionHtml = "<option>暂无数据</option>"
-        $("#secondOrg_add").attr("disabled",true);
+        jQuery("#detailSearch_secOrg").html(optionHtml);
       }
-      jQuery("#detailSearch_secOrg").html(optionHtml);
     });
+    }else {
+      optionHtml = "<option value=''>暂无数据</option>"
+      $("#detailSearch_secOrg").attr("disabled",true);
+    }
+    jQuery("#detailSearch_secOrg").html(optionHtml);
 
   }
 </script>

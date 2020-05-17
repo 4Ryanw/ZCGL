@@ -22,4 +22,18 @@ public interface NoticeService {
      */
     Notice getNoticeById(String id);
 
+    /**
+     * 新增公告
+     * @param notice
+     * @return
+     */
+    int addNotice(Notice notice);
+
+    /**
+     * 按id删除公告
+     * @param id
+     * @return
+     */
+    int deleteNoticeById(String id);
+
 }
