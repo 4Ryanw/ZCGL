@@ -23731,4 +23731,7 @@ dl li {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+#moreNotice:hover{
+  cursor:pointer;
+}
 /*# sourceMappingURL=maps/style.css.map */

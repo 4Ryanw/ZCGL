@@ -3,6 +3,7 @@ package cn.cqu.service.impl;
 import cn.cqu.dao.AccountDao;
 import cn.cqu.dao.DeviceDao;
 import cn.cqu.pojo.dto.AccountDTO;
+import cn.cqu.util.MyLog;
 import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,16 @@ public class AccountServiceImpl implements AccountService {
         return accountDao.listAccount();
     }
 
+    /**
+     * 按权限等级查询账户
+     *
+     * @return
+     */
+    @Override
+    public List<AccountDTO> listAccountByLevel(int level) {
+        return accountDao.listAccountByRoleId(level);
+    }
+
 
     /**
      * 添加账户
@@ -35,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
      * @return
      */
     @Override
+    @MyLog(actionName = "添加账户")
     public int addAccount(Account account) {
         int res ;
         //先判断账号是否重复
@@ -53,6 +65,7 @@ public class AccountServiceImpl implements AccountService {
      * @return
      */
     @Override
+    @MyLog(actionName = "删除账户")
     public int deleteAccountById(String uuid) {
         //删除前先删除其下绑定的设备
         accountDao.deleteDeviceUserById(uuid);
@@ -87,6 +100,7 @@ public class AccountServiceImpl implements AccountService {
      * @return
      */
     @Override
+    @MyLog(actionName = "更改账户状态")
     public int updateStatusByid(String uuid, int status) {
         return accountDao.updateStatusByUUId(uuid,status);
     }
@@ -120,5 +134,22 @@ public class AccountServiceImpl implements AccountService {
         resMap.put("ownerList",ownerList);
         resMap.put("allList",allList);
         return resMap;
+    }
+
+    /**
+     * 更改账户权限级别
+     *
+     * @param level
+     * @param groups
+     * @return
+     */
+    @Override
+    @MyLog(actionName = "更改账户权限级别")
+    public int updateAccountLevel(int level, String[] groups) {
+        for (String id:groups
+             ) {
+            accountDao.updateLevelById(id,level);
+        }
+        return 1;
     }
 }

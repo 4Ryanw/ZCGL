@@ -5,6 +5,7 @@ import cn.cqu.dao.OrganizationDao;
 import cn.cqu.pojo.Organization;
 import cn.cqu.pojo.dto.OrganizationDTO;
 import cn.cqu.service.OrganizationService;
+import cn.cqu.util.MyLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -138,6 +139,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @return
      */
     @Override
+    @MyLog(actionName = "删除组织")
     public int deleteOrganizationById(String id) {
         //删除前先判断是否存在子节点
         List<Organization> subList = listOrganizationByParentId(id);
@@ -161,6 +163,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @return
      */
     @Override
+    @MyLog(actionName = "修改组织名称")
     public int updateOrganizationName(Organization organization) {
         String orgName = organization.getOrgName();
         Organization example = new Organization();
@@ -180,6 +183,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @return
      */
     @Override
+    @MyLog(actionName = "增加组织")
     public int insertOrganization(Organization organization) {
             Organization example = new Organization();//判断同父级部门内是否存在重名 ,第二种实现
             example.setOrgParentId(organization.getOrgParentId());

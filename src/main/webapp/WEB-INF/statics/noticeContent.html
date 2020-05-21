@@ -26,7 +26,7 @@
         <div class="content-wrapper">
           <div class="card-body">
             <h4 class="card-title" th:text="${notice.noticeTitle}"></h4>
-            <p style="margin-left: 2rem" class="card-description" th:text="${notice.noticeContent}">
+            <p style="margin-left: 2rem" class="card-description" th:text="'&nbsp;&nbsp; '+${notice.noticeContent}">
             </p>
             <div class="template-demo">
               <h6 style="float: right" th:text="${#dates.format(notice.noticeDate, 'yyyy MM.dd')}"></h6>

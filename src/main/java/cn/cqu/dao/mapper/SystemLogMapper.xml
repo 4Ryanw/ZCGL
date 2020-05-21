@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cqu.dao.SystemLogDao">
+    <!-- where标签知道如何处理and ,or等连接词 -->
+    <select id="listLogByDateStr"  resultType="SystemLog">
+        SELECT
+        *
+        FROM
+        t_log
+        <where>
+        <if test ="startStr !=null and startStr!=''">
+            start_time &gt;= #{startStr}
+        </if>
+        <if test ="endStr !=null and endStr!=''">
+            AND start_time &lt;= #{endStr}
+        </if>
+        </where>
+    </select>
+</mapper>

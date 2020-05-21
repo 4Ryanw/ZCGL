@@ -19,6 +19,22 @@
         LEFT JOIN t_role r ON a.user_role = r.role_id
     </select>
 
+    <select id="listAccountByRoleId" resultType="AccountDTO">
+        SELECT
+        a.uuid,
+        a.user_id,
+        a.PASSWORD,
+        a.user_name,
+        a.user_role,
+        a.user_status,
+        r.role_name
+        FROM
+        t_account a
+        LEFT JOIN t_role r ON a.user_role = r.role_id
+        where
+            a.user_role = #{level}
+    </select>
+
     <select id="listUserByDeviceId" resultType="Account">
         <!-- 具体的sql -->
         SELECT

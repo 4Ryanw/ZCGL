@@ -3,6 +3,7 @@ package cn.cqu.service.impl;
 import cn.cqu.dao.NoticeDao;
 import cn.cqu.pojo.Notice;
 import cn.cqu.service.NoticeService;
+import cn.cqu.util.MyLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
+    @MyLog(actionName = "新增公告")
     public int addNotice(Notice notice) {
         notice.setNoticeDate(new Date());
         return noticeDao.insertNotice(notice);
@@ -55,6 +57,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
+    @MyLog(actionName = "删除公告")
     public int deleteNoticeById(String id) {
         return noticeDao.deleteNoticeById(id);
     }

@@ -60,7 +60,12 @@
     <div class="row">
         <div class="col-md-7 col-sm-6" style="margin-top: 1rem">
             <div >
-                <h3>信息公告</h3>
+                <h3>
+                    信息公告
+                    <small id="moreNotice" style="margin-left: 70%" class="text-muted" onclick="window.location.href='/notice'">
+                       更多>>
+                    </small>
+                </h3>
                 <!--表格-->
                 <div class="table-responsive">
                     <table id="recent-purchases-listing" class="table table-hover">
@@ -72,26 +77,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class ="tr_sub">
-                            <td>2020-05</td>
-                            <td> <a href="#">Levelled up</a> </td>
-                            <td>描述 渐渐大撒大撒阿达啊</td>
+                        <tr th:each="notice : ${noticeList}" >
+                            <td th:text="${#dates.format(notice.noticeDate, 'yyyy MM.dd')}"></td>
+                            <td > <a th:href="@{'/notice/'+${notice.noticeId}}" th:text="${notice.noticeTitle}"></a> </td>
+                            <td th:text="${notice.noticeFile}"></td>
                         </tr>
-                        <tr class ="tr_sub">
-                            <td>2020-05</td>
-                            <td>Alvin Fisher</td>
-                            <td>Ui design completed</td>
-                        </tr>
-                        <tr>
-                            <td>2020-05</td>
-                            <td>Emily Cunningham</td>
-                            <td>support</td>
-                        </tr>
-                        <tr>
-                            <td>2020-05</td>
-                            <td>Minnie Farmer</td>
-                            <td>support</td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>

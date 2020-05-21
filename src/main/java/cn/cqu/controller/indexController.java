@@ -3,10 +3,12 @@ package cn.cqu.controller;
 import cn.cqu.dao.BaseInfoDao;
 import cn.cqu.pojo.DeviceBrand;
 import cn.cqu.pojo.DeviceType;
+import cn.cqu.pojo.Notice;
 import cn.cqu.pojo.Organization;
 import cn.cqu.pojo.dto.DeviceDTO;
 import cn.cqu.service.BaseInfoService;
 import cn.cqu.service.DeviceService;
+import cn.cqu.service.NoticeService;
 import cn.cqu.service.OrganizationService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class indexController {
     private BaseInfoService baseInfoService;
     @Autowired
     private DeviceService deviceService;
+    @Autowired
+    private NoticeService noticeService;
 
     /**
      *  跳转主页
@@ -41,7 +45,13 @@ public class indexController {
     }
     //首页 (欢迎页面)
     @GetMapping("/index")
-    public void index(){}
+    public void index(ModelMap map){
+        List<Notice> list = noticeService.listAll();
+        if(list.size()>3){
+            list = list.subList(0,3);
+        }
+        map.put("noticeList",list);
+    }
     //设备管理
     @GetMapping("/deviceManage")
     public void deviceManage(HttpServletRequest request,ModelMap map){

@@ -2,6 +2,7 @@ package cn.cqu.dao;
 
 import cn.cqu.pojo.Account;
 import cn.cqu.pojo.dto.AccountDTO;
+import cn.cqu.util.MyLog;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -48,5 +49,21 @@ public interface AccountDao {
      */
     @Delete("delete from t_device_user where user_uuid = #{userId}")
     int deleteDeviceUserById(String userId);
+
+
+    /**
+     * 按等级查询用户
+     * @param level
+     * @return
+     */
+    List<AccountDTO> listAccountByRoleId(int level);
+
+    /**
+     * 根据id更改用户权限等级
+     * @param id
+     * @return
+     */
+    @Update("update t_account set user_role = #{level} where uuid = #{id} ")
+    int updateLevelById(@Param("id") String id,@Param("level")int level);
 
 }

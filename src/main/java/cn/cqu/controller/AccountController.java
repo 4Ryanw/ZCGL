@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import cn.cqu.pojo.Account;
 import cn.cqu.service.AccountService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +23,13 @@ public class AccountController {
      * 管理员账户信息
      * @return
      */
-    @RequestMapping("/admins")
-    public String listAdmins(){
-        System.out.println("访问管理员账户信息");
-        return "system";
+    @GetMapping("/admins")
+    public String listAdmins(ModelMap map){
+        List<AccountDTO> adminList = accountService.listAccountByLevel(2);
+        List<AccountDTO> superAdminList = accountService.listAccountByLevel(1);
+        adminList.addAll(superAdminList);
+        map.put("adminsList", adminList);
+        return "system::table-refresh";
     }
 
     /**
@@ -38,6 +42,17 @@ public class AccountController {
        List<AccountDTO> accountList = accountService.listAccount();
         map.put("accountDTOList", accountList);
         return "account::table-refresh";
+    }
+    /**
+     * 添加管理员页面
+     * @param map
+     * @return
+     */
+    @GetMapping("/users")
+    public String listUsers(ModelMap map){
+        List<AccountDTO> accountList = accountService.listAccountByLevel(3);
+        map.put("usersDTOList", accountList);
+        return "system::list-refresh";
     }
 
 
@@ -100,5 +115,19 @@ public class AccountController {
     public int updateStatus(String uuid,int status){
         return accountService.updateStatusByid(uuid,status);
     }
+
+
+
+    /**
+     * 更改管理员
+     * @return
+     */
+    @PutMapping("/admins")
+    @ResponseBody
+    public int updateDevOwner(HttpServletRequest request){
+        String[] groups = request.getParameter("groups").split(",");
+        int level = Integer.parseInt(request.getParameter("level"));
+        return  accountService.updateAccountLevel(level,groups);
+    };
 
 }

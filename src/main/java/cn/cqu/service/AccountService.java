@@ -18,6 +18,12 @@ public interface AccountService {
     List<AccountDTO> listAccount();
 
     /**
+     * 按权限等级查询账户
+     * @return
+     */
+    List<AccountDTO> listAccountByLevel(int level);
+
+    /**
      * 添加账户
      * @param account
      * @return
@@ -53,5 +59,16 @@ public interface AccountService {
      * @return
      */
     Map listOwenrByDevId(String devId);
+
+    /**
+     * 更改账户权限级别
+     * @param level
+     * @param groups
+     * @return
+     */
+    int updateAccountLevel(int level,String[] groups);
+
+
+
 
 }

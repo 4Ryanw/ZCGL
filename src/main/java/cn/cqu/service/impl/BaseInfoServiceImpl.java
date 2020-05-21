@@ -4,6 +4,7 @@ import cn.cqu.dao.BaseInfoDao;
 import cn.cqu.pojo.DeviceBrand;
 import cn.cqu.pojo.DeviceType;
 import cn.cqu.service.BaseInfoService;
+import cn.cqu.util.MyLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      * @return
      */
     @Override
+    @MyLog(actionName = "添加设备类型")
     public int addtDeviceType(DeviceType deviceType) {
         if(null == baseInfoDao.getDeviceTypeByName(deviceType.getType())){//先查询是否有同名类型
             return baseInfoDao.insertDeviceType(deviceType);
@@ -45,6 +47,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      * @return
      */
     @Override
+    @MyLog(actionName = "删除设备类型")
     public int deleteDeviceTypeById(String typeId) {
         return baseInfoDao.deleteDeviceTypeById(typeId);
     }
@@ -56,6 +59,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      * @return
      */
     @Override
+    @MyLog(actionName = "更新设备类型")
     public int updateDeviceType(DeviceType deviceType) {
         if(null == baseInfoDao.getDeviceTypeByName(deviceType.getType())){//先查询是否有同名类型
             return baseInfoDao.updateDevicType(deviceType);
@@ -82,6 +86,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      * @return
      */
     @Override
+    @MyLog(actionName = "添加设备品牌")
     public int addtDeviceBrand(DeviceBrand deviceBrand) {
         if(null == baseInfoDao.getDeviceBrandByName(deviceBrand.getBrand())){//先查询是否有同名品牌
             return baseInfoDao.insertDeviceBrand(deviceBrand);
@@ -97,6 +102,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      * @return
      */
     @Override
+    @MyLog(actionName = "删除设备品牌")
     public int deleteDeviceBrandById(String brandId) {
         return baseInfoDao.deleteDeviceBrandById(brandId);
     }
@@ -108,6 +114,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      * @return
      */
     @Override
+    @MyLog(actionName = "更新设备品牌")
     public int updateDeviceBrand(DeviceBrand deviceBrand) {
         if(null == baseInfoDao.getDeviceTypeByName(deviceBrand.getBrand())){//先查询是否有同名类型
             return baseInfoDao.updateDevicBrand(deviceBrand);

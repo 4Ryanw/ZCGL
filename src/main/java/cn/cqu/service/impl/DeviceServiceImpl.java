@@ -1,22 +1,19 @@
 package cn.cqu.service.impl;
 
 import cn.cqu.dao.AccountDao;
-import cn.cqu.dao.BaseInfoDao;
 import cn.cqu.dao.DeviceDao;
-import cn.cqu.dao.OrganizationDao;
 import cn.cqu.pojo.Account;
 import cn.cqu.pojo.Device;
 import cn.cqu.pojo.DeviceUseage;
 import cn.cqu.pojo.dto.DeviceDTO;
 import cn.cqu.service.DeviceService;
 import cn.cqu.util.ExcelExportUtil;
-import org.apache.ibatis.annotations.Case;
+import cn.cqu.util.MyLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -72,6 +69,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @return
      */
     @Override
+    @MyLog(actionName = "新增设备")
     public int addDevice(Device example) {
         return deviceDao.insertDevice(example);
     }
@@ -83,6 +81,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @return
      */
     @Override
+    @MyLog(actionName = "修改设备信息")
     public int updateDevice(Device example) {
         example.setLastUpate(new Date());
         return deviceDao.updateDevice(example);
@@ -95,6 +94,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @return
      */
     @Override
+    @MyLog(actionName = "根据Id删除设备")
     public int deleteDeviceById(String devId) {
         return deviceDao.deleteDeviceById(devId);
     }
@@ -107,6 +107,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @return
      */
     @Override
+    @MyLog(actionName = "修改设备状态")
     public int updateStatusByid(String devId, int status) {
         DeviceUseage deviceUseage = new DeviceUseage();
         deviceUseage.setDevId(devId);
@@ -122,6 +123,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @return
      */
     @Override
+    @MyLog(actionName = "更新设备持有者")
     public int updateDevOwnersByDevId(String devId, String[] groups) {
         //新数组转换为list方便接下来比较
         List<String> addAccountId;
@@ -170,6 +172,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @return
      */
     @Override
+    @MyLog(actionName = "更新设备部门")
     public int updateDevOrgsByDevId(String devId, String fri_org, String sec_org, String orgid_addr) {
         DeviceUseage example = new DeviceUseage();
         example.setDevId(devId);
@@ -202,6 +205,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @param pageName
      */
     @Override
+    @MyLog(actionName = "导出Excel")
     public void exportExcel(HttpServletResponse response, String pageName,String[] headers) {
             String sheetName = "工作表1";
             String fileName="" ;

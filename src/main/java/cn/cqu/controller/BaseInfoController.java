@@ -1,14 +1,17 @@
 package cn.cqu.controller;
 
+import cn.cqu.dao.SystemLogDao;
 import cn.cqu.pojo.DeviceBrand;
 import cn.cqu.pojo.DeviceType;
+import cn.cqu.pojo.SystemLog;
 import cn.cqu.service.BaseInfoService;
-import org.apache.ibatis.annotations.Delete;
+import cn.cqu.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -17,6 +20,8 @@ public class BaseInfoController {
 
     @Autowired
     private BaseInfoService baseInfoService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 获取所有设备类型信息
@@ -107,5 +112,21 @@ public class BaseInfoController {
     public int updateDeviceBrand(DeviceBrand deviceBrand){
         return baseInfoService.updateDeviceBrand(deviceBrand);
     }
+
+
+    /**
+     * 获取系统日志
+     * @param map
+     * @return
+     */
+    @RequestMapping("/log")
+    public String listLog(ModelMap map, HttpServletRequest request){
+        String startTime = request.getParameter("startTime");
+        String endTime = request.getParameter("endTime");
+        List<SystemLog> logs = logService.listLogsByDate(startTime,endTime);
+        map.put("logList",logs);
+        return "system::logList-refresh";
+    }
+
 
 }

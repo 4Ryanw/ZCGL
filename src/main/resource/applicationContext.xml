@@ -2,13 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--开启注解的扫描-->
     <context:component-scan base-package="cn.cqu">
         <!-- 配置哪些不需要扫描 -->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
+
+    <!--将AOP的注解应用到容器中-->
+<!--    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!--  shiro filter配置  -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -26,6 +31,7 @@
                 /images/** = anon
                 /js/** = anon
                 /fonts/** = anon
+                /notice/** = anon
                 /** = authc
             </value>
         </property>
