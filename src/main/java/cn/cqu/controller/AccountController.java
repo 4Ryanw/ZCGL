@@ -55,7 +55,6 @@ public class AccountController {
         return "system::list-refresh";
     }
 
-
     /**
      * 获取设备使用人信息
      * @param map
@@ -79,7 +78,6 @@ public class AccountController {
     public int addAccount(Account account){
         return accountService.addAccount(account);
     }
-
 
     /**
      * 根据uuid删除账户
@@ -115,8 +113,6 @@ public class AccountController {
     public int updateStatus(String uuid,int status){
         return accountService.updateStatusByid(uuid,status);
     }
-
-
 
     /**
      * 更改管理员

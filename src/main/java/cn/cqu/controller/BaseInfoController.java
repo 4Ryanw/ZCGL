@@ -1,6 +1,5 @@
 package cn.cqu.controller;
 
-import cn.cqu.dao.SystemLogDao;
 import cn.cqu.pojo.DeviceBrand;
 import cn.cqu.pojo.DeviceType;
 import cn.cqu.pojo.SystemLog;

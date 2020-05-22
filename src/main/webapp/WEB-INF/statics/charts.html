@@ -220,27 +220,6 @@
 <!-- 自定义jS -->
 <script>
   //图表设置
-  var doughnutPieData = {
-    //数据
-    datasets: [{
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ]
-    }],
-  };
   var doughnutPieOptions = {
     responsive: true,
     animation: {
@@ -267,10 +246,8 @@
 
   };
   var barChartData = {
-    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
     datasets: [{
       label: '分配设备数',
-      data: [10, 19, 3, 5, 2, 3],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -291,8 +268,48 @@
       fill: false
     }]
   };
-
-
+  var doughnutChartData = {
+    //数据
+    datasets: [{
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ]
+    }],
+  };
+  var pieChartData = {
+    //数据
+    datasets: [{
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ]
+    }],
+  };
 
   $(document).ready(function(){
     reloadCharts();
@@ -317,8 +334,8 @@
 
         /*类型分类*/
         //填充数据
-        doughnutPieData.datasets[0].data = data.typeMap.valueArr;
-        doughnutPieData.labels = data.typeMap.keyArr;
+        doughnutChartData.datasets[0].data = data.typeMap.valueArr;
+        doughnutChartData.labels = data.typeMap.keyArr;
         //清空画布
         $('#doughnutChart').remove(); // this is my <canvas> element
         $('#doughnutChartParent').append('<canvas id="doughnutChart" ></canvas>');
@@ -326,14 +343,14 @@
         var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
         var doughnutChart = new Chart(doughnutChartCanvas, {
           type: 'doughnut',
-          data: doughnutPieData,
+          data: doughnutChartData,
           options: doughnutPieOptions
         });
 
         /*品牌分类*/
         //填充数据
-        doughnutPieData.datasets[0].data = data.brandMap.valueArr;
-        doughnutPieData.labels = data.brandMap.keyArr;
+        pieChartData.datasets[0].data = data.brandMap.valueArr;
+        pieChartData.labels = data.brandMap.keyArr;
         //清空画布
         $('#pieChart').remove(); // this is my <canvas> element
         $('#pieChartParent').append('<canvas id="pieChart" ></canvas>');
@@ -341,7 +358,7 @@
         var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
         var pieChart = new Chart(pieChartCanvas, {
           type: 'pie',
-          data: doughnutPieData,
+          data: pieChartData,
           options: doughnutPieOptions
         });
 
