@@ -5,7 +5,9 @@ import cn.cqu.pojo.dto.DeviceDTO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -136,5 +138,24 @@ public interface DeviceDao {
   */
  @Delete("delete from t_device where dev_id = #{devId}")
  int deleteDeviceById(String devId);
+
+ /**
+  * 根据设备类型分类
+  * @param monthStr
+  * @return
+  */
+ List<HashMap<String,Object>> staDeviceByType(String monthStr);
+ /**
+  * 根据设备品牌分类
+  * @param monthStr
+  * @return
+  */
+ List<HashMap<String,Object>> staDeviceByBrand(String monthStr);
+ /**
+  * 根据分配部门分类
+  * @param monthStr
+  * @return
+  */
+ List<HashMap<String,Object>> staDeviceByOrg(String monthStr);
 
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -274,4 +275,62 @@ public class DeviceServiceImpl implements DeviceService {
         }
         return dataList;
     }
+
+    /**
+     * 根据类型统计设备数量
+     * @param monthStr
+     * @return
+     */
+    @Override
+    public Map staDeviceByType(String monthStr) {
+        List<HashMap<String, Object>> list = deviceDao.staDeviceByType(monthStr);
+        return findMap(list);
+    }
+
+    /**
+     * 根据品牌统计设备数量
+     * @param monthStr
+     * @return
+     */
+    @Override
+    public Map staDeviceByBrand(String monthStr) {
+        List<HashMap<String, Object>> list = deviceDao.staDeviceByBrand(monthStr);
+        return findMap(list);
+    }
+
+    /**
+     * 根据部门统计设备数量
+     * @param monthStr
+     * @return
+     */
+    @Override
+    public Map staDeviceByOrg(String monthStr) {
+        List<HashMap<String, Object>> list = deviceDao.staDeviceByOrg(monthStr);
+        return findMap(list);
+    }
+
+
+    public Map findMap(List<HashMap<String, Object>> list){
+        //组装结果
+        List<String> keyList = new ArrayList<>();
+        List<Long> valueList = new ArrayList<>();
+        Map<String, Object> res = new HashMap<>();
+        String key;
+        long value;
+        for (HashMap<String, Object> stringStringMap : list) {
+            for (Map.Entry<String, Object> entry : stringStringMap.entrySet()) {
+                if ("key".equals(entry.getKey())) {
+                    key = (String) entry.getValue();
+                    keyList.add(key);
+                } else {
+                    value = (long) entry.getValue();
+                    valueList.add(value);
+                }
+            }
+        }
+        res.put("keyArr", keyList.toArray());
+        res.put("valueArr", valueList.toArray());
+        return res;
+    }
+
 }

@@ -6,6 +6,7 @@ import cn.cqu.pojo.dto.DeviceDTO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 设备service接口
@@ -93,6 +94,25 @@ public interface DeviceService {
      * @param userName
      * @return
      */
-    public List<DeviceDTO> selectDeviceDTObyUserName(List<DeviceDTO> dataList,String userName);
+     List<DeviceDTO> selectDeviceDTObyUserName(List<DeviceDTO> dataList,String userName);
+
+    /**
+     * 根据类型统计设备数量
+     * @param monthStr
+     * @return
+     */
+    Map staDeviceByType(String monthStr);
+    /**
+     * 根据品牌统计设备数量
+     * @param monthStr
+     * @return
+     */
+    Map staDeviceByBrand(String monthStr);
+    /**
+     * 根据部门统计设备数量
+     * @param monthStr
+     * @return
+     */
+    Map staDeviceByOrg(String monthStr);
 
 }

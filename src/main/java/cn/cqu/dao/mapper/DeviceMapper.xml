@@ -121,4 +121,57 @@
         WHERE
             dev_id = #{devId}
     </update>
+
+    <select id="staDeviceByType" resultType="java.util.HashMap">
+        SELECT
+        t.type as 'key',
+        count( 1 ) as 'count'
+        FROM
+        t_device d
+        LEFT JOIN t_device_type t ON d.type_id = t.type_id
+       WHERE
+        d.purchase_time &lt;= #{monthStr}
+        GROUP BY
+        d.type_id
+    </select>
+    <select id="staDeviceByBrand" resultType="java.util.HashMap">
+        SELECT
+        t.brand as 'key',
+        count( 1 ) as 'count'
+        FROM
+        t_device d
+        LEFT JOIN t_device_brand t ON d.brand_id = t.brand_id
+       WHERE
+        d.purchase_time &lt;= #{monthStr}
+        GROUP BY
+        d.brand_id
+    </select>
+    <select id="staDeviceByOrg" resultType="java.util.HashMap">
+        SELECT
+        count( a.dev_id ) AS 'count',
+        IF
+        ( c.org_name IS NULL, "未分配", c.org_name ) AS 'key'
+        FROM
+        t_device a
+        LEFT JOIN t_device_usage b ON a.dev_id = b.dev_id
+        LEFT JOIN t_organization c ON c.org_id = b.dep_fri
+        WHERE
+        a.purchase_time &lt;= #{monthStr}
+        GROUP BY
+        c.org_id UNION
+        SELECT
+        count( a.type_id ) AS 'count',
+        c.org_name AS 'key'
+        FROM
+        t_device a
+        LEFT JOIN t_device_usage b ON a.dev_id = b.dev_id
+        AND a.purchase_time &lt;= #{monthStr}
+        RIGHT OUTER JOIN t_organization c ON c.org_id = b.dep_fri
+        WHERE
+        c.org_level = 1
+        GROUP BY
+        c.org_id
+    </select>
+
+
 </mapper>

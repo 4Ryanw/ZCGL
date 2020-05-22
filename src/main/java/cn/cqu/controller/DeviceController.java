@@ -3,6 +3,9 @@ package cn.cqu.controller;
 import cn.cqu.pojo.Device;
 import cn.cqu.pojo.dto.DeviceDTO;
 import cn.cqu.service.DeviceService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.JsonArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,8 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/device")
@@ -202,9 +204,15 @@ public class DeviceController {
     }
 
 
-
+    /**
+     * 下载模板
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @GetMapping("/template")
-    public void DownloadServlet(HttpServletRequest request, HttpServletResponse response)
+    public void downloadServlet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setCharacterEncoding("UTF-8");
@@ -229,8 +237,42 @@ public class DeviceController {
         while((len = in.read(buffer)) != -1){
             out.write(buffer,0,len);
         }
+    }
 
 
+    @GetMapping("/statistics")
+    @ResponseBody
+    public Map<String, Object> reloadChart(HttpServletRequest request) throws ParseException {
+        String monthStr = request.getParameter("monthStr");
+         monthStr = subMonth(monthStr);
+        Map resultMap = new HashMap();
+        //设备类型统计
+         Map typeMap =  deviceService.staDeviceByType(monthStr);
+         resultMap.put("typeMap",typeMap);
+         //设备品牌统计
+         Map brandMap = deviceService.staDeviceByBrand(monthStr);
+         resultMap.put("brandMap",brandMap);
+         //设备品牌统计
+         Map orgMap = deviceService.staDeviceByOrg(monthStr);
+         resultMap.put("orgMap",orgMap);
+        return resultMap;
+    }
+
+    /****
+     * 传入具体日期 ，返回具体日期增加一个月。
+     * @param date 日期
+     * @return 2017-05-13
+     * @throws ParseException
+     */
+    private  String subMonth(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Date dt = sdf.parse(date);
+        Calendar rightNow = Calendar.getInstance();
+        rightNow.setTime(dt);
+        rightNow.add(Calendar.MONTH, 1);
+        Date dt1 = rightNow.getTime();
+        String reStr = sdf.format(dt1);
+        return reStr;
     }
 
 }

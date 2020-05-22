@@ -158,4 +158,7 @@ public class indexController {
     @GetMapping("/system")
     public void system(){}
 
+    @GetMapping("/charts")
+    public void charts(){}
+
 }
