@@ -158,6 +158,9 @@ public class indexController {
     @GetMapping("/system")
     public void system(){}
 
+    /**
+     * 图表统计
+     */
     @GetMapping("/charts")
     public void charts(){}
 

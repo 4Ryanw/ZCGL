@@ -17,6 +17,12 @@ public class NoticeController {
     @Autowired
     NoticeService noticeService;
 
+    /**
+     * 查看公告详情
+     * @param id
+     * @param map
+     * @return
+     */
     @GetMapping("/{id}")
     public String readContent(@PathVariable("id") String id,ModelMap map){
         Notice notice = noticeService.getNoticeById(id);

@@ -192,7 +192,7 @@ public class DeviceController {
     }
 
     /**
-     * 导出表格
+     * 导出报表
      * @param response
      * @param request
      */
@@ -240,6 +240,12 @@ public class DeviceController {
     }
 
 
+    /**
+     * 获取图表统计数据
+     * @param request
+     * @return
+     * @throws ParseException
+     */
     @GetMapping("/statistics")
     @ResponseBody
     public Map<String, Object> reloadChart(HttpServletRequest request) throws ParseException {

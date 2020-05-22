@@ -93,6 +93,10 @@ public class OrgController {
         return organizationService.updateOrganizationName(organization);
     }
 
+    /**
+     * 获取组织树
+     * @return
+     */
     @GetMapping("/tree")
     @ResponseBody
     public OrganizationDTO getOrganizationTree(){

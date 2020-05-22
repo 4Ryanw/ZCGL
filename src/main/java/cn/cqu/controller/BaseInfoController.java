@@ -58,7 +58,7 @@ public class BaseInfoController {
     }
 
     /**
-     * 修改类型
+     * 修改设备类型
      * @param deviceType
      * @return
      */
