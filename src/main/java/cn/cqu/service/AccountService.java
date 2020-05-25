@@ -68,6 +68,13 @@ public interface AccountService {
      */
     int updateAccountLevel(int level,String[] groups);
 
+    /**
+     * 根据账号查询账户DTO类
+     * @param id
+     * @return
+     */
+    AccountDTO getAccountDTOById(String id);
+
 
 
 

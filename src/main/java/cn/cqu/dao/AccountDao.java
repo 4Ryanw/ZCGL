@@ -66,4 +66,12 @@ public interface AccountDao {
     @Update("update t_account set user_role = #{level} where uuid = #{id} ")
     int updateLevelById(@Param("id") String id,@Param("level")int level);
 
+
+    /**
+     * 根据id查询账户DTO类
+     * @param id
+     * @return
+     */
+    AccountDTO getAccountDTOById(String id);
+
 }

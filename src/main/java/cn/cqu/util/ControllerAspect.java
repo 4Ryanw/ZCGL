@@ -27,7 +27,6 @@ import java.util.*;
 public class ControllerAspect  {
     @Autowired
     SystemLogDao systemLogDao;
-
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ControllerAspect.class);
 
     //切入点表达式
@@ -37,44 +36,6 @@ public class ControllerAspect  {
     @Pointcut("@annotation(cn.cqu.util.MyLog)")
     public void pointCut() {
     }
-
-/*    @Before("pointCut()")
-    public void before(JoinPoint joinPoint) {
-        MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
-        String user = (String) SecurityUtils.getSubject().getPrincipal();
-//        System.out.println("管理员:"+user+"  方法名:"+methodSignature.getMethod().getName()+" 参数列表:"+ArrayToParameterString(methodSignature.getParameterNames(),joinPoint.getArgs()));
-        String[] parameterArr = ArrayToParameterString(methodSignature.getParameterNames(),joinPoint.getArgs());
-
-        try {
-            Class clazz = joinPoint.getTarget().getClass();
-
-            String methodName = joinPoint.getSignature().getName();
-            Class[] parameterTypes = ((MethodSignature)joinPoint.getSignature()).getMethod().getParameterTypes();
-            Method methdo = clazz.getMethod(methodName,parameterTypes);
-            MyLog myLog  = methdo.getAnnotation(MyLog.class);
-            if (myLog!= null) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String dateLog = sdf.format(new Date());
-                System.out.println(dateLog+" 管理员:"+user+myLog.actionName()+myLog.target()+"("+parameterArr[myLog.targetIndex()]+")的"+myLog.result()+"为("+parameterArr[myLog.resultIndex()]+")");
-            }
-        } catch (Exception ex) {
-            ex.toString();
-            System.out.println(ex);
-        }
-
-    }
-    private  String[] ArrayToParameterString(String[] parameterNames,Object[] parameterValues) {
-        List<String> list =  new ArrayList<>();
-        if (parameterNames != null && parameterNames.length > 0) {
-            for (int i = 0; i < parameterNames.length; i++) {
-                String s ;
-                s = parameterNames[i]+":"+parameterValues[i];
-                list.add(s);
-            }
-        }
-        String[] array =new String[list.size()];
-        return list.toArray(array);
-    }*/
 
     private String requestPath = null ; // 请求地址
     private String userNo = null ; // 用户名
@@ -120,7 +81,6 @@ public class ControllerAspect  {
     @Around("pointCut()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
 
-    
         /**
          * 1.获取request信息
          * 2.根据request获取session

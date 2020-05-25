@@ -152,4 +152,16 @@ public class AccountServiceImpl implements AccountService {
         }
         return 1;
     }
+
+    /**
+     * 根据id查询账户DTO类
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public AccountDTO getAccountDTOById(String id) {
+
+        return accountDao.getAccountDTOById(id);
+    }
 }

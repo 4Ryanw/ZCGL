@@ -331,13 +331,12 @@
       },
       url: "/device/statistics",
       success: function (data) {
-
         /*类型分类*/
         //填充数据
         doughnutChartData.datasets[0].data = data.typeMap.valueArr;
         doughnutChartData.labels = data.typeMap.keyArr;
         //清空画布
-        $('#doughnutChart').remove(); // this is my <canvas> element
+        $('#doughnutChart').remove();
         $('#doughnutChartParent').append('<canvas id="doughnutChart" ></canvas>');
         //绘制表格
         var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
@@ -352,7 +351,7 @@
         pieChartData.datasets[0].data = data.brandMap.valueArr;
         pieChartData.labels = data.brandMap.keyArr;
         //清空画布
-        $('#pieChart').remove(); // this is my <canvas> element
+        $('#pieChart').remove();
         $('#pieChartParent').append('<canvas id="pieChart" ></canvas>');
         //绘制表格
         var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
@@ -367,7 +366,7 @@
         barChartData.datasets[0].data = data.orgMap.valueArr;
         barChartData.labels = data.orgMap.keyArr;
         //清空画布
-        $('#barChart').remove(); // this is my <canvas> element
+        $('#barChart').remove();
         $('#barChartParent').append('<canvas id="barChart" ></canvas>');
 
         //绘制图表

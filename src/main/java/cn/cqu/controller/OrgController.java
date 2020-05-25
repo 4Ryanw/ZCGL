@@ -3,7 +3,6 @@ package cn.cqu.controller;
 import cn.cqu.pojo.Organization;
 import cn.cqu.pojo.dto.OrganizationDTO;
 import cn.cqu.service.OrganizationService;
-import org.apache.ibatis.annotations.Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 组织类型控制器
+ * 组织机构控制器
  */
 
 @Controller

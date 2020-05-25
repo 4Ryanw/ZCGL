@@ -46,4 +46,16 @@
         where
         d.dev_id = #{deviceId}
     </select>
+    <select id="getAccountDTOById" resultType="AccountDTO">
+        <!-- 具体的sql -->
+        SELECT
+        a.*,
+        r.role_name
+        FROM
+        t_role r
+        INNER JOIN
+        t_account a ON a.user_role= r.role_id
+        where
+        a.user_id = #{id}
+    </select>
 </mapper>

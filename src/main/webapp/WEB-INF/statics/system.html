@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="cn" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
 
   <!--  meta 标签 -->
@@ -90,6 +91,7 @@
                           <input type="text" id="endTime" style="margin-left: 1rem" class="form-control col-2 timepicker" onchange="loadLogs()" placeholder="结束时间">
                         </div>
                         <p class="card-description">  管理员账号   </p>
+                        <div style=" overflow-y: scroll;height: 300px">
                         <ul class="list-arrow" id="logsUL" th:fragment="logList-refresh">
 <!--                          <li>2020-03-29 21:54:59 管理员(admin)：修改账号(ab)状态为:启用 </li>-->
                           <!--<li>2020-03-22 20:36:54 管理员(admin)：新增设备(wr123)使用部门(一级部门:综合服务中心,二级部门:11,三级部门:555,物理位置:)</li>
@@ -97,6 +99,7 @@
                           <li>2020-03-22 19:17:10 管理员(admin)：修改设备(111)IP地址:192.168.0.1;MAC地址:00:ec:56:a7:97:6E</li>-->
                           <li th:each="log : ${logList}" th:text="${#dates.format(log.startTime, 'yyyy-MM-dd HH:mm:ss')+' 管理员('+log.userNo+'): '+log.discription}"></li>
                         </ul>
+                        </div>
                       </div>
                     </div>
                   </div>

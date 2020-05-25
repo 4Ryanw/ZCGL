@@ -38,7 +38,6 @@ public class DeviceController {
         return pageName+"::table-refresh";
     }
 
-
     /**
      * 按条件查询设备
      * @param map
@@ -54,6 +53,7 @@ public class DeviceController {
       map.put("dtoList", deviceDTOList);
       return pageName+"::table-refresh";
     };
+
     /**
      * 根据id获取设备信息
      * @param map
@@ -236,7 +236,6 @@ public class DeviceController {
         }
     }
 
-
     /**
      * 获取图表统计数据
      * @param request
@@ -261,7 +260,7 @@ public class DeviceController {
         return resultMap;
     }
 
-    /****
+    /**
      * 传入具体日期 ，返回具体日期增加一个月。
      * @param date 日期
      * @return 2017-05-13

@@ -45,6 +45,7 @@
     /*初始化*/
     $(document).ready(function(){
         d3.json('/organization/tree',function(data){
+            console.info(data);
             json.push(data);
             root = json[0];
             root.x0 = height / 2;
