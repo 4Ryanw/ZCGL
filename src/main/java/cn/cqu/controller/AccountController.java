@@ -43,6 +43,19 @@ public class AccountController {
         map.put("accountDTOList", accountList);
         return "account::table-refresh";
     }
+
+    /**
+     * 通过用户名称搜索用户
+     * @param map
+     * @param userName
+     * @return
+     */
+    @GetMapping("/list/{userName}")
+    public String listAccountsByUserName(ModelMap map,@PathVariable("userName")String userName){
+       List<AccountDTO> accountList = accountService.listAccountByName(userName);
+        map.put("accountDTOList", accountList);
+        return "account::table-refresh";
+    }
     /**
      * 添加管理员页面
      * @param map

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="cn" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
   <title>台账管理系统</title>
 </head>
@@ -43,7 +44,7 @@
                         <option value="all">全部</option>
                       </select>
                     </div>
-                  <div class="col-md-4">
+                  <div shiro:hasAnyRoles="admin,superAdmin" class="col-md-4">
                     <button type="button" class="btn btn-outline-primary btn-fw mr-2" data-toggle="modal" data-target="#addModal" onclick="onchangeSelect_add()">新增物理位置</button>
                     <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
                     <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>

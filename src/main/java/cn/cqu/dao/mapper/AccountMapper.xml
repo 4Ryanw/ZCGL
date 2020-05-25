@@ -58,4 +58,24 @@
         where
         a.user_id = #{id}
     </select>
+
+    <select id="listAccountByName" resultType="AccountDTO">
+        <!-- 具体的sql -->
+        SELECT
+        a.uuid,
+        a.user_id,
+        a.PASSWORD,
+        a.user_name,
+        a.user_role,
+        a.user_status,
+        r.role_name
+        FROM
+        t_account a
+        LEFT JOIN t_role r ON a.user_role = r.role_id
+        <where>
+        <if test ="userName !=null and userName!=''">
+            a.user_name like "%"#{userName}"%"
+        </if>
+        </where>
+    </select>
 </mapper>

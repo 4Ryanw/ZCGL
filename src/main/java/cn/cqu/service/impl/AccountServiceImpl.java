@@ -1,7 +1,6 @@
 package cn.cqu.service.impl;
 
 import cn.cqu.dao.AccountDao;
-import cn.cqu.dao.DeviceDao;
 import cn.cqu.pojo.dto.AccountDTO;
 import cn.cqu.util.MyLog;
 import com.mysql.jdbc.StringUtils;
@@ -163,5 +162,17 @@ public class AccountServiceImpl implements AccountService {
     public AccountDTO getAccountDTOById(String id) {
 
         return accountDao.getAccountDTOById(id);
+    }
+
+    /**
+     * 根据用户名查询账户DTO类
+     *
+     * @param userName
+     * @return
+     */
+    @Override
+    public List<AccountDTO> listAccountByName(String userName) {
+
+        return accountDao.listAccountByName(userName);
     }
 }

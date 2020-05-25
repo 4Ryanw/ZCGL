@@ -143,16 +143,6 @@
           <div class="col-md-12 stretch-card">
             <div class="card">
               <div class="card-body">
-                <div class="row">
-                  <!-- 排序下拉框-->
-                  <div class="input-group-prepend col-md-7">
-                    <button id="sortWay-menu" class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">排序方式</button>
-                    <div  class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 47px, 0px);">
-                      <a class="dropdown-item" href="#" onclick="changeSortWay(this)">购置时间升序</a>
-                      <a class="dropdown-item" href="#" onclick="changeSortWay(this)">购置时间降序</a>
-                    </div>
-                  </div>
-                </div>
                 <div class="table-responsive">
                   <table id="table-listing" class="table table-hover table-refresh"  th:fragment="table-refresh">
                     <thead>

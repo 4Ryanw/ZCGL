@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="cn" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <!--公共布局样式-->
 <head th:replace="/pages/commons/layout :: common_layout(~{::title},~{})">
   <title>台账管理系统</title>
@@ -30,18 +31,20 @@
                           <i class="mdi mdi-magnify"></i>
                         </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="输入用户名信息" aria-label="search" aria-describedby="search">
+                    <input type="text" class="form-control" id="userName_search" placeholder="输入用户名信息" aria-label="search" aria-describedby="search">
                   </div>
                 </li>
               </ul>
               <div class="d-flex justify-content-between align-items-end flex-wrap" >
-                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0">
+                <button type="button" class="btn btn-light bg-white  mr-3 mt-2 mt-xl-0" onclick="searchByName()">
                   <a><i class="mdi mdi-magnify"></i> 搜索</a>
                 </button>
-                <button type="button" class="btn btn-outline-primary btn-fw mr-2"data-toggle="modal" data-target="#addModal">新增人员</button>
-                <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
-                <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
-              </div>
+                <div shiro:hasAnyRoles="admin,superAdmin">
+                  <button type="button" class="btn btn-outline-primary btn-fw mr-2"data-toggle="modal" data-target="#addModal">新增人员</button>
+                  <button type="button" class="btn btn-outline-success btn-fw mr-2"  onclick="openEdit()">编辑</button>
+                  <button type="button" class="btn btn-outline-danger btn-fw mr-2" data-toggle="modal" data-target="#deleteModal">删除</button>
+                </div>
+                </div>
             </div>
           </div>
         </div>
@@ -63,7 +66,7 @@
                       <th></th>
                       <th>姓 名</th>
                       <th>账号</th>
-                      <th>账号状态</th>
+                      <th shiro:hasAnyRoles="admin,superAdmin">账号状态</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -71,7 +74,7 @@
                       <td id="uuId" th:value="${accountDTO.uuid}"><input type="checkbox"/></td>
                       <td id="userName" th:text="${accountDTO.username}">Jeremy Ortega</td>
                       <td id="userId" th:text="${accountDTO.userId}">a120935779</td>
-                      <td><input id="userStatus"  type='checkbox' checked class='account_status_switch' th:value="${accountDTO.userStatus}" name='mycheck'></td>
+                      <td shiro:hasAnyRoles="admin,superAdmin"><input id="userStatus"  type='checkbox' checked class='account_status_switch' th:value="${accountDTO.userStatus}" name='mycheck'></td>
                     </tr>
                     </tbody>
                   </table>
@@ -145,7 +148,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" id="myModalLabel">编辑</h4>
+              <h4 class="modal-title">编辑</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
@@ -323,6 +326,14 @@
     inittable(table_init_url);
     initSwitch();
   });
+
+  function searchByName(){
+    var userName = $("#userName_search").val();
+    var url = table_init_url+"/"+userName;
+    alert(url)
+    inittable(url)
+  }
 </script>
+
 </html>
 

@@ -75,6 +75,13 @@ public interface AccountService {
      */
     AccountDTO getAccountDTOById(String id);
 
+    /**
+     * 根据用户名查询账户DTO类
+     * @param userName
+     * @return
+     */
+    List<AccountDTO> listAccountByName(String userName);
+
 
 
 
