@@ -9,11 +9,16 @@ import cn.cqu.pojo.dto.DeviceDTO;
 import cn.cqu.service.DeviceService;
 import cn.cqu.util.ExcelExportUtil;
 import cn.cqu.util.MyLog;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -307,6 +312,64 @@ public class DeviceServiceImpl implements DeviceService {
     public Map staDeviceByOrg(String monthStr) {
         List<HashMap<String, Object>> list = deviceDao.staDeviceByOrg(monthStr);
         return findMap(list);
+    }
+
+    /**
+     * 根据状态统计设备数量
+     *
+     * @param monthStr
+     * @return
+     */
+    @Override
+    public Map staDeviceByStatus(String monthStr) {
+        List<HashMap<String, Object>> list = deviceDao.staDeviceByStatus(monthStr);
+        Map resMap =  list.get(0);
+        int countUser = accountDao.listAccount().size();
+        resMap.put("countUser",countUser);
+        Long stop =(Long)resMap.get("total")-(Long)resMap.get("running");
+        resMap.put("stop",stop);
+        return resMap;
+    }
+
+    /**
+     * 识别文件
+     *
+     * @param filePath
+     * @return
+     */
+    @Override
+    public Map fileRead(String filePath) throws Exception {
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-DD");
+        SimpleDateFormat sdf2  = new SimpleDateFormat("yyyy年MM月D日");
+        InputStream is = new FileInputStream(filePath);
+        XWPFDocument doc = new XWPFDocument(is);
+        XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
+        String text = extractor.getText();
+
+        /* 找出指定的2个字符在 该字符串里面的 位置 */
+        int idIndex = text.indexOf("设备标识:");
+        int typeIndex = text.indexOf("设备类型:");
+        int dateIndex = text.indexOf("购买日期:");
+        int brandIndex = text.indexOf("设备品牌:");
+        int erpCodeIndex = text.indexOf("ERP编码:");
+        int modelIndex = text.indexOf("设备型号:");
+        /* 开始截取 */
+        String id = text.substring(idIndex, typeIndex).substring(5).trim();
+        String type = text.substring(typeIndex, dateIndex).substring(5).trim();
+        String purchaseTime = text.substring(dateIndex, brandIndex).substring(5).trim();
+        purchaseTime =  sdf.format(sdf2.parse(purchaseTime));
+        String brand = text.substring(brandIndex, erpCodeIndex).substring(5).trim();
+        String erpcode = text.substring(erpCodeIndex, modelIndex).substring(6).trim();
+        String model=text.substring(modelIndex).substring(5).trim();
+        Map resMap = new HashMap();
+        resMap.put("id",id);
+        resMap.put("type",type);
+        resMap.put("purchaseTime",purchaseTime);
+        resMap.put("brand",brand);
+        resMap.put("erpCode",erpcode);
+        resMap.put("devModel",model);
+        is.close();
+        return resMap;
     }
 
 

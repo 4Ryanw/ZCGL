@@ -4,10 +4,7 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import cn.cqu.dao.AccountDao;
 import cn.cqu.pojo.Account;
 import cn.cqu.pojo.dto.AccountDTO;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -21,17 +18,6 @@ import java.util.Set;
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     private AccountDao accountDao;
-
-
-/*    *//**
-     * 方言配置
-     * @return
-     *//*
-    @Bean(name = "shiroDialect")
-    public ShiroDialect shiroDialect() {
-        System.out.println("配置方言");
-        return new ShiroDialect();
-    }*/
 
     /**
      * 授权
@@ -63,9 +49,15 @@ public class UserRealm extends AuthorizingRealm {
         //String password = (String) authenticationToken.getCredentials();
         //根据账号查询数据库，如果查不到就认为账号不正确，返回null
         Account user = accountDao.getAccountById(userId);
-        if(null != user)
+        //判断账户是否存在
+        if(null != user){
+            //判断账户状态
+            if(user.getUserStatus()==0){ //status为0 代表停用
+                throw new LockedAccountException() ;
+            }
             //交由shiro判断，是否与用户输入的匹配
             return new SimpleAuthenticationInfo(user.getUserId(),user.getPassword(),getName());
+        }
         else
             return null;
     }

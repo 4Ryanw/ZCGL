@@ -178,7 +178,8 @@
   var searchParam = {};
   var selectedObj = null;//被选中目标
   var table_init_url = "/organization/macAddress/list";//表格加载请求地址
-
+    var aTargets = [0]; //禁止排序列下标
+    var aaSorting = 1; //排序起始列下标
   //重置查询条件
   function initexample() {
       example = {
@@ -207,7 +208,7 @@
           toastr.success('添加成功');
           cleanInfo();
           initexample();
-          searchByexample(table_init_url,searchParam);
+          searchByexample(table_init_url,searchParam,aTargets,aaSorting);
         }
         else if(data == -1){
           toastr.warning('已存在同名部门');
@@ -230,7 +231,7 @@
             toastr.success('删除成功');
             cleanInfo();
             initexample();
-            searchByexample(table_init_url,searchParam);
+            searchByexample(table_init_url,searchParam,aTargets,aaSorting);
           }else if(data == -1){
             toastr.warning('存在子节点');
           }else if(data == -2){
@@ -269,7 +270,7 @@
         if(data==1){
           toastr.success("修改成功");
           cleanInfo();
-          searchByexample(table_init_url,searchParam);
+          searchByexample(table_init_url,searchParam,aTargets,aaSorting);
           $('.modal').modal('hide');
         }
         else if(data == -1){
@@ -305,7 +306,7 @@
 
   function onchangeSelect_2(){
       initexample();
-      searchByexample(table_init_url,searchParam)
+      searchByexample(table_init_url,searchParam,aTargets,aaSorting)
   }
 
     //绑定级联下拉框

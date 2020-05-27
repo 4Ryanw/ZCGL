@@ -19,6 +19,8 @@ public class LoginController {
                 mv.addAttribute("msg", "账号不存在");
             } else if (e.contains("org.apache.shiro.authc.IncorrectCredentialsException")) {
                 mv.addAttribute("msg", "密码错误");
+            } else if (e.contains("org.apache.shiro.authc.LockedAccountException")) {
+                mv.addAttribute("msg", "账户已停用");
             }
         }
         return "login";

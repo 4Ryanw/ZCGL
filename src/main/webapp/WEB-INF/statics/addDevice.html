@@ -59,7 +59,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">设备类型</label>
                     <div class="col-sm-6">
-                      <select class="form-control" name="typeId">
+                      <select class="form-control" id="devType" name="typeId">
                         <option th:each="type : ${deviceTypeList}" th:value="${type.typeId}" th:text="${type.type}"></option>
                       </select>
                     </div>
@@ -69,7 +69,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">设备品牌</label>
                     <div class="col-sm-6">
-                      <select class="form-control" name="brandId">
+                      <select class="form-control" id="devBrand" name="brandId">
                         <option th:each="brand : ${deviceBrandList}" th:value="${brand.brandId}" th:text="${brand.brand}"></option>
                       </select>
                     </div>
@@ -113,15 +113,19 @@
               <p class="card-description" style="margin-top: 1rem">
                 模板导入
               </p>
-              <div class="template-demo">
+              <div class="template-demo row">
                 <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="window.location.href='/device/template?filename=template.docx'">
                   <i class="mdi mdi-download btn-icon-prepend"></i>
                  下载模板
                 </button>
-                <button type="button" class="btn btn-outline-danger btn-icon-text">
+              <!--  <button type="button" class="btn btn-outline-danger btn-icon-text">
                   <i class="mdi mdi-upload btn-icon-prepend"></i>
                   上传
-                </button>
+                </button>-->
+                  <div class="file-container" style="position:relative;">
+                    <button style="margin-top: 16px" class="btn btn-outline-danger btn-icon-text fileinput-button" type="button"><i class="mdi mdi-upload btn-icon-prepend"></i>上传</button>
+                    <input type="file" id="jobData" onchange="loadFile(this.files[0])" style="position:absolute;top:25px;left:0; opacity:0">
+                  </div>
               </div>
             </form>
           </div>
@@ -198,6 +202,49 @@
       }
     })
   });
+
+
+  function loadFile(file){
+    var formData = new FormData();
+    formData.append("file",file);
+    $.ajax({
+      url:'/device/file',
+      type:'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success:function(res){
+        var brandFlag = false;
+        var typeFlag = false;
+        $("#devId").val(res.id);
+        $("#devId").blur();
+        $("input[name='erpCode']").val(res.erpCode);
+        $("input[name='devModel']").val(res.devModel);
+        $("input[name='purchaseTime']").val(res.purchaseTime);
+
+        $("#devBrand option").each(function () {
+          var text = $(this).text();
+          if(res.brand==text){
+            $(this).attr("selected",true);
+            brandFlag = true;
+          }
+        })
+        if(!brandFlag){
+          toastr.error("品牌信息无法识别,请手动选择");
+        }
+        $("#devType option").each(function () {
+          var text = $(this).text();
+          if(res.type==text){
+            $(this).attr("selected",true);
+            typeFlag= true;
+          }
+        })
+        if(!typeFlag){
+          toastr.error("类型信息无法识别,请手动选择");
+        }
+      }
+    })
+  }
 
 </script>
 </html>

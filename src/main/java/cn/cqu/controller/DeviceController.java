@@ -3,6 +3,10 @@ package cn.cqu.controller;
 import cn.cqu.pojo.Device;
 import cn.cqu.pojo.dto.DeviceDTO;
 import cn.cqu.service.DeviceService;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -257,6 +258,9 @@ public class DeviceController {
          //设备品牌统计
          Map orgMap = deviceService.staDeviceByOrg(monthStr);
          resultMap.put("orgMap",orgMap);
+         //设备状态统计
+        Map statusMap = deviceService.staDeviceByStatus(monthStr);
+        resultMap.put("statusMap",statusMap);
         return resultMap;
     }
 
@@ -275,6 +279,38 @@ public class DeviceController {
         Date dt1 = rightNow.getTime();
         String reStr = sdf.format(dt1);
         return reStr;
+    }
+
+    @PostMapping("/file")
+    @ResponseBody
+    public Map uploadFile(HttpServletRequest request) throws Exception {
+        System.out.println("文件上传");
+        //文件上传的位置
+        String path =  request.getSession().getServletContext().getRealPath("/upload");
+        File file = new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        //解析request对象,获取文件上传项
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload fileUpload = new ServletFileUpload(factory);
+        //解析
+        List<FileItem> list =  fileUpload.parseRequest(request);
+        //遍历
+        for (FileItem item:list
+             ) {
+            if(item.isFormField()){//普通表单项
+
+          }   else{
+                String fileName = item.getName()+UUID.randomUUID();
+                //完成文件上传
+                item.write(new File(path,fileName));
+                //删除临时文件
+                item.delete();
+                return   deviceService.fileRead(path+"/"+fileName);
+            }
+        }
+        return null;
     }
 
 }

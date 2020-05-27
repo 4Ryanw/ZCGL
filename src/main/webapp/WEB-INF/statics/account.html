@@ -184,6 +184,8 @@
 <script>
   var selectedObj = null;//被选中目标
   var table_init_url = "/account/list";//表格加载请求地址
+  var aTargets = [0,1,2]; //禁止排序列下标
+  var aaSorting = 3; //排序起始列下标
   //初始化开关的函数
   function initSwitch(){
     var switch_list = $('.account_status_switch');
@@ -249,7 +251,7 @@
             if(data == 1){
               toastr.success('添加成功');
               cleanInfo();
-              inittable(table_init_url);
+              inittable(table_init_url,aTargets,aaSorting);
               initSwitch();
             }
             else if(data == 0)
@@ -270,7 +272,7 @@
           success: function(data) {
             toastr.success('删除成功');
             cleanInfo();
-            inittable(table_init_url);
+            inittable(table_init_url,aTargets,aaSorting);
             initSwitch();
           }
         });
@@ -323,15 +325,14 @@
   };
   /*初始化*/
   $(document).ready(function(){
-    inittable(table_init_url);
+    inittable(table_init_url,aTargets,aaSorting);
     initSwitch();
   });
 
   function searchByName(){
     var userName = $("#userName_search").val();
     var url = table_init_url+"/"+userName;
-    alert(url)
-    inittable(url)
+    inittable(url,aTargets,aaSorting)
   }
 </script>
 

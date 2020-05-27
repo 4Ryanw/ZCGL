@@ -220,9 +220,11 @@
 <!-- 自定义jS -->
 <script>
     var table_init_url = "/account/admins";//表格加载请求地址
+    var aTargets = [0,1]; //禁止排序列下标
+    var aaSorting = 2; //排序起始列下标
     /*初始化*/
     $(document).ready(function(){
-      inittable(table_init_url);
+      inittable(table_init_url,aTargets,aaSorting);
       loadLogs();
 
 
@@ -274,7 +276,7 @@
         $("#userModal").html(data);
         toastr.success("删除成功")
         $('#userModal').modal('hide');
-        inittable(table_init_url);
+        inittable(table_init_url,aTargets,aaSorting);
       }
     });
   }
@@ -299,7 +301,7 @@
           else
             toastr.error("服务器异常");
           $('#userModal').modal('hide');
-          inittable(table_init_url);
+          inittable(table_init_url,aTargets,aaSorting);
         }
 
       });

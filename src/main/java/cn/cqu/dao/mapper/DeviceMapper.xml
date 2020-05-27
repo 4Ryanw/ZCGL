@@ -172,6 +172,17 @@
         GROUP BY
         c.org_id
     </select>
+    <select id="staDeviceByStatus" resultType="java.util.HashMap">
+        SELECT
+        count( b.dev_id ) AS 'total',
+        count( IF ( b.dev_status = 2, TRUE, NULL ) ) AS 'running'
+        FROM
+        t_device AS a
+        LEFT JOIN t_device_usage b ON a.dev_id = b.dev_id
+        WHERE
+          a.purchase_time &lt;= #{monthStr}
+
+    </select>
 
 
 </mapper>

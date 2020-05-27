@@ -337,6 +337,8 @@
 <script>
   var searchFlag = false; //高级搜索标志
   var table_init_url = "/device/list/deviceList";//表格加载请求地址
+  var aTargets = [0,1,2,3,4,6,7,8,9,10,11]; //禁止排序列下标
+  var aaSorting = 5; //排序起始列下标
   //重写绑定表格点击事件
   function initTr_onclick(){
     $(".tr_sub").click(function () {
@@ -358,7 +360,7 @@
       minView: 2,
       autoclose: true
     });
-    inittable(table_init_url);
+    inittable(table_init_url,aTargets,aaSorting);
   });
 
   /*更多搜索*/
@@ -381,13 +383,13 @@
 
       if($("#detailSearch_purchaseTime").val()!="")
         example.purchaseTime=$("#detailSearch_purchaseTime").val();
-        searchByexample("/device/list",example);
+        searchByexample("/device/list",example,aTargets,aaSorting);
     }else {//id模糊搜索
       var example = {
         "devId":$("#detailSearch_devId2").val(),
         "pageName":"deviceList"
       }
-      searchByexample("/device/list",example);
+      searchByexample("/device/list",example,aTargets,aaSorting);
     }
   }
 

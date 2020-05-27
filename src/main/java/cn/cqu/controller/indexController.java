@@ -54,9 +54,7 @@ public class indexController {
     }
     //设备管理
     @GetMapping("/deviceManage")
-    public void deviceManage(HttpServletRequest request,ModelMap map){
-        String user = (String) SecurityUtils.getSubject().getPrincipal();
-        request.getSession().setAttribute("loginUser",user);
+    public void deviceManage(ModelMap map){
         List<DeviceType> typeList = baseInfoService.listDeviceType();
         List<DeviceBrand> deviceBrandList =  baseInfoService.listDeviceBrand();
         map.put("deviceBrandList",deviceBrandList);
@@ -67,7 +65,9 @@ public class indexController {
     public void account(){}
     //设备台账
     @GetMapping("/deviceList")
-    public void deviceList(ModelMap map){
+    public void deviceList(HttpServletRequest request,ModelMap map){
+        String user = (String) SecurityUtils.getSubject().getPrincipal();
+        request.getSession().setAttribute("loginUser",user);
         List<DeviceType> typeList = baseInfoService.listDeviceType();
         List<DeviceBrand> deviceBrandList =  baseInfoService.listDeviceBrand();
         Organization example = new Organization();

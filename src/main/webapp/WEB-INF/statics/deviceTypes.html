@@ -138,6 +138,8 @@
 <script>
   var selectedObj = null;//被选中目标
   var table_init_url = "/baseInfos/type/list";//表格加载请求地址
+  var aTargets = [0]; //禁止排序列下标
+  var aaSorting = 1; //排序起始列下标
   //新增设备类型
   function addInfo(){
         $.ajax({
@@ -151,7 +153,7 @@
             if(data == 1){
               toastr.success('添加成功');
               cleanInfo();
-              inittable(table_init_url);
+              inittable(table_init_url,aTargets,aaSorting);
             }
             else if(data == -1){
                 toastr.warning('已经存在同名类型');
@@ -173,7 +175,7 @@
           if(data == 1){
             toastr.success('删除成功');
             cleanInfo();
-            inittable(table_init_url);
+            inittable(table_init_url,aTargets,aaSorting);
           }else{
             toastr.warning('系统错误');
           }
@@ -211,7 +213,7 @@
                       if(data==1){
                           toastr.success("修改成功");
                           cleanInfo();
-                          inittable(table_init_url);
+                          inittable(table_init_url,aTargets,aaSorting);
                           $('.modal').modal('hide');
                       }
                       else if(data == -1){
@@ -225,7 +227,7 @@
 
   /*初始化*/
   $(document).ready(function(){
-    inittable(table_init_url);
+    inittable(table_init_url,aTargets,aaSorting);
   });
 </script>
 </html>

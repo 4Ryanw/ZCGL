@@ -46,7 +46,7 @@
     }
 
     //初始化表格 ，加载数据并绑定表格点击事件
-    function inittable(url){
+    function inittable(url,aTargets,aaSorting){
       $('.modal').modal('hide');
       $.ajax({
         url:url,
@@ -66,10 +66,11 @@
               search: ""
             },
             "pagingType": "full_numbers",
-            //初始化datatable，但对序号为0列的列不进行排序，别的列均可进行排序
-            "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0 ] }],
+            //初始化datatable，指定列不能排序
+            "aoColumnDefs": [ { "bSortable": false, "aTargets": aTargets }],
+            //最小排序开始列数
             "aaSorting": [
-                    [1, 'asc']
+                    [aaSorting, 'asc']
             ],
             searching: false, paging: true, info: true, striped: false
           });
@@ -80,7 +81,7 @@
     }
 
     //按条件查询
-    function searchByexample(url,param){
+    function searchByexample(url,param,aTargets,aaSorting){
       $('.modal').modal('hide');
       $.ajax({
         url:url,
@@ -100,8 +101,12 @@
               search: ""
             },
             "pagingType": "full_numbers",
-            //初始化datatable，但对序号为0列的列不进行排序，别的列均可进行排序
-            // "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0 ] }],
+            //初始化datatable，指定列不能排序
+            "aoColumnDefs": [ { "bSortable": false, "aTargets": aTargets }],
+            //最小排序开始列数
+            "aaSorting": [
+              [aaSorting, 'asc']
+            ],
             searching: true, paging: true, info: true
           });
           initTr_onclick();

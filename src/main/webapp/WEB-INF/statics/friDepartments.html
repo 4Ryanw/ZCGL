@@ -140,6 +140,8 @@
   var parent_id = 0; //固定上级组织为虚拟节点
   var selectedObj = null;//被选中目标
   var table_init_url = "/organization/list";//表格加载请求地址
+  var aTargets = [0]; //禁止排序列下标
+  var aaSorting = 1; //排序起始列下标
   var example = {       //初始化查询参数
           "orgLevel":level
       }
@@ -158,8 +160,7 @@
         if(data == 1){
           toastr.success('添加成功');
           cleanInfo();
-          //inittable(table_init_url);
-          searchByexample(table_init_url,example);
+          searchByexample(table_init_url,example,aTargets,aaSorting);
         }
         else if(data == -1){
           toastr.warning('已存在同名部门');
@@ -181,7 +182,7 @@
           if(data == 1){
             toastr.success('删除成功');
             cleanInfo();
-              searchByexample(table_init_url,example);
+              searchByexample(table_init_url,example,aTargets,aaSorting);
           }else if(data == -1){
             toastr.warning('存在子节点');
           }else if(data == -2){
@@ -224,7 +225,7 @@
         if(data==1){
           toastr.success("修改成功");
           cleanInfo();
-          searchByexample(table_init_url,example);
+          searchByexample(table_init_url,example,aTargets,aaSorting);
           $('.modal').modal('hide');
         }
         else if(data == -1){
@@ -239,7 +240,7 @@
 
   /*初始化*/
   $(document).ready(function(){
-      searchByexample(table_init_url,example);
+      searchByexample(table_init_url,example,aTargets,aaSorting);
   });
 </script>
 </html>

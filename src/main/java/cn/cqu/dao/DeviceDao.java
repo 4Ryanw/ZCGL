@@ -140,22 +140,28 @@ public interface DeviceDao {
  int deleteDeviceById(String devId);
 
  /**
-  * 根据设备类型分类
+  * 根据设备类型分类统计
   * @param monthStr
   * @return
   */
  List<HashMap<String,Object>> staDeviceByType(String monthStr);
  /**
-  * 根据设备品牌分类
+  * 根据设备品牌分类统计
   * @param monthStr
   * @return
   */
  List<HashMap<String,Object>> staDeviceByBrand(String monthStr);
  /**
-  * 根据分配部门分类
+  * 根据分配部门分类统计
   * @param monthStr
   * @return
   */
  List<HashMap<String,Object>> staDeviceByOrg(String monthStr);
+ /**
+  * 根据设备状态分类统计
+  * @param monthStr
+  * @return
+  */
+ List<HashMap<String,Object>> staDeviceByStatus(String monthStr);
 
 }

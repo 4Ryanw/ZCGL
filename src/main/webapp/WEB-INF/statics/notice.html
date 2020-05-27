@@ -93,10 +93,12 @@
 <div th:replace="/pages/commons/footer::common_js"></div>
 <!-- 自定义jS -->
 <script>
-    var url = "/notice/list"
+    var url = "/notice/list";
+    var aTargets = [0,2]; //禁止排序列下标
+    var aaSorting = 1; //排序起始列下标
   /*初始化*/
   $(document).ready(function(){
-      inittable(url);
+      inittable(url,aTargets,aaSorting);
   });
 
   function readNotice() {
@@ -126,7 +128,7 @@
       success:function (data) {
         if(data == 1){
           toastr.success("删除成功");
-          inittable(url);
+          inittable(url,aTargets,aaSorting);
         }else {
           toastr.error("服务器错误");
         }

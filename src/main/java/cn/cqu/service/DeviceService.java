@@ -5,6 +5,7 @@ import cn.cqu.pojo.Device;
 import cn.cqu.pojo.dto.DeviceDTO;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -114,5 +115,18 @@ public interface DeviceService {
      * @return
      */
     Map staDeviceByOrg(String monthStr);
+    /**
+     * 根据状态统计设备数量
+     * @param monthStr
+     * @return
+     */
+    Map staDeviceByStatus(String monthStr);
+
+    /**
+     * 识别文件
+     * @param filePath
+     * @return
+     */
+    Map fileRead(String filePath) throws FileNotFoundException, Exception;
 
 }
