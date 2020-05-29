@@ -8,8 +8,11 @@ import java.util.List;
  * 组织结构树DTO
  */
 public class OrganizationDTO implements Serializable {
+    //节点名称
     private String name;
+    //父节点名称
     private String parent;
+    //子节点集合
     private List<OrganizationDTO> children = new ArrayList<>();
 
     public OrganizationDTO() {

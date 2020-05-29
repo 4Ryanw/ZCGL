@@ -151,9 +151,7 @@ public class indexController {
      * 编辑公告
      */
     @GetMapping("/noticeEdit")
-    public void noticeEdit(){
-
-    }
+    public void noticeEdit(){}
     //系统管理
     @GetMapping("/system")
     public void system(){}

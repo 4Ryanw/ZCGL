@@ -68,11 +68,11 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     private OrganizationDTO listChildrenNode(Organization parentNode,String parentName){
 
-        //先把Organization转化为DTO1
+        //先把Organization转化为DTO
         OrganizationDTO  organizationDTO= new OrganizationDTO(parentNode.getOrgName(),parentName);
         //如果还有子节点,查询出来
         List<Organization> childrenList = listOrganizationByParentId(parentNode.getOrgId());
-        OrganizationDTO d2  = null;
+        OrganizationDTO d2;
         if(childrenList.size()>0){
             for (Organization childrenNode:childrenList//再遍历递归调用自身
             ) {

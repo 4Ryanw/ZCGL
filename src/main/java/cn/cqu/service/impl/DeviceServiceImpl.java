@@ -142,7 +142,7 @@ public class DeviceServiceImpl implements DeviceService {
         List<String> deleteAccountId = new ArrayList<>();
         List<String> deleteAccountId_coppy = new ArrayList<>();
         for (Account account:oldAccount
-             ) {
+        ) {
             deleteAccountId.add(account.getUuid());
             deleteAccountId_coppy.add(account.getUuid());
         }
@@ -213,6 +213,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     @MyLog(actionName = "导出Excel")
     public void exportExcel(HttpServletResponse response, String pageName,String[] headers) {
+
             String sheetName = "工作表1";
             String fileName="" ;
             List<DeviceDTO> deviceList = listDeviceDto();

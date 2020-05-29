@@ -255,7 +255,7 @@ public class DeviceController {
          //设备品牌统计
          Map brandMap = deviceService.staDeviceByBrand(monthStr);
          resultMap.put("brandMap",brandMap);
-         //设备品牌统计
+         //设备部门统计
          Map orgMap = deviceService.staDeviceByOrg(monthStr);
          resultMap.put("orgMap",orgMap);
          //设备状态统计

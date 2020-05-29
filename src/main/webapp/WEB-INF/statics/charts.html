@@ -222,6 +222,7 @@
     }],
   };
 
+  //加载的时候
   $(document).ready(function(){
     reloadCharts();
   });
@@ -233,10 +234,6 @@
     reloadCharts();
   }
 
-  //月累计数据统计
-  function  Count() {
-    
-  }  
   //重载图表
   function reloadCharts(){
     var monthStr = $("#sta_month").html();
@@ -247,6 +244,7 @@
       },
       url: "/device/statistics",
       success: function (data) {
+        console.info(data);
         //statusMap
         /*状态统计*/
         $("#countUser").html(data.statusMap.countUser) ;
